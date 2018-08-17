@@ -1,0 +1,25 @@
+{
+  "name": "ngsi-ld_tests",
+  "version": "1.0.0",
+  "description": "This project is intended to define a test suite for NGSI-LD , the evolution of NGSIv2 for supporting linked data based on JSON-LD.",
+  "main": "index.js",
+  "dependencies": {
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "jest": "^23.5.0"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fiware/NGSI-LD_Tests.git"
+  },
+  "author": "FIWARE Foundation e.V.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fiware/NGSI-LD_Tests/issues"
+  },
+  "homepage": "https://github.com/fiware/NGSI-LD_Tests#readme"
+}
