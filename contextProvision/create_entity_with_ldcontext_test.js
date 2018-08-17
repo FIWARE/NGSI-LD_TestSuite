@@ -1,6 +1,7 @@
 'use strict';
 
 var testedResource = require('../common.js').testedResource;
+var assertCreated = require('../common.js').assertCreated;
 var http = require('../http.js');
 
 var entitiesResource = testedResource + '/' + 'entities' + '/';
@@ -37,7 +38,7 @@ describe('Create Entity. JSON-LD @context', () => {
         };
 
         let response = await http.post(entitiesResource, entity, JSON_LD_HEADERS);
-        expect(response.response).toHaveProperty('statusCode', 201);
+        assertCreated(response.response, entity.id);
     });
 
     it('should create an entity with JSON-LD @context as single URI', async function() {
@@ -67,7 +68,7 @@ describe('Create Entity. JSON-LD @context', () => {
         };
 
         let response = await http.post(entitiesResource, entity, JSON_LD_HEADERS);
-        expect(response.response).toHaveProperty('statusCode', 201);
+        assertCreated(response.response, entity.id);
     });
 
 });

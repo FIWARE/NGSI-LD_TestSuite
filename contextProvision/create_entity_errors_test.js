@@ -16,7 +16,7 @@ describe('Create Entity. Errors. JSON', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should reject an empty which node type is not recognized', async function() {
+    it('should reject an entity which node type is not recognized', async function() {
         let entity = {
           'id': 'urn:ngsi-ld:T4:9000',
           'type': 'T',
@@ -29,4 +29,62 @@ describe('Create Entity. Errors. JSON', () => {
         let response = await http.post(entitiesResource, entity);
         expect(response.response).toHaveProperty('statusCode', 400);
     });
+
+    it('should reject an entity with a property value equal to null', async function() {
+        let entity = {
+          'id': 'urn:ngsi-ld:T4:9000',
+          'type': 'T',
+          'P1': {
+            'type': 'Property',
+            'value': null
+          }
+        };
+
+        let response = await http.post(entitiesResource, entity);
+        expect(response.response).toHaveProperty('statusCode', 400);
+    });
+
+    it('should reject an entity with a Relationship with no object', async function() {
+        let entity = {
+          'id': 'urn:ngsi-ld:T4:9000',
+          'type': 'T',
+          'R1': {
+            'type': 'Relationship',
+            'value': '1234'
+          }
+        };
+
+        let response = await http.post(entitiesResource, entity);
+        expect(response.response).toHaveProperty('statusCode', 400);
+    });
+
+    it('should reject an entity with a Property with no value', async function() {
+        let entity = {
+          'id': 'urn:ngsi-ld:T4:9000',
+          'type': 'T',
+          'P1': {
+            'type': 'Property',
+            'object': '1234'
+          }
+        };
+
+        let response = await http.post(entitiesResource, entity);
+        expect(response.response).toHaveProperty('statusCode', 400);
+    });
+
+    it('should reject an entity with a Relationship object equal to null', async function() {
+        let entity = {
+          'id': 'urn:ngsi-ld:T4:9000',
+          'type': 'T',
+          'R1': {
+            'type': 'Relationship',
+            'object': null
+          }
+        };
+
+        let response = await http.post(entitiesResource, entity);
+        expect(response.response).toHaveProperty('statusCode', 400);
+    });
+
+    // TODO: Add here more tests (null values, etc.)
 });

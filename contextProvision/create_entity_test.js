@@ -1,6 +1,7 @@
 'use strict';
 
 var testedResource = require('../common.js').testedResource;
+var assertCreated = require('../common.js').assertCreated;
 var http = require('../http.js');
 
 var entitiesResource = testedResource + '/' + 'entities' + '/';
@@ -13,7 +14,7 @@ describe('Create Entity. JSON', () => {
         };
 
         let response = await http.post(entitiesResource, entity);
-        expect(response.response).toHaveProperty('statusCode', 201);
+        assertCreated(response.response, entity.id);
     });
 
     it('should create an entity. One Property', async function() {
@@ -27,7 +28,7 @@ describe('Create Entity. JSON', () => {
         };
 
         let response = await http.post(entitiesResource, entity);
-        expect(response.response).toHaveProperty('statusCode', 201);
+         assertCreated(response.response, entity.id);
     });
 
     it('should create an entity. One GeoProperty', async function() {
@@ -44,7 +45,7 @@ describe('Create Entity. JSON', () => {
         };
 
         let response = await http.post(entitiesResource, entity);
-        expect(response.response).toHaveProperty('statusCode', 201);
+        assertCreated(response.response, entity.id);
     });
 
     it('should create an entity. One TemporalProperty', async function() {
@@ -58,7 +59,7 @@ describe('Create Entity. JSON', () => {
         };
 
         let response = await http.post(entitiesResource, entity);
-        expect(response.response).toHaveProperty('statusCode', 201);
+        assertCreated(response.response, entity.id);
     });
 
     it('should create an entity. Property. Relationship', async function() {
@@ -76,7 +77,7 @@ describe('Create Entity. JSON', () => {
         };
 
         let response = await http.post(entitiesResource, entity);
-        expect(response.response).toHaveProperty('statusCode', 201);
+        assertCreated(response.response, entity.id);
     });
 
     it('should create an entity. Property. observedAt', async function() {
@@ -91,7 +92,7 @@ describe('Create Entity. JSON', () => {
         };
 
         let response = await http.post(entitiesResource, entity);
-        expect(response.response).toHaveProperty('statusCode', 201);
+        assertCreated(response.response, entity.id);
     });
 
     it('should create an entity. Property. unitCode', async function() {
@@ -106,7 +107,7 @@ describe('Create Entity. JSON', () => {
         };
 
         let response = await http.post(entitiesResource, entity);
-        expect(response.response).toHaveProperty('statusCode', 201);
+        assertCreated(response.response, entity.id);
     });
 
     it('should create an entity. Relationship. observedAt', async function() {
@@ -121,7 +122,7 @@ describe('Create Entity. JSON', () => {
         };
 
         let response = await http.post(entitiesResource, entity);
-        expect(response.response).toHaveProperty('statusCode', 201);
+        assertCreated(response.response, entity.id);
     });
 
     it('should create an entity. Property. Property', async function() {
@@ -140,7 +141,7 @@ describe('Create Entity. JSON', () => {
         };
 
         let response = await http.post(entitiesResource, entity);
-        expect(response.response).toHaveProperty('statusCode', 201);
+        assertCreated(response.response, entity.id);
     });
 
 
@@ -159,7 +160,7 @@ describe('Create Entity. JSON', () => {
         };
 
         let response = await http.post(entitiesResource, entity);
-        expect(response.response).toHaveProperty('statusCode', 201);
+        assertCreated(response.response, entity.id);
     });
 
     it('should create an entity. Property. Relationship', async function() {
@@ -178,7 +179,7 @@ describe('Create Entity. JSON', () => {
         };
 
         let response = await http.post(entitiesResource, entity);
-        expect(response.response).toHaveProperty('statusCode', 201);
+        assertCreated(response.response, entity.id);
     });
 
     it('should create an entity. Relationship. Relationship', async function() {
@@ -196,6 +197,6 @@ describe('Create Entity. JSON', () => {
         };
 
         let response = await http.post(entitiesResource, entity);
-        expect(response.response).toHaveProperty('statusCode', 201);
+        assertCreated(response.response, entity.id);
     });
 });
