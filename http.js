@@ -1,6 +1,6 @@
 var request = require('request');
 
-function post(resource,data,headers) {
+function post(resource, data, headers) {
     return new Promise(function(resolve, reject) {
         let options = {
             method: 'POST',
@@ -10,7 +10,7 @@ function post(resource,data,headers) {
             simple: false,
             json: true // Automatically stringifies the body to JSON
         };
-        
+
         request(options, function(error, response, body) {
             resolve({
                 response: response,
