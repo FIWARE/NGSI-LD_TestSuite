@@ -1,0 +1,17 @@
+{
+  "@context": {
+    "T": "http://example.org/other/T",
+    "T2": "http://example.org/other/T2",
+    "T3": "http://example.org/other/T3",
+    "P1": "http://example.org/other/P1",
+    "P2": "http://example.org/other/P2",
+    "P3": "http://example.org/other/P3",
+    "R1": "http://example.org/other/R1",
+    "R2": "http://example.org/other/R2",
+    "R3": "http://example.org/other/R3",
+    "P1_R1": "http://example.org/other/P1_R1",
+    "P1_P1": "http://example.org/other/P1_P1",
+    "R1_P1": "http://example.org/other/R1_P1",
+    "R1_R1": "http://example.org/other/R1_R1"
+  }
+}

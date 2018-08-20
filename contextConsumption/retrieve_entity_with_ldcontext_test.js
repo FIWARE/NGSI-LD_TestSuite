@@ -6,7 +6,8 @@ var http = require('../http.js');
 var entitiesResource = testedResource + '/' + 'entities' + '/';
 var assertRetrieved = require('../common.js').assertRetrieved;
 
-const JSON_LD = 'application/ld+json';
+const JSON_LD = /application\/ld\+json(;.*)?/;
+
 const JSON_LD_HEADERS_POST = {
     'Content-Type': JSON_LD
 };

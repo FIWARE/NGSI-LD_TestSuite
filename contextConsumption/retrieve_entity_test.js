@@ -13,7 +13,7 @@ describe('Retrieve Entity. JSON. Default @context', () => {
         'P1': {
             'type': 'Property',
             'value': 12,
-            'observedAt': '2018-12-04T12:00:00',
+            'observedAt': '2018-12-04T12:00:00.00',
             'P1_R1': {
                 'type': 'Relationship',
                 'object': 'urn:ngsi-ld:T2:6789'
@@ -73,7 +73,7 @@ describe('Retrieve Entity. JSON. Default @context', () => {
     
     it('should retrieve the entity attribute projection', async function() {
         let response = await http.get(entitiesResource + entity.id + '?attrs=P1');
-         assertRetrieved(response,entity, entityOneAttr);
+         assertRetrieved(response, entityOneAttr);
     });
     
     it('should retrieve the entity no attribute matches', async function() {
@@ -84,5 +84,5 @@ describe('Retrieve Entity. JSON. Default @context', () => {
     it('should report an error if the entity does not exist', async function() {
         let response = await http.get(entitiesResource + 'urn:ngsi-ld:xxxxxxx');
         expect(response.response).toHaveProperty('statusCode', 404);
-    });
+    }); 
 });

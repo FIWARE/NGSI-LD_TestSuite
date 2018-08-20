@@ -1,3 +1,5 @@
+'use strict';
+
 var endpoint = process.env.TEST_ENDPOINT;
 var ngsild = 'ngsi-ld/v1';
 
@@ -8,10 +10,10 @@ if (process.env.FAKE_LD == 'yes') {
 
 const testedResource = endpoint + '/' + ngsild;
 
-const JSON = 'application/json';
-
 // Regular expression for matching the link header pointing to the JSON-LD @context
 const JSON_LD_CONTEXT_HEADER = /<.+>;\s+rel="http:\/\/www\.w3\.org\/ns\/json-ld#context";\s+type="application\/ld\+json"/;
+
+const JSON = /application\/json(;.*)?/;
 
 function assertCreated(response, id) {
     expect(response).toHaveProperty('statusCode', 201);
@@ -20,10 +22,10 @@ function assertCreated(response, id) {
 
 function assertRetrieved(response, entity, mimeType) {
     let mType = mimeType || JSON;
-    console.log('MIME Type', mType);
+    console.log('MIME Type', mType, response.response.headers['content-type']);
 
     expect(response.response).toHaveProperty('statusCode', 200);
-    expect(response.response.headers).toHaveProperty('content-type', mType);
+    expect(response.response.headers['content-type']).toMatch(mType);
 
     // response.response.headers['link'] =
     // '<http://json-ld.org/contexts/person.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
