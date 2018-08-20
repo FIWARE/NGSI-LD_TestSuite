@@ -5,7 +5,7 @@ var http = require('../http.js');
 
 var entitiesResource = testedResource + '/' + 'entities' + '/';
 
-describe('Retrieve Entity. JSON', () => {
+describe('Retrieve Entity. JSON. Default @context', () => {
     let entity = {
         'id': 'urn:ngsi-ld:T:I123k467' + ':' + new Date().getTime(),
         'type': 'T',
@@ -28,11 +28,24 @@ describe('Retrieve Entity. JSON', () => {
         }
     };
     
+    // Entity key Values
     let entityKeyValues = {
         'id': entity.id,
-        'type': 'T',
-        'P1': 12,
-        'R1': 'urn:ngsi-ld:T3:A2345'
+        'type': entity.type,
+        'P1': entity.P1.value,
+        'R1': entity.R1.object
+    };
+    
+    // Entity projection only one attribute
+    let entityOneAttr = {
+        'id': entity.id,
+        'type': entity.type,
+        'P1': entity.P1
+    };
+    
+    let entityNoAttr = {
+        'id': entity.id,
+        'type': entity.type,
     };
     
     beforeAll(() => {
@@ -49,6 +62,18 @@ describe('Retrieve Entity. JSON', () => {
         let response = await http.get(entitiesResource + entity.id + '?options=keyValues');
         expect(response.response).toHaveProperty('statusCode', 200);
         expect(response.body).toEqual(entityKeyValues);
+    });
+    
+    it('should retrieve the entity attribute projection', async function() {
+        let response = await http.get(entitiesResource + entity.id + '?attrs=P1');
+        expect(response.response).toHaveProperty('statusCode', 200);
+        expect(response.body).toEqual(entityOneAttr);
+    });
+    
+    it('should retrieve the entity no attribute matches', async function() {
+        let response = await http.get(entitiesResource + entity.id + '?attrs=notFoundAttr');
+        expect(response.response).toHaveProperty('statusCode', 200);
+        expect(response.body).toEqual(entityNoAttr);
     });
     
     it('should report an error if the entity does not exist', async function() {
