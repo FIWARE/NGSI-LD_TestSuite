@@ -68,17 +68,17 @@ describe('Retrieve Entity. JSON. Default @context', () => {
     
     it('should retrieve the entity key values mode', async function() {
         let response = await http.get(entitiesResource + entity.id + '?options=keyValues');
-         assertRetrieved(response,entity);
+         assertRetrieved(response,entityKeyValues);
     });
     
     it('should retrieve the entity attribute projection', async function() {
         let response = await http.get(entitiesResource + entity.id + '?attrs=P1');
-         assertRetrieved(response,entity);
+         assertRetrieved(response,entity, entityOneAttr);
     });
     
     it('should retrieve the entity no attribute matches', async function() {
         let response = await http.get(entitiesResource + entity.id + '?attrs=notFoundAttr');
-         assertRetrieved(response,entity);
+         assertRetrieved(response,entityNoAttr);
     });
     
     it('should report an error if the entity does not exist', async function() {

@@ -81,7 +81,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
     
     it('should retrieve the entity key values mode', async function() {
         let response = await http.get(entitiesResource + entity.id + '?options=keyValues', JSON_LD_HEADERS_GET);
-         assertRetrieved(response,entity,JSON_LD);
+         assertRetrieved(response,entityKeyValues,JSON_LD);
     });
     
     it('should retrieve the entity attribute projection', async function() {
@@ -90,16 +90,25 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
             'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
         };
         let response = await http.get(entitiesResource + entity.id + '?attrs=P1', headers);
-        assertRetrieved(response,entity, JSON_LD);
+        assertRetrieved(response,entityOneAttr, JSON_LD);
     });
     
     it('should retrieve the entity no attribute matches', async function() {
+        var headers = {
+            'Accept': JSON_LD,
+            'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+        };
         let response = await http.get(entitiesResource + entity.id + '?attrs=notFoundAttr', JSON_LD_HEADERS_GET);
-         assertRetrieved(response,entity, JSON_LD);
+        assertRetrieved(response, entityNoAttr, JSON_LD);
     });
     
-    it('should report an error if the entity does not exist', async function() {
-        let response = await http.get(entitiesResource + 'urn:ngsi-ld:xxxxxxx', JSON_LD_HEADERS_GET);
-        expect(response.response).toHaveProperty('statusCode', 404);
+    it('should retrieve the entity no attribute matches', async function() {
+        var headers = {
+            'Accept': JSON_LD,
+            // Observe that the provided @context will make the attribute not to match
+            'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/textContext2.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+        };
+        let response = await http.get(entitiesResource + entity.id + '?attrs=P1', JSON_LD_HEADERS_GET);
+        assertRetrieved(response,entityNoAttr, JSON_LD);
     });
 });
