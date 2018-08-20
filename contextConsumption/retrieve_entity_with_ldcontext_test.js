@@ -6,7 +6,16 @@ var http = require('../http.js');
 var entitiesResource = testedResource + '/' + 'entities' + '/';
 var assertRetrieved = require('../common.js').assertRetrieved;
 
-describe('Retrieve Entity. JSON. Default @context', () => {
+const JSON_LD = 'application/ld+json';
+const JSON_LD_HEADERS_POST = {
+    'Content-Type': JSON_LD
+};
+
+const JSON_LD_HEADERS_GET = {
+    'Accept': JSON_LD
+};
+
+describe('Retrieve Entity. JSON-LD. @context ', () => {
     let entity = {
         'id': 'urn:ngsi-ld:T:I123k467' + ':' + new Date().getTime(),
         'type': 'T',
@@ -34,7 +43,8 @@ describe('Retrieve Entity. JSON. Default @context', () => {
                 'type': 'Property',
                 'value': false
             }
-        }
+        },
+        '@context': 'https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld'
     };
 
     // Entity key Values
@@ -42,47 +52,54 @@ describe('Retrieve Entity. JSON. Default @context', () => {
         'id': entity.id,
         'type': entity.type,
         'P1': entity.P1.value,
-        'R1': entity.R1.object
+        'R1': entity.R1.object,
+        '@context': entity['@context']
     };
 
     // Entity projection only one attribute
     let entityOneAttr = {
         'id': entity.id,
         'type': entity.type,
-        'P1': entity.P1
+        'P1': entity.P1,
+        '@context': entity['@context']
     };
 
     let entityNoAttr = {
         'id': entity.id,
         'type': entity.type,
+        '@context': entity['@context']
     };
 
     beforeAll(() => {
-        return http.post(entitiesResource, entity);
+        return http.post(entitiesResource, entity, JSON_LD_HEADERS_POST);
     });
     
     it('should retrieve the entity', async function() {
-        let response = await http.get(entitiesResource + entity.id);
-        assertRetrieved(response,entity);
+        let response = await http.get(entitiesResource + entity.id, JSON_LD_HEADERS_GET);
+        assertRetrieved(response,entity, JSON_LD);
     });
     
     it('should retrieve the entity key values mode', async function() {
-        let response = await http.get(entitiesResource + entity.id + '?options=keyValues');
-         assertRetrieved(response,entity);
+        let response = await http.get(entitiesResource + entity.id + '?options=keyValues', JSON_LD_HEADERS_GET);
+         assertRetrieved(response,entity,JSON_LD);
     });
     
     it('should retrieve the entity attribute projection', async function() {
-        let response = await http.get(entitiesResource + entity.id + '?attrs=P1');
-         assertRetrieved(response,entity);
+        var headers = {
+            'Accept': JSON_LD,
+            'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+        };
+        let response = await http.get(entitiesResource + entity.id + '?attrs=P1', headers);
+        assertRetrieved(response,entity, JSON_LD);
     });
     
     it('should retrieve the entity no attribute matches', async function() {
-        let response = await http.get(entitiesResource + entity.id + '?attrs=notFoundAttr');
-         assertRetrieved(response,entity);
+        let response = await http.get(entitiesResource + entity.id + '?attrs=notFoundAttr', JSON_LD_HEADERS_GET);
+         assertRetrieved(response,entity, JSON_LD);
     });
     
     it('should report an error if the entity does not exist', async function() {
-        let response = await http.get(entitiesResource + 'urn:ngsi-ld:xxxxxxx');
+        let response = await http.get(entitiesResource + 'urn:ngsi-ld:xxxxxxx', JSON_LD_HEADERS_GET);
         expect(response.response).toHaveProperty('statusCode', 404);
     });
 });

@@ -26,7 +26,7 @@ function get(resource, headers) {
             method: 'GET',
             uri: resource,
             headers: headers,
-            json:true
+            json: true
         };
 
         request(options, function(error, response, body) {
