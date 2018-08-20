@@ -99,7 +99,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
             'Accept': JSON_LD,
             'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
         };
-        let response = await http.get(entitiesResource + entity.id + '?attrs=notFoundAttr', JSON_LD_HEADERS_GET);
+        let response = await http.get(entitiesResource + entity.id + '?attrs=notFoundAttr', headers);
         assertRetrieved(response, entityNoAttr, JSON_LD);
     });
     
@@ -109,7 +109,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
             // Observe that the provided @context will make the attribute not to match
             'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/textContext2.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
         };
-        let response = await http.get(entitiesResource + entity.id + '?attrs=P1', JSON_LD_HEADERS_GET);
+        let response = await http.get(entitiesResource + entity.id + '?attrs=P1', headers);
         assertRetrieved(response,entityNoAttr, JSON_LD);
     });
 });
