@@ -38,7 +38,26 @@ function get(resource, headers) {
     });
 }
 
+function del(resource, headers) {
+    return new Promise(function(resolve, reject) {
+        let options = {
+            method: 'DELETE',
+            uri: resource,
+            headers: headers,
+            json: true
+        };
+
+        request(options, function(error, response, body) {
+            resolve({
+                response: response,
+                body: body
+            });
+        });
+    });
+}
+
 module.exports = {
     'post': post,
-    'get': get
+    'get': get,
+    'delete': del
 };
