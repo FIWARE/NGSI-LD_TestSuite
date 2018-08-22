@@ -20,27 +20,48 @@ function assertCreated(response, id) {
     expect(response.headers).toHaveProperty('location', '/' + ngsild + '/entities/' + id);
 }
 
-function assertRetrieved(response, entity, mimeType) {
-    let mType = mimeType || JSON;
-    console.log('MIME Type', mType, response.response.headers['content-type']);
+function assertResponse(response, mimeType) {
+  let mType = mimeType || JSON;
 
-    expect(response.response).toHaveProperty('statusCode', 200);
-    expect(response.response.headers['content-type']).toMatch(mType);
+  expect(response.response).toHaveProperty('statusCode', 200);
+  expect(response.response.headers['content-type']).toMatch(mType);
 
-    // response.response.headers['link'] =
-    // '<http://json-ld.org/contexts/person.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
+  // response.response.headers['link'] =
+  // '<http://json-ld.org/contexts/person.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
 
-    if (mType == JSON) {
+  if (mType == JSON) {
       expect(response.response.headers['link']).toBeDefined();
       let linkHeader = response.response.headers['link'];
       expect(linkHeader).toMatch(JSON_LD_CONTEXT_HEADER);
-    }
+  }
+}
 
+function assertRetrieved(response, entity, mimeType) {
+    assertResponse(response, mimeType);
     expect(response.body).toEqual(entity);
+}
+
+function assertRetrievedQuery(response, entity, mimeType) {
+  assertResponse(response, mimeType);
+  // Check first query result
+  expect(response.body[0]).toBeDefined();
+  expect(response.body[0]).toEqual(entity);
+}
+
+function serializeParams(query) {
+  let out = '';
+  Object.keys(query).forEach(function(key) {
+    out += key + '=' + encodeURIComponent(query[key]);
+    out += '&';
+  });
+
+  return out.substring(0, out.length - 1);
 }
 
 module.exports = {
   testedResource: testedResource,
   assertCreated: assertCreated,
-  assertRetrieved: assertRetrieved
+  assertRetrieved: assertRetrieved,
+  assertRetrievedQuery: assertRetrievedQuery,
+  serializeParams: serializeParams
 };

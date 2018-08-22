@@ -35,7 +35,7 @@ describe('Create Entity. JSON', () => {
         let entity = {
           'id': 'urn:ngsi-ld:T:I12345' + ':' + new Date().getTime(),
           'type': 'T',
-          'P1': {
+          'location': {
             'type': 'GeoProperty',
             'value': {
                 'type': 'Point',
