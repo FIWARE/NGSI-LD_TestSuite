@@ -12,6 +12,7 @@
     "P1_R1": "http://example.org/P1_R1",
     "P1_P1": "http://example.org/P1_P1",
     "R1_P1": "http://example.org/R1_P1",
-    "R1_R1": "http://example.org/R1_R1"
+    "R1_R1": "http://example.org/R1_R1",
+    "T_Query": "http://example.org/T_Query"
   }
 }

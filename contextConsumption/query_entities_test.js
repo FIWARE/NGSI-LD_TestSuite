@@ -40,7 +40,7 @@ describe('Query Entity. JSON. Default @context', () => {
             'type': 'GeoProperty',
             'value': {
                 'type': 'Point',
-                'coordinates': [-8, 40]
+                'coordinates': [-8.01, 40.01]
             }
         }
     };
@@ -82,6 +82,7 @@ describe('Query Entity. JSON. Default @context', () => {
     
     it('query by condition over value', async function() {
         let queryParams = {
+          id: entity.id,  
           q: 'P1>5'  
         };
         
@@ -91,6 +92,7 @@ describe('Query Entity. JSON. Default @context', () => {
     
      it('query by condition over object', async function() {
         let queryParams = {
+            id: entity.id,
             q: 'R1=="urn:ngsi-ld:T2:6789"'
         };
         
@@ -100,7 +102,30 @@ describe('Query Entity. JSON. Default @context', () => {
     
     it('query by condition over observedAt', async function() {
         let queryParams = {
+            id: entity.id,
             q: 'P1.observedAt>2018-12-03'
+        };
+        
+        let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+        assertRetrievedQuery(response, entity);
+    });
+    
+    it('query by condition over property of property', async function() {
+        let queryParams = {
+            id: entity.id,
+            q: 'P1.P1_P1 > 0.70'
+        };
+        
+        let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+        assertRetrievedQuery(response, entity);
+    });
+    
+    it('geoQuery near', async function() {
+        let queryParams = {
+            id: entity.id,
+            geometry: 'Point',
+            coordinates: [-8,40],
+            georel: 'near;maxDistance==3000'
         };
         
         let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));

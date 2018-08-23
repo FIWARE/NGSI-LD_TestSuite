@@ -57,6 +57,12 @@ function assertRetrievedQuery(response, entity, mimeType) {
   expect(response.body[0]).toEqual(entity);
 }
 
+function assertNoResultsQuery(response, mimeType) {
+  assertResponse(response, mimeType);
+  // Check first query result
+  expect(response.body.length).toBe(0);
+}
+
 function serializeParams(query) {
   let out = '';
   Object.keys(query).forEach(function(key) {
@@ -72,5 +78,6 @@ module.exports = {
   assertCreated: assertCreated,
   assertRetrieved: assertRetrieved,
   assertRetrievedQuery: assertRetrievedQuery,
+  assertNoResultsQuery: assertNoResultsQuery,
   serializeParams: serializeParams
 };

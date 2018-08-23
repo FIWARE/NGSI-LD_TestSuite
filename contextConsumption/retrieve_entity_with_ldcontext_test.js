@@ -16,6 +16,8 @@ const JSON_LD_HEADERS_GET = {
     'Accept': JSON_LD
 };
 
+const JSON_LD_LINK_HEADER =
+
 describe('Retrieve Entity. JSON-LD. @context ', () => {
     let entity = {
         'id': 'urn:ngsi-ld:T:I123k467' + ':' + new Date().getTime(),
@@ -75,9 +77,14 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         return http.post(entitiesResource, entity, JSON_LD_HEADERS_POST);
     });
     
-    it('should retrieve the entity', async function() {
+    it('should retrieve the entity. JSON-LD MIME Type requested', async function() {
         let response = await http.get(entitiesResource + entity.id, JSON_LD_HEADERS_GET);
         assertRetrieved(response,entity, JSON_LD);
+    });
+    
+    it('should retrieve the entity. JSON MIME type (default)', async function() {
+        let response = await http.get(entitiesResource + entity.id);
+        assertRetrieved(response,entity);
     });
     
     it('should retrieve the entity key values mode', async function() {
@@ -103,7 +110,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         assertRetrieved(response, entityNoAttr, JSON_LD);
     });
     
-    it('should retrieve the entity no attribute matches', async function() {
+    it('should retrieve the entity no attribute matches as @context differs', async function() {
         var headers = {
             'Accept': JSON_LD,
             // Observe that the provided @context will make the attribute not to match
