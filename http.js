@@ -1,3 +1,13 @@
+/**
+ *   HTTP functions for executing tests
+ *
+ *   Copyright (c) 2018. FIWARE Foundation e.V. 
+ *
+ *
+ */
+
+'use strict';
+
 var request = require('request');
 
 function post(resource, data, headers) {
@@ -12,7 +22,7 @@ function post(resource, data, headers) {
         };
 
         request(options, function(error, response, body) {
-            resolve({
+           error ? reject(error) : resolve({
                 response: response,
                 body: body
             });
@@ -30,7 +40,7 @@ function get(resource, headers) {
         };
 
         request(options, function(error, response, body) {
-            resolve({
+            error ? reject(error) : resolve({
                 response: response,
                 body: body
             });
@@ -48,7 +58,7 @@ function del(resource, headers) {
         };
 
         request(options, function(error, response, body) {
-            resolve({
+            error ? reject(error) : resolve({
                 response: response,
                 body: body
             });
