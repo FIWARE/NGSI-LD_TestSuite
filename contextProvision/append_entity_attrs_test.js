@@ -73,6 +73,13 @@ describe('Append Entity Attributes. JSON. Default @context', () => {
         expect(response.response).toHaveProperty('statusCode', 404);
     });
     
+    it('append Entity Attributes. Empty Payload', async function() {
+        let response = await http.post(entitiesResource + entity.id
+                                       + '/' + 'attrs' + '/', {});
+        
+        expect(response.response).toHaveProperty('statusCode', 400);
+    });
+    
     it('append Entity Attributes. Attributes are overwritten', async function() {
         let overwrittenAttrs = {
             'P1': {
@@ -82,10 +89,9 @@ describe('Append Entity Attributes. JSON. Default @context', () => {
         };
         let response = await http.post(entitiesResource + entity.id
                                        + '/' + 'attrs' + '/', overwrittenAttrs);
-        
-        let checkResponse = await http.get(entitiesResource + entity.id);
         expect(response.response).toHaveProperty('statusCode', 204);
         
+        let checkResponse = await http.get(entitiesResource + entity.id);
         let finalEntity = Object.assign(entity, overwrittenAttrs);
         expect(checkResponse.body).toEqual(finalEntity);
     });
@@ -106,7 +112,8 @@ describe('Append Entity Attributes. JSON. Default @context', () => {
                                        overwrittenAttrs);
         expect(response.response).toHaveProperty('statusCode', 207);
         
-        
+        let finalEntity = Object.assign(entity, {});
+        finalEntity['P2'] = overwrittenAttrs['P2'];
         let checkResponse = await http.get(entitiesResource + entity.id);     
         expect(checkResponse.body).toEqual(finalEntity);
     }); 

@@ -9,7 +9,7 @@ var serializeParams = require('../common.js').serializeParams;
 
 describe('Query Entity. JSON. Default @context', () => {
     let entity = {
-        'id': 'urn:ngsi-ld:T:I123k467' + ':' + new Date().getTime(),
+        'id': 'urn:ngsi-ld:T:I123k467',
         'type': 'T_Query',
         'P1': {
             'type': 'Property',

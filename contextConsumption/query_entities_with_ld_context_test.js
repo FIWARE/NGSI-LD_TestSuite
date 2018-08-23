@@ -14,7 +14,7 @@ const JSON_LD_HEADER_CONTEXT = '<https://fiware.github.io/NGSI-LD_Tests/ldContex
 
 describe('Query Entity. JSON-LD. @context', () => {
     let entity = {
-        'id': 'urn:ngsi-ld:T:I123k467' + ':' + new Date().getTime(),
+        'id': 'urn:ngsi-ld:T:I123k467:Context',
         'type': 'T_Query',
         'P1': {
             'type': 'Property',

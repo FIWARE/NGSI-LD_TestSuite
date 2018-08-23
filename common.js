@@ -1,6 +1,6 @@
 /**
  *   Common utility functions. Probably in the future this would need a bit of refactoring
- *   
+ *
  *   Copyright (c) 2018 FIWARE Foundation e.V.
  *
  *

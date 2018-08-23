@@ -1,7 +1,7 @@
 /**
  *   HTTP functions for executing tests
  *
- *   Copyright (c) 2018. FIWARE Foundation e.V. 
+ *   Copyright (c) 2018. FIWARE Foundation e.V.
  *
  *
  */
