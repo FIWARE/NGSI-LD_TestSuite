@@ -66,8 +66,29 @@ function del(resource, headers) {
     });
 }
 
+function patch(resource, data, headers) {
+    return new Promise(function(resolve, reject) {
+         let options = {
+            method: 'PATCH',
+            uri: resource,
+            body: data,
+            headers: headers,
+            simple: false,
+            json: true // Automatically stringifies the body to JSON
+        };
+
+        request(options, function(error, response, body) {
+            error ? reject(error) : resolve({
+                response: response,
+                body: body
+            });
+        });
+    });
+}
+
 module.exports = {
     'post': post,
     'get': get,
-    'delete': del
+    'delete': del,
+    'patch': patch
 };

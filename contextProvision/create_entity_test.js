@@ -199,4 +199,16 @@ describe('Create Entity. JSON', () => {
         let response = await http.post(entitiesResource, entity);
         assertCreated(response.response, entity.id);
     });
+
+    it('should report an error if Entity already exists', async function() {
+        let entity = {
+          'id': 'urn:ngsi-ld:T:I1234' + ':' + new Date().getTime(),
+          'type': 'T'
+        };
+
+        let response = await http.post(entitiesResource, entity);
+        let response2 = await http.post(entitiesResource, entity);
+
+        expect(response2.response).toHaveProperty('statusCode', 409);
+    });
 });

@@ -26,7 +26,7 @@ describe('Create Entity. JSON-LD @context', () => {
                 'coordinates': [-8, 40]
             }
           },
-           'P1': {
+          'P3': {
             'type': 'Property',
             'value': 'Hola'
           },
@@ -48,21 +48,6 @@ describe('Create Entity. JSON-LD @context', () => {
           'P1': {
             'type': 'TemporalProperty',
             'value': '2018-12-04T12:00:00'
-          },
-          'P2': {
-            'type': 'GeoProperty',
-            'value': {
-                'type': 'Point',
-                'coordinates': [-8, 40]
-            }
-          },
-           'P1': {
-            'type': 'Property',
-            'value': 'Hola'
-          },
-          'R1': {
-            'type': 'Relationship',
-            'object': 'urn:ngsi-ld:T2:6789'
           },
           '@context': ['https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld']
         };
