@@ -4,7 +4,6 @@ var testedResource = require('../common.js').testedResource;
 var http = require('../http.js');
 
 var entitiesResource = testedResource + '/' + 'entities' + '/';
-var assertRetrieved = require('../common.js').assertRetrieved;
 
 describe('Delete Entity Attribute. Default @context', () => {
   let entity = {

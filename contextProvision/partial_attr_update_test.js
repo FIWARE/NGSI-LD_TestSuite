@@ -4,7 +4,6 @@ var testedResource = require('../common.js').testedResource;
 var http = require('../http.js');
 
 var entitiesResource = testedResource + '/' + 'entities' + '/';
-var assertRetrievedQuery = require('../common.js').assertRetrievedQuery;
 
 describe('Partial Entity Attribute Update. JSON. Default @context', () => {
   let entity = {
