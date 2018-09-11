@@ -9,14 +9,12 @@ var assertRetrieved = require('../common.js').assertRetrieved;
 const JSON_LD = /application\/ld\+json(;.*)?/;
 
 const JSON_LD_HEADERS_POST = {
-    'Content-Type': JSON_LD
+    'Content-Type': 'application/ld+json'
 };
 
 const JSON_LD_HEADERS_GET = {
-    'Accept': JSON_LD
+    'Accept': 'application/ld+json'
 };
-
-const JSON_LD_LINK_HEADER =
 
 describe('Retrieve Entity. JSON-LD. @context ', () => {
     let entity = {
@@ -94,7 +92,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
     
     it('should retrieve the entity attribute projection', async function() {
         var headers = {
-            'Accept': JSON_LD,
+            'Accept': 'application/ld+json',
             'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
         };
         let response = await http.get(entitiesResource + entity.id + '?attrs=P1', headers);
@@ -103,7 +101,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
     
     it('should retrieve the entity no attribute matches', async function() {
         var headers = {
-            'Accept': JSON_LD,
+            'Accept': 'application/ld+json',
             'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
         };
         let response = await http.get(entitiesResource + entity.id + '?attrs=notFoundAttr', headers);
@@ -112,7 +110,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
     
     it('should retrieve the entity no attribute matches as @context differs', async function() {
         var headers = {
-            'Accept': JSON_LD,
+            'Accept': 'application/ld+json',
             // Observe that the provided @context will make the attribute not to match
             'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/textContext2.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
         };

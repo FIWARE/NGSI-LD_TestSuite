@@ -12,6 +12,10 @@ const JSON_LD = /application\/ld\+json(;.*)?/;
 
 const JSON_LD_HEADER_CONTEXT = '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
 
+const ACCEPT_JSON_LD = {
+    'Accept': 'application/ld+json'
+};
+
 describe('Query Entity. JSON-LD. @context', () => {
     let entity = {
         'id': 'urn:ngsi-ld:T:I123k467:Context',
@@ -43,7 +47,7 @@ describe('Query Entity. JSON-LD. @context', () => {
           type: 'T_Query',
         };
             
-        let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+        let response = await http.get(entitiesResource + '?' + serializeParams(queryParams), ACCEPT_JSON_LD);
         assertNoResultsQuery(response,JSON_LD); 
     });
     
@@ -66,9 +70,9 @@ describe('Query Entity. JSON-LD. @context', () => {
           q: 'P1>5'  
         };
         
-        let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+        let response = await http.get(entitiesResource + '?' + serializeParams(queryParams), ACCEPT_JSON_LD);
         // Response here shall be JSON
-        assertNoResultsQuery(response);
+        assertNoResultsQuery(response, JSON_LD);
     });
     
     it('query by condition over value. Right @context. ', async function() {

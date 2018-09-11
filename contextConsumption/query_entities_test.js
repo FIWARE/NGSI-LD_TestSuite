@@ -9,12 +9,12 @@ var serializeParams = require('../common.js').serializeParams;
 
 describe('Query Entity. JSON. Default @context', () => {
     let entity = {
-        'id': 'urn:ngsi-ld:T:I123k467',
+        'id': 'urn:ngsi-ld:T_Query:I123k467',
         'type': 'T_Query',
         'P1': {
             'type': 'Property',
             'value': 12,
-            'observedAt': '2018-12-04T12:00:00.00',
+            'observedAt': '2018-12-04T12:00:00',
             'P1_R1': {
                 'type': 'Relationship',
                 'object': 'urn:ngsi-ld:T2:6789'
