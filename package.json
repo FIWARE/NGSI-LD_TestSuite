@@ -4,9 +4,11 @@
   "description": "This project is intended to define a test suite for NGSI-LD , the evolution of NGSIv2 for supporting linked data based on JSON-LD.",
   "main": "index.js",
   "dependencies": {
+    "acorn": "^5.7.3",
     "request": "^2.88.0"
   },
   "devDependencies": {
+    "eslint": "^5.5.0",
     "jest": "^23.5.0"
   },
   "scripts": {
