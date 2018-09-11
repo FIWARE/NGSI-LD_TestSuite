@@ -25,8 +25,8 @@ const JSON_LD_CONTEXT_HEADER = /<.+>;\s+rel="http:\/\/www\.w3\.org\/ns\/json-ld#
 const JSON = /application\/json(;.*)?/;
 
 function assertCreated(response, id) {
-    expect(response).toHaveProperty('statusCode', 201);
-    expect(response.headers).toHaveProperty('location', '/' + ngsild + '/entities/' + id);
+  expect(response).toHaveProperty('statusCode', 201);
+  expect(response.headers).toHaveProperty('location', '/' + ngsild + '/entities/' + id);
 }
 
 function assertResponse(response, mimeType) {
@@ -39,15 +39,15 @@ function assertResponse(response, mimeType) {
   // '<http://json-ld.org/contexts/person.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
 
   if (mType == JSON) {
-      expect(response.response.headers['link']).toBeDefined();
-      let linkHeader = response.response.headers['link'];
-      expect(linkHeader).toMatch(JSON_LD_CONTEXT_HEADER);
+    expect(response.response.headers['link']).toBeDefined();
+    let linkHeader = response.response.headers['link'];
+    expect(linkHeader).toMatch(JSON_LD_CONTEXT_HEADER);
   }
 }
 
 function assertRetrieved(response, entity, mimeType) {
-    assertResponse(response, mimeType);
-    expect(response.body).toEqual(entity);
+  assertResponse(response, mimeType);
+  expect(response.body).toEqual(entity);
 }
 
 function assertRetrievedQuery(response, entity, mimeType) {
