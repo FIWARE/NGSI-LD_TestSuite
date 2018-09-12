@@ -1,6 +1,7 @@
 language: node_js
+node_js:
+  - 10.9
 install:
   - npm install
-  - npm install acorn@5.7.3
 script:
   - npm run lint
