@@ -206,6 +206,7 @@ describe('Create Entity. JSON', () => {
       'type': 'T'
     };
 
+    await http.post(entitiesResource, entity);
     let response2 = await http.post(entitiesResource, entity);
 
     expect(response2.response).toHaveProperty('statusCode', 409);
