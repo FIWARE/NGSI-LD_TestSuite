@@ -40,7 +40,7 @@ describe('Query Entity. JSON. Default @context', () => {
       'type': 'GeoProperty',
       'value': {
         'type': 'Point',
-        'coordinates': [-8.01, 40.01]
+        'coordinates': [-30.01, 75.01]
       }
     }
   };
@@ -52,7 +52,7 @@ describe('Query Entity. JSON. Default @context', () => {
   afterAll(() => {
     return http.delete(entitiesResource + entity.id);
   });
-    
+   
   it('query by type', async function() {
     let queryParams = {
       type: 'T_Query',
@@ -119,12 +119,11 @@ describe('Query Entity. JSON. Default @context', () => {
     let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
     assertRetrievedQuery(response, entity);
   });
-    
+
   it('geoQuery near', async function() {
     let queryParams = {
-      id: entity.id,
       geometry: 'Point',
-      coordinates: [-8,40],
+      coordinates: '[-30,75]',
       georel: 'near;maxDistance==3000'
     };
         
