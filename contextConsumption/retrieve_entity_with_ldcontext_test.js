@@ -18,7 +18,7 @@ const JSON_LD_HEADERS_GET = {
 
 describe('Retrieve Entity. JSON-LD. @context ', () => {
   let entity = {
-    'id': 'urn:ngsi-ld:T:I123k467' + ':' + new Date().getTime(),
+    'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
     'type': 'T',
     'P1': {
       'type': 'Property',

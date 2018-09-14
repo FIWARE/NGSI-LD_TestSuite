@@ -12,6 +12,8 @@
     "P1_R1": "http://example.org/other/P1_R1",
     "P1_P1": "http://example.org/other/P1_P1",
     "R1_P1": "http://example.org/other/R1_P1",
-    "R1_R1": "http://example.org/other/R1_R1"
+    "R1_R1": "http://example.org/other/R1_R1",
+    "P100": "http://example.org/other/P100",
+    "R100": "http://example.org/other/R100"
   }
 }

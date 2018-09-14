@@ -13,6 +13,8 @@
     "P1_P1": "http://example.org/P1_P1",
     "R1_P1": "http://example.org/R1_P1",
     "R1_R1": "http://example.org/R1_R1",
-    "T_Query": "http://example.org/T_Query"
+    "T_Query": "http://example.org/T_Query",
+    "P100": "http://example.org/P100",
+    "R100": "http://example.org/R100"
   }
 }

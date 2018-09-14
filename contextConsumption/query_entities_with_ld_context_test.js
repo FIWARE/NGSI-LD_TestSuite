@@ -20,11 +20,11 @@ describe('Query Entity. JSON-LD. @context', () => {
   let entity = {
     'id': 'urn:ngsi-ld:T:I123k467:Context',
     'type': 'T_Query',
-    'P1': {
+    'P100': {
       'type': 'Property',
       'value': 12,
     },
-    'R1': {
+    'R100': {
       'type': 'Relationship',
       'object': 'urn:ngsi-ld:T2:6789',
     },
@@ -67,7 +67,7 @@ describe('Query Entity. JSON-LD. @context', () => {
     
   it('query by condition over value. Default @context. Not found as @context does not match for the attribute.', async function() {
     let queryParams = {
-      q: 'P1>5'  
+      q: 'P100>5'  
     };
         
     let response = await http.get(entitiesResource + '?' + serializeParams(queryParams), ACCEPT_JSON_LD);
@@ -78,7 +78,7 @@ describe('Query Entity. JSON-LD. @context', () => {
   it('query by condition over value. Right @context. ', async function() {
     let queryParams = {
       id: entity.id,  
-      q: 'P1>5'  
+      q: 'P100>5'  
     };
         
     let headers = {

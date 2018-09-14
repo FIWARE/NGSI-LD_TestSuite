@@ -7,7 +7,7 @@ var entitiesResource = testedResource + '/' + 'entities' + '/';
 
 describe('Append Entity Attributes. JSON. Default @context', () => {
   let entity = {
-    'id': 'urn:ngsi-ld:T:I123k467' + ':' + new Date().getTime(),
+    'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
     'type': 'T',
     'P1': {
       'type': 'Property',

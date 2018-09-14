@@ -13,7 +13,7 @@ const JSON_LD_HEADERS = {
 describe('Create Entity. JSON-LD @context', () => {
   it('should create an entity with JSON-LD @context as single URI', async function() {
     let entity = {
-      'id': 'urn:ngsi-ld:T:I12345' + ':' + new Date().getTime(),
+      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'TemporalProperty',
@@ -43,7 +43,7 @@ describe('Create Entity. JSON-LD @context', () => {
 
   it('should create an entity with JSON-LD @context asa vector of URIs', async function() {
     let entity = {
-      'id': 'urn:ngsi-ld:T:I12345' + ':' + new Date().getTime(),
+      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'TemporalProperty',

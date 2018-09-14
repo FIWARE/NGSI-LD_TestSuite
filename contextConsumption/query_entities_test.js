@@ -9,9 +9,9 @@ var serializeParams = require('../common.js').serializeParams;
 
 describe('Query Entity. JSON. Default @context', () => {
   let entity = {
-    'id': 'urn:ngsi-ld:T_Query:I123k467',
+    'id': 'urn:ngsi-ld:T_Query:EntityForQuery2345',
     'type': 'T_Query',
-    'P1': {
+    'P100': {
       'type': 'Property',
       'value': 12,
       'observedAt': '2018-12-04T12:00:00',
@@ -24,7 +24,7 @@ describe('Query Entity. JSON. Default @context', () => {
         'value': 0.79
       }
     },
-    'R1': {
+    'R100': {
       'type': 'Relationship',
       'object': 'urn:ngsi-ld:T2:6789',
       'R1_R1': {
@@ -73,7 +73,7 @@ describe('Query Entity. JSON. Default @context', () => {
     
   it('query by idPattern', async function() {
     let queryParams = {
-      idPattern: '.*:T_Query:I123k467'
+      idPattern: '.*:T_Query:EntityForQuery.*'
     };
         
     let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
@@ -83,7 +83,7 @@ describe('Query Entity. JSON. Default @context', () => {
   it('query by condition over value', async function() {
     let queryParams = {
       id: entity.id,  
-      q: 'P1>5'  
+      q: 'P100>5'  
     };
         
     let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
@@ -93,7 +93,7 @@ describe('Query Entity. JSON. Default @context', () => {
   it('query by condition over object', async function() {
     let queryParams = {
       id: entity.id,
-      q: 'R1=="urn:ngsi-ld:T2:6789"'
+      q: 'R100=="urn:ngsi-ld:T2:6789"'
     };
         
     let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
@@ -103,7 +103,7 @@ describe('Query Entity. JSON. Default @context', () => {
   it('query by condition over observedAt', async function() {
     let queryParams = {
       id: entity.id,
-      q: 'P1.observedAt>2018-12-03'
+      q: 'P100.observedAt>2018-12-03'
     };
         
     let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
@@ -113,7 +113,7 @@ describe('Query Entity. JSON. Default @context', () => {
   it('query by condition over property of property', async function() {
     let queryParams = {
       id: entity.id,
-      q: 'P1.P1_P1 > 0.70'
+      q: 'P100.P1_P1 > 0.70'
     };
         
     let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));

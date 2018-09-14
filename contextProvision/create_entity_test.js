@@ -9,7 +9,7 @@ var entitiesResource = testedResource + '/' + 'entities' + '/';
 describe('Create Entity. JSON', () => {
   it('should create an empty entity', async function() {
     let entity = {
-      'id': 'urn:ngsi-ld:T:I1234' + ':' + new Date().getTime(),
+      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
       'type': 'T'
     };
 
@@ -19,7 +19,7 @@ describe('Create Entity. JSON', () => {
 
   it('should create an entity. One Property', async function() {
     let entity = {
-      'id': 'urn:ngsi-ld:T:I12345' + ':' + new Date().getTime(),
+      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'Property',
@@ -33,7 +33,7 @@ describe('Create Entity. JSON', () => {
 
   it('should create an entity. One GeoProperty', async function() {
     let entity = {
-      'id': 'urn:ngsi-ld:T:I12345' + ':' + new Date().getTime(),
+      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
       'type': 'T',
       'location': {
         'type': 'GeoProperty',
@@ -50,7 +50,7 @@ describe('Create Entity. JSON', () => {
 
   it('should create an entity. One TemporalProperty', async function() {
     let entity = {
-      'id': 'urn:ngsi-ld:T:I12345' + ':' + new Date().getTime(),
+      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'TemporalProperty',
@@ -64,7 +64,7 @@ describe('Create Entity. JSON', () => {
 
   it('should create an entity. Property. Relationship', async function() {
     let entity = {
-      'id': 'urn:ngsi-ld:T:I12346' + ':' + new Date().getTime(),
+      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'Property',
@@ -82,7 +82,7 @@ describe('Create Entity. JSON', () => {
 
   it('should create an entity. Property. observedAt', async function() {
     let entity = {
-      'id': 'urn:ngsi-ld:T:I123467' + ':' + new Date().getTime(),
+      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'Property',
@@ -97,7 +97,7 @@ describe('Create Entity. JSON', () => {
 
   it('should create an entity. Property. unitCode', async function() {
     let entity = {
-      'id': 'urn:ngsi-ld:T:I123467' + ':' + new Date().getTime(),
+      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'Property',
@@ -112,7 +112,7 @@ describe('Create Entity. JSON', () => {
 
   it('should create an entity. Relationship. observedAt', async function() {
     let entity = {
-      'id': 'urn:ngsi-ld:T:I123k467' + ':' + new Date().getTime(),
+      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
       'type': 'T',
       'R1': {
         'type': 'Relationship',
@@ -127,7 +127,7 @@ describe('Create Entity. JSON', () => {
 
   it('should create an entity. Property. Property', async function() {
     let entity = {
-      'id': 'urn:ngsi-ld:T:I123k467' + ':' + new Date().getTime(),
+      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'Property',
@@ -147,7 +147,7 @@ describe('Create Entity. JSON', () => {
 
   it('should create an entity. Relationship. Property', async function() {
     let entity = {
-      'id': 'urn:ngsi-ld:T:I123k467' + ':' + new Date().getTime(),
+      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
       'type': 'T',
       'R1': {
         'type': 'Relationship',
@@ -165,7 +165,7 @@ describe('Create Entity. JSON', () => {
 
   it('should create an entity. Property. Relationship', async function() {
     let entity = {
-      'id': 'urn:ngsi-ld:T:I123k467' + ':' + new Date().getTime(),
+      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'Property',
@@ -184,7 +184,7 @@ describe('Create Entity. JSON', () => {
 
   it('should create an entity. Relationship. Relationship', async function() {
     let entity = {
-      'id': 'urn:ngsi-ld:T:I123k467' + ':' + new Date().getTime(),
+      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
       'type': 'T',
       'R1': {
         'type': 'Relationship',
@@ -202,7 +202,7 @@ describe('Create Entity. JSON', () => {
 
   it('should report an error if Entity already exists', async function() {
     let entity = {
-      'id': 'urn:ngsi-ld:T:I1234' + ':' + new Date().getTime(),
+      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
       'type': 'T'
     };
 
