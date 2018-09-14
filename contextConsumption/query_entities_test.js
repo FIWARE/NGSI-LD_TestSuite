@@ -73,7 +73,7 @@ describe('Query Entity. JSON. Default @context', () => {
     
   it('query by idPattern', async function() {
     let queryParams = {
-      idPattern: '.*:I123k467'
+      idPattern: '.*:T_Query:I123k467'
     };
         
     let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
