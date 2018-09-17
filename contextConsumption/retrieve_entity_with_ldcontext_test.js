@@ -74,7 +74,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
   beforeAll(() => {
     return http.post(entitiesResource, entity, JSON_LD_HEADERS_POST);
   });
-    
+  
   it('should retrieve the entity. JSON-LD MIME Type requested', async function() {
     let response = await http.get(entitiesResource + entity.id, JSON_LD_HEADERS_GET);
     assertRetrieved(response,entity, JSON_LD);
@@ -107,12 +107,12 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
     let response = await http.get(entitiesResource + entity.id + '?attrs=notFoundAttr', headers);
     assertRetrieved(response, entityNoAttr, JSON_LD);
   });
-    
+
   it('should retrieve the entity no attribute matches as @context differs', async function() {
     var headers = {
       'Accept': 'application/ld+json',
       // Observe that the provided @context will make the attribute not to match
-      'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/textContext2.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+      'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testContext2.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
     };
     let response = await http.get(entitiesResource + entity.id + '?attrs=P1', headers);
     assertRetrieved(response,entityNoAttr, JSON_LD);
