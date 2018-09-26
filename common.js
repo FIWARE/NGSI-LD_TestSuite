@@ -7,13 +7,13 @@
  */
 
 
-'use strict';
 
-var endpoint = process.env.TEST_ENDPOINT;
-var ngsild = 'ngsi-ld/v1';
+
+const endpoint = process.env.TEST_ENDPOINT;
+let ngsild = 'ngsi-ld/v1';
 
 // Just to test an old NGSIv2 endpoint
-if (process.env.FAKE_LD == 'yes') {
+if (process.env.FAKE_LD === 'yes') {
   ngsild = 'v2';
 }
 
@@ -30,7 +30,7 @@ function assertCreated(response, id) {
 }
 
 function assertResponse(response, mimeType) {
-  let mType = mimeType || JSON;
+  const mType = mimeType || JSON;
 
   expect(response.response).toHaveProperty('statusCode', 200);
   expect(response.response.headers['content-type']).toMatch(mType);
@@ -38,9 +38,9 @@ function assertResponse(response, mimeType) {
   // response.response.headers['link'] =
   // '<http://json-ld.org/contexts/person.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
 
-  if (mType == JSON) {
-    expect(response.response.headers['link']).toBeDefined();
-    let linkHeader = response.response.headers['link'];
+  if (mType === JSON) {
+    expect(response.response.headers.link).toBeDefined();
+    const linkHeader = response.response.headers.link;
     expect(linkHeader).toMatch(JSON_LD_CONTEXT_HEADER);
   }
 }
@@ -74,10 +74,10 @@ function serializeParams(query) {
 }
 
 module.exports = {
-  testedResource: testedResource,
-  assertCreated: assertCreated,
-  assertRetrieved: assertRetrieved,
-  assertRetrievedQuery: assertRetrievedQuery,
-  assertNoResultsQuery: assertNoResultsQuery,
-  serializeParams: serializeParams
+  testedResource,
+  assertCreated,
+  assertRetrieved,
+  assertRetrievedQuery,
+  assertNoResultsQuery,
+  serializeParams
 };

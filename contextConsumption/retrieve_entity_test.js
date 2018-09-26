@@ -1,14 +1,14 @@
-'use strict';
 
-var testedResource = require('../common.js').testedResource;
-var http = require('../http.js');
 
-var entitiesResource = testedResource + '/' + 'entities' + '/';
-var assertRetrieved = require('../common.js').assertRetrieved;
+const testedResource = require('../common.js').testedResource;
+const http = require('../http.js');
+
+const entitiesResource = testedResource + '/entities/';
+const assertRetrieved = require('../common.js').assertRetrieved;
 
 describe('Retrieve Entity. JSON. Default @context', () => {
-  let entity = {
-    'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+  const entity = {
+    'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
     'type': 'T',
     'P1': {
       'type': 'Property',
@@ -38,7 +38,7 @@ describe('Retrieve Entity. JSON. Default @context', () => {
   };
 
   // Entity key Values
-  let entityKeyValues = {
+  const entityKeyValues = {
     'id': entity.id,
     'type': entity.type,
     'P1': entity.P1.value,
@@ -46,13 +46,13 @@ describe('Retrieve Entity. JSON. Default @context', () => {
   };
 
   // Entity projection only one attribute
-  let entityOneAttr = {
+  const entityOneAttr = {
     'id': entity.id,
     'type': entity.type,
     'P1': entity.P1
   };
 
-  let entityNoAttr = {
+  const entityNoAttr = {
     'id': entity.id,
     'type': entity.type,
   };
@@ -62,27 +62,27 @@ describe('Retrieve Entity. JSON. Default @context', () => {
   });
     
   it('should retrieve the entity', async function() {
-    let response = await http.get(entitiesResource + entity.id);
+    const response = await http.get(entitiesResource + entity.id);
     assertRetrieved(response,entity);
   });
     
   it('should retrieve the entity key values mode', async function() {
-    let response = await http.get(entitiesResource + entity.id + '?options=keyValues');
+    const response = await http.get(entitiesResource + entity.id + '?options=keyValues');
     assertRetrieved(response,entityKeyValues);
   });
     
   it('should retrieve the entity attribute projection', async function() {
-    let response = await http.get(entitiesResource + entity.id + '?attrs=P1');
+    const response = await http.get(entitiesResource + entity.id + '?attrs=P1');
     assertRetrieved(response, entityOneAttr);
   });
     
   it('should retrieve the entity no attribute matches', async function() {
-    let response = await http.get(entitiesResource + entity.id + '?attrs=notFoundAttr');
+    const response = await http.get(entitiesResource + entity.id + '?attrs=notFoundAttr');
     assertRetrieved(response,entityNoAttr);
   });
     
   it('should report an error if the entity does not exist', async function() {
-    let response = await http.get(entitiesResource + 'urn:ngsi-ld:xxxxxxx');
+    const response = await http.get(entitiesResource + 'urn:ngsi-ld:xxxxxxx');
     expect(response.response).toHaveProperty('statusCode', 404);
   }); 
 });

@@ -1,23 +1,23 @@
-'use strict';
 
-var testedResource = require('../common.js').testedResource;
-var http = require('../http.js');
 
-var entitiesResource = testedResource + '/' + 'entities' + '/';
+const testedResource = require('../common.js').testedResource;
+const http = require('../http.js');
+
+const entitiesResource = testedResource + '/entities/';
 
 describe('Create Entity. Errors. JSON', () => {
   it('should reject an entity which id is not a URI', async function() {
-    let entity = {
+    const entity = {
       'id': 'abcdef',
       'type': 'T'
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     expect(response.response).toHaveProperty('statusCode', 400);
   });
 
   it('should reject an entity which node type is not recognized', async function() {
-    let entity = {
+    const entity = {
       'id': 'urn:ngsi-ld:T4:9000',
       'type': 'T',
       'P1': {
@@ -26,12 +26,12 @@ describe('Create Entity. Errors. JSON', () => {
       }
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     expect(response.response).toHaveProperty('statusCode', 400);
   });
 
   it('should reject an entity with a property value equal to null', async function() {
-    let entity = {
+    const entity = {
       'id': 'urn:ngsi-ld:T4:9000',
       'type': 'T',
       'P1': {
@@ -40,12 +40,12 @@ describe('Create Entity. Errors. JSON', () => {
       }
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     expect(response.response).toHaveProperty('statusCode', 400);
   });
 
   it('should reject an entity with a Relationship with no object', async function() {
-    let entity = {
+    const entity = {
       'id': 'urn:ngsi-ld:T4:9000',
       'type': 'T',
       'R1': {
@@ -54,12 +54,12 @@ describe('Create Entity. Errors. JSON', () => {
       }
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     expect(response.response).toHaveProperty('statusCode', 400);
   });
 
   it('should reject an entity with a Property with no value', async function() {
-    let entity = {
+    const entity = {
       'id': 'urn:ngsi-ld:T4:9000',
       'type': 'T',
       'P1': {
@@ -68,12 +68,12 @@ describe('Create Entity. Errors. JSON', () => {
       }
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     expect(response.response).toHaveProperty('statusCode', 400);
   });
 
   it('should reject an entity with a Relationship object equal to null', async function() {
-    let entity = {
+    const entity = {
       'id': 'urn:ngsi-ld:T4:9000',
       'type': 'T',
       'R1': {
@@ -82,7 +82,7 @@ describe('Create Entity. Errors. JSON', () => {
       }
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     expect(response.response).toHaveProperty('statusCode', 400);
   });
 

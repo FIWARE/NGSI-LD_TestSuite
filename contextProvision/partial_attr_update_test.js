@@ -1,13 +1,13 @@
-'use strict';
 
-var testedResource = require('../common.js').testedResource;
-var http = require('../http.js');
 
-var entitiesResource = testedResource + '/' + 'entities' + '/';
+const testedResource = require('../common.js').testedResource;
+const http = require('../http.js');
+
+const entitiesResource = testedResource + '/entities/';
 
 describe('Partial Entity Attribute Update. JSON. Default @context', () => {
-  let entity = {
-    'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+  const entity = {
+    'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
     'type': 'T',
     'P1': {
       'type': 'Property',
@@ -24,7 +24,7 @@ describe('Partial Entity Attribute Update. JSON. Default @context', () => {
     }
   };
 
-  let partialUpdate = {
+  const partialUpdate = {
     'value': 55
   };
 
@@ -37,33 +37,33 @@ describe('Partial Entity Attribute Update. JSON. Default @context', () => {
   });
     
   it('Partial Attribute Update.', async function() {
-    let response = await http.patch(entitiesResource + entity.id + '/' + 'attrs' + '/' + 'P1', partialUpdate);
+    const response = await http.patch(entitiesResource + entity.id + '/attrs/P1', partialUpdate);
     expect(response.response).toHaveProperty('statusCode', 204);
         
-    let checkResponse = await http.get(entitiesResource + entity.id);
+    const checkResponse = await http.get(entitiesResource + entity.id);
         
-    var finalEntity = Object.assign(entity, {});
-    finalEntity['P1']['value'] = partialUpdate['value'];
+    const finalEntity = Object.assign(entity, {});
+    finalEntity.P1.value = partialUpdate.value;
     expect(checkResponse.body).toEqual(finalEntity);
   });
     
   it('Partial Attribute Update. Target entity does not exist', async function() {
-    let response = await http.patch(entitiesResource + 'urn:ngsi-ld:doesnotexist'
-                                       + '/' + 'attrs' + '/' + 'P1', partialUpdate);
+    const response = await http.patch(entitiesResource + 'urn:ngsi-ld:doesnotexist'
+                                       + '/attrs/P1', partialUpdate);
         
     expect(response.response).toHaveProperty('statusCode', 404);
   });
     
   it('Partial Attribute Update. Target Attribute does not exist', async function() {
-    let response = await http.patch(entitiesResource + entity.id
-                                       + '/' + 'attrs' + '/' + 'NonExistentAttribute', partialUpdate);
+    const response = await http.patch(entitiesResource + entity.id
+                                       + '/attrs/NonExistentAttribute', partialUpdate);
         
     expect(response.response).toHaveProperty('statusCode', 404);
   });
     
   it('Partial Attribute Update. Empty Payload', async function() {
-    let response = await http.patch(entitiesResource + entity.id
-                                       + '/' + 'attrs' + '/' + 'P1', {});
+    const response = await http.patch(entitiesResource + entity.id
+                                       + '/attrs/P1', {});
         
     expect(response.response).toHaveProperty('statusCode', 400);
   });

@@ -1,13 +1,13 @@
-'use strict';
 
-var testedResource = require('../common.js').testedResource;
-var http = require('../http.js');
 
-var entitiesResource = testedResource + '/' + 'entities' + '/';
+const testedResource = require('../common.js').testedResource;
+const http = require('../http.js');
+
+const entitiesResource = testedResource + '/entities/';
 
 describe('Delete Entity Attribute. Default @context', () => {
-  let entity = {
-    'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+  const entity = {
+    'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
     'type': 'T',
     'P1': {
       'type': 'Property',
@@ -20,12 +20,12 @@ describe('Delete Entity Attribute. Default @context', () => {
   });
     
   it('should delete the entity attribute', async function() {
-    let response = await http.delete(entitiesResource + entity.id + '/' + 'attrs' + '/' + 'P1');
+    const response = await http.delete(entitiesResource + entity.id + '/attrs/P1');
     expect(response.response).toHaveProperty('statusCode', 204);       
   });
     
   it('should return 404 if attribute does not exist', async function() {
-    let response = await http.delete(entitiesResource + entity.id + '/' + 'attrs' + '/' + 'P1');
+    const response = await http.delete(entitiesResource + entity.id + '/attrs/P1');
     expect(response.response).toHaveProperty('statusCode', 404);    
   });
 });

@@ -1,10 +1,10 @@
-'use strict';
 
-var testedResource = require('../common.js').testedResource;
-var http = require('../http.js');
 
-var entitiesResource = testedResource + '/' + 'entities' + '/';
-var assertRetrieved = require('../common.js').assertRetrieved;
+const testedResource = require('../common.js').testedResource;
+const http = require('../http.js');
+
+const entitiesResource = testedResource + '/entities/';
+const assertRetrieved = require('../common.js').assertRetrieved;
 
 const JSON_LD = /application\/ld\+json(;.*)?/;
 
@@ -17,8 +17,8 @@ const JSON_LD_HEADERS_GET = {
 };
 
 describe('Retrieve Entity. JSON-LD. @context ', () => {
-  let entity = {
-    'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+  const entity = {
+    'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
     'type': 'T',
     'P1': {
       'type': 'Property',
@@ -49,7 +49,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
   };
 
   // Entity key Values
-  let entityKeyValues = {
+  const entityKeyValues = {
     'id': entity.id,
     'type': entity.type,
     'P1': entity.P1.value,
@@ -58,14 +58,14 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
   };
 
   // Entity projection only one attribute
-  let entityOneAttr = {
+  const entityOneAttr = {
     'id': entity.id,
     'type': entity.type,
     'P1': entity.P1,
     '@context': entity['@context']
   };
 
-  let entityNoAttr = {
+  const entityNoAttr = {
     'id': entity.id,
     'type': entity.type,
     '@context': entity['@context']
@@ -76,45 +76,45 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
   });
   
   it('should retrieve the entity. JSON-LD MIME Type requested', async function() {
-    let response = await http.get(entitiesResource + entity.id, JSON_LD_HEADERS_GET);
+    const response = await http.get(entitiesResource + entity.id, JSON_LD_HEADERS_GET);
     assertRetrieved(response,entity, JSON_LD);
   });
     
   it('should retrieve the entity. JSON MIME type (default)', async function() {
-    let response = await http.get(entitiesResource + entity.id);
+    const response = await http.get(entitiesResource + entity.id);
     assertRetrieved(response,entity);
   });
     
   it('should retrieve the entity key values mode', async function() {
-    let response = await http.get(entitiesResource + entity.id + '?options=keyValues', JSON_LD_HEADERS_GET);
+    const response = await http.get(entitiesResource + entity.id + '?options=keyValues', JSON_LD_HEADERS_GET);
     assertRetrieved(response,entityKeyValues,JSON_LD);
   });
     
   it('should retrieve the entity attribute projection', async function() {
-    var headers = {
+    const headers = {
       'Accept': 'application/ld+json',
       'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
     };
-    let response = await http.get(entitiesResource + entity.id + '?attrs=P1', headers);
+    const response = await http.get(entitiesResource + entity.id + '?attrs=P1', headers);
     assertRetrieved(response,entityOneAttr, JSON_LD);
   });
     
   it('should retrieve the entity no attribute matches', async function() {
-    var headers = {
+    const headers = {
       'Accept': 'application/ld+json',
       'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
     };
-    let response = await http.get(entitiesResource + entity.id + '?attrs=notFoundAttr', headers);
+    const response = await http.get(entitiesResource + entity.id + '?attrs=notFoundAttr', headers);
     assertRetrieved(response, entityNoAttr, JSON_LD);
   });
 
   it('should retrieve the entity no attribute matches as @context differs', async function() {
-    var headers = {
+    const headers = {
       'Accept': 'application/ld+json',
       // Observe that the provided @context will make the attribute not to match
       'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testContext2.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
     };
-    let response = await http.get(entitiesResource + entity.id + '?attrs=P1', headers);
+    const response = await http.get(entitiesResource + entity.id + '?attrs=P1', headers);
     assertRetrieved(response,entityNoAttr, JSON_LD);
   });
 });

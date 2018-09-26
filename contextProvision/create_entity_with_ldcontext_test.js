@@ -1,10 +1,10 @@
-'use strict';
 
-var testedResource = require('../common.js').testedResource;
-var assertCreated = require('../common.js').assertCreated;
-var http = require('../http.js');
 
-var entitiesResource = testedResource + '/' + 'entities' + '/';
+const testedResource = require('../common.js').testedResource;
+const assertCreated = require('../common.js').assertCreated;
+const http = require('../http.js');
+
+const entitiesResource = testedResource + '/entities/';
 
 const JSON_LD_HEADERS = {
   'Content-Type': 'application/ld+json'
@@ -12,8 +12,8 @@ const JSON_LD_HEADERS = {
 
 describe('Create Entity. JSON-LD @context', () => {
   it('should create an entity with JSON-LD @context as single URI', async function() {
-    let entity = {
-      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'TemporalProperty',
@@ -37,13 +37,13 @@ describe('Create Entity. JSON-LD @context', () => {
       '@context': 'https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld'
     };
 
-    let response = await http.post(entitiesResource, entity, JSON_LD_HEADERS);
+    const response = await http.post(entitiesResource, entity, JSON_LD_HEADERS);
     assertCreated(response.response, entity.id);
   });
 
   it('should create an entity with JSON-LD @context asa vector of URIs', async function() {
-    let entity = {
-      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'TemporalProperty',
@@ -52,7 +52,7 @@ describe('Create Entity. JSON-LD @context', () => {
       '@context': ['https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld']
     };
 
-    let response = await http.post(entitiesResource, entity, JSON_LD_HEADERS);
+    const response = await http.post(entitiesResource, entity, JSON_LD_HEADERS);
     assertCreated(response.response, entity.id);
   });
 
