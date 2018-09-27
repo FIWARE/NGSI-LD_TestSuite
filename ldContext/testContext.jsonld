@@ -1,5 +1,6 @@
 {
   "@context": {
+    "name": "http://schema.org/name",
     "T": "http://example.org/T",
     "T2": "http://example.org/T2",
     "T3": "http://example.org/T3",
