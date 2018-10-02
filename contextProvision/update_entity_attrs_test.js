@@ -1,13 +1,13 @@
-'use strict';
 
-var testedResource = require('../common.js').testedResource;
-var http = require('../http.js');
 
-var entitiesResource = testedResource + '/' + 'entities' + '/';
+const testedResource = require('../common.js').testedResource;
+const http = require('../http.js');
+
+const entitiesResource = testedResource + '/entities/';
 
 describe('Update Entity Attributes. JSON. Default @context', () => {
-  let entity = {
-    'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+  const entity = {
+    'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
     'type': 'T',
     'P1': {
       'type': 'Property',
@@ -24,7 +24,7 @@ describe('Update Entity Attributes. JSON. Default @context', () => {
     }
   };
 
-  let updatedAttributes = {
+  const updatedAttributes = {
     'P1': {
       'type': 'Relationship',
       'object': 'urn:ngsi-ld:T2:6789'
@@ -47,43 +47,43 @@ describe('Update Entity Attributes. JSON. Default @context', () => {
   });
     
   it('Update Entity Attributes. Partial success', async function() {
-    let response = await http.patch(entitiesResource + entity.id + '/' + 'attrs' + '/', updatedAttributes);
+    const response = await http.patch(entitiesResource + entity.id + '/attrs/', updatedAttributes);
     expect(response.response).toHaveProperty('statusCode', 207);
         
-    let checkResponse = await http.get(entitiesResource + entity.id);
+    const checkResponse = await http.get(entitiesResource + entity.id);
         
-    var finalEntity = Object.assign(entity, {});
-    finalEntity['P1'] = updatedAttributes['P1'];
+    const finalEntity = Object.assign(entity, {});
+    finalEntity.P1 = updatedAttributes.P1;
     expect(checkResponse.body).toEqual(finalEntity);
   });
     
   it('Update Entity Attributes. Target entity does not exist', async function() {
-    let response = await http.patch(entitiesResource + 'urn:ngsi-ld:doesnotexist'
-                                       + '/' + 'attrs' + '/', updatedAttributes);
+    const response = await http.patch(entitiesResource + 'urn:ngsi-ld:doesnotexist'
+                                       + '/attrs/', updatedAttributes);
         
     expect(response.response).toHaveProperty('statusCode', 404);
   });
     
   it('Update Entity Attributes. Empty Payload', async function() {
-    let response = await http.patch(entitiesResource + entity.id
-                                       + '/' + 'attrs' + '/', {});
+    const response = await http.patch(entitiesResource + entity.id
+                                       + '/attrs/', {});
         
     expect(response.response).toHaveProperty('statusCode', 400);
   });
     
   it('Update Entity Attributes. All Attributes are overwritten', async function() {
-    let overwrittenAttrs = {
+    const overwrittenAttrs = {
       'P1': {
         'type': 'Property',
         'value': 'Hola'
       }
     };
-    let response = await http.patch(entitiesResource + entity.id
-                                       + '/' + 'attrs' + '/', overwrittenAttrs);
+    const response = await http.patch(entitiesResource + entity.id
+                                       + '/attrs/', overwrittenAttrs);
     expect(response.response).toHaveProperty('statusCode', 204);
         
-    let checkResponse = await http.get(entitiesResource + entity.id);
-    let finalEntity = Object.assign(entity, overwrittenAttrs);
+    const checkResponse = await http.get(entitiesResource + entity.id);
+    const finalEntity = Object.assign(entity, overwrittenAttrs);
     expect(checkResponse.body).toEqual(finalEntity);
   });
 });

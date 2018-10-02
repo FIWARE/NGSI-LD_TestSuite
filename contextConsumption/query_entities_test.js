@@ -1,14 +1,14 @@
-'use strict';
 
-var testedResource = require('../common.js').testedResource;
-var http = require('../http.js');
 
-var entitiesResource = testedResource + '/' + 'entities' + '/';
-var assertRetrievedQuery = require('../common.js').assertRetrievedQuery;
-var serializeParams = require('../common.js').serializeParams;
+const testedResource = require('../common.js').testedResource;
+const http = require('../http.js');
+
+const entitiesResource = testedResource + '/entities/';
+const assertRetrievedQuery = require('../common.js').assertRetrievedQuery;
+const serializeParams = require('../common.js').serializeParams;
 
 describe('Query Entity. JSON. Default @context', () => {
-  let entity = {
+  const entity = {
     'id': 'urn:ngsi-ld:T_Query:EntityForQuery2345',
     'type': 'T_Query',
     'P100': {
@@ -54,80 +54,80 @@ describe('Query Entity. JSON. Default @context', () => {
   });
    
   it('query by type', async function() {
-    let queryParams = {
+    const queryParams = {
       type: 'T_Query',
     };
             
-    let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
     assertRetrievedQuery(response,entity); 
   });
    
   it('query by id', async function() {
-    let queryParams = {
+    const queryParams = {
       id: entity.id  
     };
         
-    let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
     assertRetrievedQuery(response,entity);
   });
     
   it('query by idPattern', async function() {
-    let queryParams = {
+    const queryParams = {
       idPattern: '.*:T_Query:EntityForQuery.*'
     };
         
-    let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
     assertRetrievedQuery(response, entity);
   });
     
   it('query by condition over value', async function() {
-    let queryParams = {
+    const queryParams = {
       id: entity.id,  
       q: 'P100>5'  
     };
         
-    let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
     assertRetrievedQuery(response, entity);
   });
     
   it('query by condition over object', async function() {
-    let queryParams = {
+    const queryParams = {
       id: entity.id,
       q: 'R100=="urn:ngsi-ld:T2:6789"'
     };
         
-    let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
     assertRetrievedQuery(response, entity);
   });
     
   it('query by condition over observedAt', async function() {
-    let queryParams = {
+    const queryParams = {
       id: entity.id,
       q: 'P100.observedAt>2018-12-03'
     };
         
-    let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
     assertRetrievedQuery(response, entity);
   });
     
   it('query by condition over property of property', async function() {
-    let queryParams = {
+    const queryParams = {
       id: entity.id,
       q: 'P100.P1_P1 > 0.70'
     };
         
-    let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
     assertRetrievedQuery(response, entity);
   });
 
   it('geoQuery near', async function() {
-    let queryParams = {
+    const queryParams = {
       geometry: 'Point',
       coordinates: '[-30,75]',
       georel: 'near;maxDistance==3000'
     };
         
-    let response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
     assertRetrievedQuery(response, entity);
   }); 
 });

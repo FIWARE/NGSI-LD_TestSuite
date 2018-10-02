@@ -6,25 +6,25 @@
  *
  */
 
-'use strict';
 
-var request = require('request');
+
+const request = require('request');
 
 function post(resource, data, headers) {
   return new Promise(function(resolve, reject) {
-    let options = {
+    const options = {
       method: 'POST',
       uri: resource,
       body: data,
-      headers: headers,
+      headers,
       simple: false,
       json: true // Automatically stringifies the body to JSON
     };
 
     request(options, function(error, response, body) {
-      error ? reject(error) : resolve({
-        response: response,
-        body: body
+      return error ? reject(error) : resolve({
+        response,
+        body
       });
     });
   });
@@ -32,17 +32,17 @@ function post(resource, data, headers) {
 
 function get(resource, headers) {
   return new Promise(function(resolve, reject) {
-    let options = {
+    const options = {
       method: 'GET',
       uri: resource,
-      headers: headers,
+      headers,
       json: true
     };
 
     request(options, function(error, response, body) {
-      error ? reject(error) : resolve({
-        response: response,
-        body: body
+      return error ? reject(error) : resolve({
+        response,
+        body
       });
     });
   });
@@ -50,17 +50,17 @@ function get(resource, headers) {
 
 function del(resource, headers) {
   return new Promise(function(resolve, reject) {
-    let options = {
+    const options = {
       method: 'DELETE',
       uri: resource,
-      headers: headers,
+      headers,
       json: true
     };
 
     request(options, function(error, response, body) {
-      error ? reject(error) : resolve({
-        response: response,
-        body: body
+      return error ? reject(error) : resolve({
+        response,
+        body
       });
     });
   });
@@ -68,27 +68,27 @@ function del(resource, headers) {
 
 function patch(resource, data, headers) {
   return new Promise(function(resolve, reject) {
-    let options = {
+    const options = {
       method: 'PATCH',
       uri: resource,
       body: data,
-      headers: headers,
+      headers,
       simple: false,
       json: true // Automatically stringifies the body to JSON
     };
 
     request(options, function(error, response, body) {
-      error ? reject(error) : resolve({
-        response: response,
-        body: body
+      return error ? reject(error) : resolve({
+        response,
+        body
       });
     });
   });
 }
 
 module.exports = {
-  'post': post,
-  'get': get,
+  post,
+  get,
   'delete': del,
-  'patch': patch
+  patch
 };

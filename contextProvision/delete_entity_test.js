@@ -1,13 +1,13 @@
-'use strict';
 
-var testedResource = require('../common.js').testedResource;
-var http = require('../http.js');
 
-var entitiesResource = testedResource + '/' + 'entities' + '/';
+const testedResource = require('../common.js').testedResource;
+const http = require('../http.js');
+
+const entitiesResource = testedResource + '/entities/';
 
 describe('Delete Entity.', () => {
-  let entity = {
-    'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+  const entity = {
+    'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
     'type': 'T'
   };
 
@@ -16,12 +16,12 @@ describe('Delete Entity.', () => {
   });
     
   it('should delete the entity', async function() {
-    let response = await http.delete(entitiesResource + entity.id);
+    const response = await http.delete(entitiesResource + entity.id);
     expect(response.response).toHaveProperty('statusCode', 204);       
   });
     
   it('should return 404 if entity does not exist', async function() {
-    let response = await http.delete(entitiesResource + entity.id);
+    const response = await http.delete(entitiesResource + entity.id);
     expect(response.response).toHaveProperty('statusCode', 404);    
   });
 });

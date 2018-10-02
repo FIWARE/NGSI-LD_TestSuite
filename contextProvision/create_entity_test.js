@@ -1,25 +1,25 @@
-'use strict';
 
-var testedResource = require('../common.js').testedResource;
-var assertCreated = require('../common.js').assertCreated;
-var http = require('../http.js');
 
-var entitiesResource = testedResource + '/' + 'entities' + '/';
+const testedResource = require('../common.js').testedResource;
+const assertCreated = require('../common.js').assertCreated;
+const http = require('../http.js');
+
+const entitiesResource = testedResource + '/entities/';
 
 describe('Create Entity. JSON', () => {
   it('should create an empty entity', async function() {
-    let entity = {
-      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T'
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     assertCreated(response.response, entity.id);
   });
 
   it('should create an entity. One Property', async function() {
-    let entity = {
-      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'Property',
@@ -27,13 +27,13 @@ describe('Create Entity. JSON', () => {
       }
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     assertCreated(response.response, entity.id);
   });
 
   it('should create an entity. One GeoProperty', async function() {
-    let entity = {
-      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
       'location': {
         'type': 'GeoProperty',
@@ -44,13 +44,13 @@ describe('Create Entity. JSON', () => {
       }
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     assertCreated(response.response, entity.id);
   });
 
   it('should create an entity. One TemporalProperty', async function() {
-    let entity = {
-      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'TemporalProperty',
@@ -58,13 +58,13 @@ describe('Create Entity. JSON', () => {
       }
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     assertCreated(response.response, entity.id);
   });
 
   it('should create an entity. Property. Relationship', async function() {
-    let entity = {
-      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'Property',
@@ -76,13 +76,13 @@ describe('Create Entity. JSON', () => {
       }
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     assertCreated(response.response, entity.id);
   });
 
   it('should create an entity. Property. observedAt', async function() {
-    let entity = {
-      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'Property',
@@ -91,13 +91,13 @@ describe('Create Entity. JSON', () => {
       }
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     assertCreated(response.response, entity.id);
   });
 
   it('should create an entity. Property. unitCode', async function() {
-    let entity = {
-      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'Property',
@@ -106,13 +106,13 @@ describe('Create Entity. JSON', () => {
       }
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     assertCreated(response.response, entity.id);
   });
 
   it('should create an entity. Relationship. observedAt', async function() {
-    let entity = {
-      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
       'R1': {
         'type': 'Relationship',
@@ -121,13 +121,13 @@ describe('Create Entity. JSON', () => {
       }
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     assertCreated(response.response, entity.id);
   });
 
   it('should create an entity. Property. Property', async function() {
-    let entity = {
-      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'Property',
@@ -140,14 +140,14 @@ describe('Create Entity. JSON', () => {
       }
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     assertCreated(response.response, entity.id);
   });
 
 
   it('should create an entity. Relationship. Property', async function() {
-    let entity = {
-      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
       'R1': {
         'type': 'Relationship',
@@ -159,13 +159,13 @@ describe('Create Entity. JSON', () => {
       }
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     assertCreated(response.response, entity.id);
   });
 
   it('should create an entity. Property. Relationship', async function() {
-    let entity = {
-      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
       'P1': {
         'type': 'Property',
@@ -178,13 +178,13 @@ describe('Create Entity. JSON', () => {
       }
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     assertCreated(response.response, entity.id);
   });
 
   it('should create an entity. Relationship. Relationship', async function() {
-    let entity = {
-      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
       'R1': {
         'type': 'Relationship',
@@ -196,18 +196,18 @@ describe('Create Entity. JSON', () => {
       }
     };
 
-    let response = await http.post(entitiesResource, entity);
+    const response = await http.post(entitiesResource, entity);
     assertCreated(response.response, entity.id);
   });
 
   it('should report an error if Entity already exists', async function() {
-    let entity = {
-      'id': 'urn:ngsi-ld:T' + ':' + new Date().getTime(),
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T'
     };
 
     await http.post(entitiesResource, entity);
-    let response2 = await http.post(entitiesResource, entity);
+    const response2 = await http.post(entitiesResource, entity);
 
     expect(response2.response).toHaveProperty('statusCode', 409);
   });

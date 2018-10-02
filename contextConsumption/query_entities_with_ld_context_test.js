@@ -1,12 +1,12 @@
-'use strict';
 
-var testedResource = require('../common.js').testedResource;
-var http = require('../http.js');
 
-var entitiesResource = testedResource + '/' + 'entities' + '/';
-var assertRetrievedQuery = require('../common.js').assertRetrievedQuery;
-var assertNoResultsQuery = require('../common.js').assertNoResultsQuery;
-var serializeParams = require('../common.js').serializeParams;
+const testedResource = require('../common.js').testedResource;
+const http = require('../http.js');
+
+const entitiesResource = testedResource + '/entities/';
+const assertRetrievedQuery = require('../common.js').assertRetrievedQuery;
+const assertNoResultsQuery = require('../common.js').assertNoResultsQuery;
+const serializeParams = require('../common.js').serializeParams;
 
 const JSON_LD = /application\/ld\+json(;.*)?/;
 
@@ -17,7 +17,7 @@ const ACCEPT_JSON_LD = {
 };
 
 describe('Query Entity. JSON-LD. @context', () => {
-  let entity = {
+  const entity = {
     'id': 'urn:ngsi-ld:T:I123k467:Context',
     'type': 'T_Query',
     'P100': {
@@ -43,50 +43,50 @@ describe('Query Entity. JSON-LD. @context', () => {
   });
     
   it('query by type. Default @context. Not found as @context does not match.', async function() {
-    let queryParams = {
+    const queryParams = {
       type: 'T_Query',
     };
             
-    let response = await http.get(entitiesResource + '?' + serializeParams(queryParams), ACCEPT_JSON_LD);
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams), ACCEPT_JSON_LD);
     assertNoResultsQuery(response,JSON_LD); 
   });
     
   it('query by type. Right @context', async function() {
-    let queryParams = {
+    const queryParams = {
       type: 'T_Query',
     };
         
-    let headers = {
+    const headers = {
       'Accept': 'application/ld+json',
       'Link': JSON_LD_HEADER_CONTEXT
     };
         
-    let response = await http.get(entitiesResource + '?' + serializeParams(queryParams), headers);
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams), headers);
     assertRetrievedQuery(response,entity,JSON_LD); 
   });
     
   it('query by condition over value. Default @context. Not found as @context does not match for the attribute.', async function() {
-    let queryParams = {
+    const queryParams = {
       q: 'P100>5'  
     };
         
-    let response = await http.get(entitiesResource + '?' + serializeParams(queryParams), ACCEPT_JSON_LD);
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams), ACCEPT_JSON_LD);
     // Response here shall be JSON
     assertNoResultsQuery(response, JSON_LD);
   });
     
   it('query by condition over value. Right @context. ', async function() {
-    let queryParams = {
+    const queryParams = {
       id: entity.id,  
       q: 'P100>5'  
     };
         
-    let headers = {
+    const headers = {
       'Accept': 'application/ld+json',
       'Link': JSON_LD_HEADER_CONTEXT
     };
         
-    let response = await http.get(entitiesResource + '?' + serializeParams(queryParams), headers);
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams), headers);
     assertRetrievedQuery(response, entity, JSON_LD);
   });
 });
