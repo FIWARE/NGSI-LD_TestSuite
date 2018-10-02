@@ -20,7 +20,6 @@
     "node": ">=8.6"
   },
   "scripts": {
-    "pretest": "npm run lint",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "lint": "eslint . --cache --fix"
