@@ -20,6 +20,30 @@ It exercises the creation of Entities using JSON-LD as input (including a @conte
 
 It exercises appending new Attributes to an Entity. Using JSON content and a Default @context.
 
+## Update Attributes (Sections: 6.6.3.2, 5.6.2)
+
+### update_entity_attrs_test.js
+
+It exercises the update of Entity Attributes. 
+
+## Partial Attribute Update (Sections: 6.7.3.1, 5.6.4)
+
+### partial_attr_update_test.js
+
+It exercises the partial update of an Entity Attribute. 
+
+## Delete Entity (Sections: 6.5.3.2, 5.6.6)
+
+### delete_entity_test.js
+
+It exercises the deletion of an Entity.
+
+## Delete Entity Attribute (Sections: 6.7.3.2, 5.6.5)
+
+### delete_entity_attr_test.js
+
+It exercises the deletion of an Entity Attribute. 
+
 ## Protocol Errors (Section 6.3.4)
 
 ### protocol_errors_test.js
