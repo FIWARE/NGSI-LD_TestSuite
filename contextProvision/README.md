@@ -20,8 +20,8 @@ It exercises the creation of Entities using JSON-LD as input (including a @conte
 
 It exercises appending new Attributes to an Entity. Using JSON content and a Default @context.
 
-## Protocol Errors 
+## Protocol Errors (Section 6.3.4)
 
 ### protocol_errors_test.js
 
-It exercises different protocol errors that might happen. (Section 6.3.4)
+It exercises different protocol errors that might happen. 
