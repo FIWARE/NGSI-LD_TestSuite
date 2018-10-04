@@ -14,7 +14,7 @@ It exercises the creation of Entities under different error circumstances that s
 
 It exercises the creation of Entities using JSON-LD as input (including a @context).
 
-## Append Attributes
+## Append Attributes (Sections: 6.6.3.1, 5.6.3)
 
 ### append_entity_attrs_test.js
 
