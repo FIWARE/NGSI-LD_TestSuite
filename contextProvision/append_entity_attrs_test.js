@@ -1,5 +1,3 @@
-
-
 const testedResource = require('../common.js').testedResource;
 const http = require('../http.js');
 
@@ -45,21 +43,24 @@ describe('Append Entity Attributes. JSON. Default @context', () => {
       }
     }
   };
+  
+  // The Entity Id has to be properly encoded
+  const entityId = encodeURIComponent(entity.id);
 
   beforeAll(() => {
     return http.post(entitiesResource, entity);
   });
     
   afterAll(() => {
-    return http.delete(entitiesResource + entity.id);
+    return http.delete(entitiesResource + entityId);
   });
     
   it('append Entity Attributes', async function() {
-    const response = await http.post(entitiesResource + entity.id + '/attrs/', appendedAttributes);
+    const response = await http.post(entitiesResource + entityId + '/attrs/', appendedAttributes);
         
     expect(response.response).toHaveProperty('statusCode', 204);
         
-    const checkResponse = await http.get(entitiesResource + entity.id);
+    const checkResponse = await http.get(entitiesResource + entityId);
         
     const finalEntity = Object.assign(entity, appendedAttributes);
     expect(checkResponse.body).toEqual(finalEntity);
@@ -73,7 +74,7 @@ describe('Append Entity Attributes. JSON. Default @context', () => {
   });
     
   it('append Entity Attributes. Empty Payload', async function() {
-    const response = await http.post(entitiesResource + entity.id
+    const response = await http.post(entitiesResource + entityId
                                        + '/attrs/', {});
         
     expect(response.response).toHaveProperty('statusCode', 400);
@@ -86,11 +87,11 @@ describe('Append Entity Attributes. JSON. Default @context', () => {
         'value': 'Hola'
       }
     };
-    const response = await http.post(entitiesResource + entity.id
+    const response = await http.post(entitiesResource + entityId
                                        + '/attrs/', overwrittenAttrs);
     expect(response.response).toHaveProperty('statusCode', 204);
         
-    const checkResponse = await http.get(entitiesResource + entity.id);
+    const checkResponse = await http.get(entitiesResource + entityId);
     const finalEntity = Object.assign(entity, overwrittenAttrs);
     expect(checkResponse.body).toEqual(finalEntity);
   });
@@ -106,14 +107,15 @@ describe('Append Entity Attributes. JSON. Default @context', () => {
         'value': 'Adios'
       }
     };
-    const response = await http.post(entitiesResource + entity.id
+    const response = await http.post(entitiesResource + entityId
                                        + '/attrs/?options=noOverwrite',
     overwrittenAttrs);
     expect(response.response).toHaveProperty('statusCode', 207);
         
     const finalEntity = Object.assign(entity, {});
     finalEntity.P2 = overwrittenAttrs.P2;
-    const checkResponse = await http.get(entitiesResource + entity.id);     
+    const checkResponse = await http.get(entitiesResource + entityId);     
     expect(checkResponse.body).toEqual(finalEntity);
-  }); 
+  });
+  
 });
