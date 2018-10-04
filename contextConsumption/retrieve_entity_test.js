@@ -88,7 +88,7 @@ describe('Retrieve Entity. JSON. Default @context', () => {
   });
     
   it('should report an error if the entity does not exist', async function() {
-    const response = await http.get(entitiesResource + 'urn:ngsi-ld:xxxxxxx');
+    const response = await http.get(entitiesResource + encodeURIComponent('urn:ngsi-ld:xxxxxxx'));
     expect(response.response).toHaveProperty('statusCode', 404);
   });
   
