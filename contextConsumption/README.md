@@ -2,7 +2,7 @@
 
 ## Entity Retrieval
 
-(Section)
+(Section 5.7.1, 6.5.3.1)
 
 ### retrieve_entity_test.js
 
@@ -14,7 +14,7 @@ Exercises retrieval of Entities that are in a user @context. JSON-LD Link header
 
 ## Query Entities
 
-(Section)
+(Section 5.7.2, 6.4.3.2)
 
 ### query_entities.js
 
