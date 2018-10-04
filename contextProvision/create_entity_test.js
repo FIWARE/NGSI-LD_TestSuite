@@ -48,13 +48,16 @@ describe('Create Entity. JSON', () => {
     assertCreated(response.response, entity.id);
   });
 
-  it('should create an entity. One TemporalProperty', async function() {
+  it('should create an entity. One Property. DateTime', async function() {
     const entity = {
       'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
       'P1': {
-        'type': 'TemporalProperty',
-        'value': '2018-12-04T12:00:00'
+        'type': 'Property',
+        'value': {
+          '@type': 'DateTime',
+          '@value': '2018-12-04T12:00:00'
+        }
       }
     };
 
@@ -211,4 +214,5 @@ describe('Create Entity. JSON', () => {
 
     expect(response2.response).toHaveProperty('statusCode', 409);
   });
+  
 });

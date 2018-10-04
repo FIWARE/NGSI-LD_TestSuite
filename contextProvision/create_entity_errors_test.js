@@ -85,6 +85,18 @@ describe('Create Entity. Errors. JSON', () => {
     const response = await http.post(entitiesResource, entity);
     expect(response.response).toHaveProperty('statusCode', 400);
   });
+  
+  it('should report an error if @context is provided in a JSON payload', async function() {
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
+      'type': 'T',
+      '@context': 'http://example.org/ldContext/'
+    };
+
+    const response = await http.post(entitiesResource, entity);
+
+    expect(response.response).toHaveProperty('statusCode', 400);
+  });
 
   // TODO: Add here more tests (null values, etc.)
 });
