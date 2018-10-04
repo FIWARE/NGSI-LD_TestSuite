@@ -11,6 +11,10 @@
 const request = require('request');
 
 function post(resource, data, headers) {
+  headers = headers || {
+    'Content-Type': 'application/json'
+  };
+  
   return new Promise(function(resolve, reject) {
     const options = {
       method: 'POST',
