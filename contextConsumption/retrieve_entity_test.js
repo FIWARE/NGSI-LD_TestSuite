@@ -36,6 +36,8 @@ describe('Retrieve Entity. JSON. Default @context', () => {
       }
     }
   };
+  
+  const entityId = encodeURIComponent(entity.id);
 
   // Entity key Values
   const entityKeyValues = {
@@ -60,29 +62,34 @@ describe('Retrieve Entity. JSON. Default @context', () => {
   beforeAll(() => {
     return http.post(entitiesResource, entity);
   });
+  
+  afterAll(() => {
+    return http.delete(entitiesResource + entityId);
+  });
     
   it('should retrieve the entity', async function() {
-    const response = await http.get(entitiesResource + entity.id);
+    const response = await http.get(entitiesResource + entityId);
     assertRetrieved(response,entity);
   });
     
   it('should retrieve the entity key values mode', async function() {
-    const response = await http.get(entitiesResource + entity.id + '?options=keyValues');
+    const response = await http.get(entitiesResource + entityId + '?options=keyValues');
     assertRetrieved(response,entityKeyValues);
   });
     
   it('should retrieve the entity attribute projection', async function() {
-    const response = await http.get(entitiesResource + entity.id + '?attrs=P1');
+    const response = await http.get(entitiesResource + entityId + '?attrs=P1');
     assertRetrieved(response, entityOneAttr);
   });
     
   it('should retrieve the entity no attribute matches', async function() {
-    const response = await http.get(entitiesResource + entity.id + '?attrs=notFoundAttr');
+    const response = await http.get(entitiesResource + entityId + '?attrs=notFoundAttr');
     assertRetrieved(response,entityNoAttr);
   });
     
   it('should report an error if the entity does not exist', async function() {
     const response = await http.get(entitiesResource + 'urn:ngsi-ld:xxxxxxx');
     expect(response.response).toHaveProperty('statusCode', 404);
-  }); 
+  });
+  
 });

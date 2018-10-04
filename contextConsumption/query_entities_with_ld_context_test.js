@@ -30,6 +30,8 @@ describe('Query Entity. JSON-LD. @context', () => {
     },
     '@context': 'https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld'
   };
+  
+  const entityId = encodeURIComponent(entity.id);
 
   beforeAll(() => {
     const JSON_LD_HEADERS = {
@@ -39,7 +41,7 @@ describe('Query Entity. JSON-LD. @context', () => {
   });
     
   afterAll(() => {
-    return http.delete(entitiesResource + entity.id);
+    return http.delete(entitiesResource + entityId);
   });
     
   it('query by type. Default @context. Not found as @context does not match.', async function() {
@@ -89,4 +91,5 @@ describe('Query Entity. JSON-LD. @context', () => {
     const response = await http.get(entitiesResource + '?' + serializeParams(queryParams), headers);
     assertRetrievedQuery(response, entity, JSON_LD);
   });
+  
 });

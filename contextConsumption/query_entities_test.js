@@ -44,13 +44,15 @@ describe('Query Entity. JSON. Default @context', () => {
       }
     }
   };
+  
+  const entityId = encodeURIComponent(entity.id);
 
   beforeAll(() => {
     return http.post(entitiesResource, entity);
   });
     
   afterAll(() => {
-    return http.delete(entitiesResource + entity.id);
+    return http.delete(entitiesResource + entityId);
   });
    
   it('query by type', async function() {
@@ -129,5 +131,6 @@ describe('Query Entity. JSON. Default @context', () => {
         
     const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
     assertRetrievedQuery(response, entity);
-  }); 
+  });
+  
 });
