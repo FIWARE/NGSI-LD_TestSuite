@@ -24,7 +24,9 @@ It exercises the creation of Entities using JSON-LD as input (including a @conte
 
 It exercises appending new Attributes to an Entity. Using JSON content and a Default @context.
 
-## Update Attributes (Sections: 6.6.3.2, 5.6.2)
+## Update Attributes 
+
+(Sections: 6.6.3.2, 5.6.2)
 
 ### update_entity_attrs_test.js
 
