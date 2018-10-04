@@ -18,8 +18,8 @@
     "P100": "http://example.org/P100",
     "R100": "http://example.org/R100",
     "DateProp": {
-      "@id":   "http://example.org/TempProp",
-			"@type": "http://uri.etsi.org/ngsi-ld/DateTime"
+      "@id":   "http://example.org/DateProp",
+      "@type": "http://uri.etsi.org/ngsi-ld/DateTime"
     }
   }
 }
