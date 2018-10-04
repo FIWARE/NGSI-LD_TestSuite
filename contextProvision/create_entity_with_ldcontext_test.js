@@ -15,8 +15,8 @@ describe('Create Entity. JSON-LD @context', () => {
     const entity = {
       'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
-      'P1': {
-        'type': 'TemporalProperty',
+      'DateProp': {
+        'type':  'Property',
         'value': '2018-12-04T12:00:00'
       },
       'P2': {
@@ -41,12 +41,12 @@ describe('Create Entity. JSON-LD @context', () => {
     assertCreated(response.response, entity.id);
   });
 
-  it('should create an entity with JSON-LD @context asa vector of URIs', async function() {
+  it('should create an entity with JSON-LD @context as a vector of URIs', async function() {
     const entity = {
       'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
-      'P1': {
-        'type': 'TemporalProperty',
+      'DateProp': {
+        'type': 'Property',
         'value': '2018-12-04T12:00:00'
       },
       '@context': ['https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld']
