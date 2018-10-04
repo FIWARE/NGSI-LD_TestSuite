@@ -97,6 +97,33 @@ describe('Create Entity. Errors. JSON', () => {
 
     expect(response.response).toHaveProperty('statusCode', 400);
   });
+  
+  it('should report an error if no @context is provided in a JSON-LD payload', async function() {
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
+      'type': 'T'
+    };
+
+    const response = await http.post(entitiesResource, entity, {
+      'Content-Type': 'application/ld+json'
+    });
+
+    expect(response.response).toHaveProperty('statusCode', 400);
+  });
+  
+  it('should report an error if a JSON-LD header is provided with a JSON-LD payload', async function() {
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
+      'type': 'T'
+    };
+
+    const response = await http.post(entitiesResource, entity, {
+      'Content-Type': 'application/ld+json',
+      'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+    });
+
+    expect(response.response).toHaveProperty('statusCode', 400);
+  });
 
   // TODO: Add here more tests (null values, etc.)
 });
