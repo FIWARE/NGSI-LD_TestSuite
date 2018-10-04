@@ -23,6 +23,8 @@ describe('Partial Entity Attribute Update. JSON. Default @context', () => {
       }
     }
   };
+  
+  const entityId = encodeURIComponent(entity.id);
 
   const partialUpdate = {
     'value': 55
@@ -33,14 +35,14 @@ describe('Partial Entity Attribute Update. JSON. Default @context', () => {
   });
     
   afterAll(() => {
-    return http.delete(entitiesResource + entity.id);
+    return http.delete(entitiesResource + entityId);
   });
     
   it('Partial Attribute Update.', async function() {
-    const response = await http.patch(entitiesResource + entity.id + '/attrs/P1', partialUpdate);
+    const response = await http.patch(entitiesResource + entityId + '/attrs/P1', partialUpdate);
     expect(response.response).toHaveProperty('statusCode', 204);
         
-    const checkResponse = await http.get(entitiesResource + entity.id);
+    const checkResponse = await http.get(entitiesResource + entityId);
         
     const finalEntity = Object.assign(entity, {});
     finalEntity.P1.value = partialUpdate.value;
@@ -55,14 +57,14 @@ describe('Partial Entity Attribute Update. JSON. Default @context', () => {
   });
     
   it('Partial Attribute Update. Target Attribute does not exist', async function() {
-    const response = await http.patch(entitiesResource + entity.id
+    const response = await http.patch(entitiesResource + entityId
                                        + '/attrs/NonExistentAttribute', partialUpdate);
         
     expect(response.response).toHaveProperty('statusCode', 404);
   });
     
   it('Partial Attribute Update. Empty Payload', async function() {
-    const response = await http.patch(entitiesResource + entity.id
+    const response = await http.patch(entitiesResource + entityId
                                        + '/attrs/P1', {});
         
     expect(response.response).toHaveProperty('statusCode', 400);

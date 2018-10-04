@@ -1,5 +1,3 @@
-
-
 const testedResource = require('../common.js').testedResource;
 const http = require('../http.js');
 
@@ -37,20 +35,22 @@ describe('Update Entity Attributes. JSON. Default @context', () => {
       }
     }
   };
+  
+  const entityId = encodeURIComponent(entity.id);
 
   beforeAll(() => {
     return http.post(entitiesResource, entity);
   });
     
   afterAll(() => {
-    return http.delete(entitiesResource + entity.id);
+    return http.delete(entitiesResource + entityId);
   });
     
   it('Update Entity Attributes. Partial success', async function() {
-    const response = await http.patch(entitiesResource + entity.id + '/attrs/', updatedAttributes);
+    const response = await http.patch(entitiesResource + entityId + '/attrs/', updatedAttributes);
     expect(response.response).toHaveProperty('statusCode', 207);
         
-    const checkResponse = await http.get(entitiesResource + entity.id);
+    const checkResponse = await http.get(entitiesResource + entityId);
         
     const finalEntity = Object.assign(entity, {});
     finalEntity.P1 = updatedAttributes.P1;
@@ -65,7 +65,7 @@ describe('Update Entity Attributes. JSON. Default @context', () => {
   });
     
   it('Update Entity Attributes. Empty Payload', async function() {
-    const response = await http.patch(entitiesResource + entity.id
+    const response = await http.patch(entitiesResource + entityId
                                        + '/attrs/', {});
         
     expect(response.response).toHaveProperty('statusCode', 400);
@@ -78,11 +78,11 @@ describe('Update Entity Attributes. JSON. Default @context', () => {
         'value': 'Hola'
       }
     };
-    const response = await http.patch(entitiesResource + entity.id
+    const response = await http.patch(entitiesResource + entityId
                                        + '/attrs/', overwrittenAttrs);
     expect(response.response).toHaveProperty('statusCode', 204);
         
-    const checkResponse = await http.get(entitiesResource + entity.id);
+    const checkResponse = await http.get(entitiesResource + entityId);
     const finalEntity = Object.assign(entity, overwrittenAttrs);
     expect(checkResponse.body).toEqual(finalEntity);
   });
