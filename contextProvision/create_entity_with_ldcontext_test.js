@@ -15,6 +15,32 @@ describe('Create Entity. JSON-LD @context', () => {
     const entity = {
       'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
+      'P2': {
+        'type': 'GeoProperty',
+        'value': {
+          'type': 'Point',
+          'coordinates': [-8, 40]
+        }
+      },
+      'P3': {
+        'type': 'Property',
+        'value': 'Hola'
+      },
+      'R1': {
+        'type': 'Relationship',
+        'object': 'urn:ngsi-ld:T2:6789'
+      },
+      '@context': 'https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld'
+    };
+
+    const response = await http.post(entitiesResource, entity, JSON_LD_HEADERS);
+    assertCreated(response.response, entity.id);
+  });
+  
+  it('should create an entity with JSON-LD @context as single URI. DateTime Property', async function() {
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
+      'type': 'T',
       'DateProp': {
         'type':  'Property',
         'value': '2018-12-04T12:00:00'
