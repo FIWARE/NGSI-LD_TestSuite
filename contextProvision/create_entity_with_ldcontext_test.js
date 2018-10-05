@@ -37,13 +37,16 @@ describe('Create Entity. JSON-LD @context', () => {
     assertCreated(response.response, entity.id);
   });
   
-  it('should create an entity with JSON-LD @context as single URI. DateTime Property', async function() {
+  it('should create an entity with JSON-LD @context as single URI. DateTime Property inline', async function() {
     const entity = {
       'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
       'DateProp': {
         'type':  'Property',
-        'value': '2018-12-04T12:00:00'
+        'value': {
+          '@type': 'DateTime',
+          '@value': '2018-12-04T12:00:00'
+        }
       },
       'P2': {
         'type': 'GeoProperty',
