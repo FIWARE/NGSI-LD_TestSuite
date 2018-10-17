@@ -6,18 +6,15 @@
  *
  */
 
-
-
-
 const endpoint = process.env.TEST_ENDPOINT;
-let ngsild = 'ngsi-ld/v1';
+let ngsild = "ngsi-ld/v1";
 
 // Just to test an old NGSIv2 endpoint
-if (process.env.FAKE_LD === 'yes') {
-  ngsild = 'v2';
+if (process.env.FAKE_LD === "yes") {
+  ngsild = "v2";
 }
 
-const testedResource = endpoint + '/' + ngsild;
+const testedResource = endpoint + "/" + ngsild;
 
 // Regular expression for matching the link header pointing to the JSON-LD @context
 const JSON_LD_CONTEXT_HEADER = /<.+>;\s+rel="http:\/\/www\.w3\.org\/ns\/json-ld#context";\s+type="application\/ld\+json"/;
@@ -25,15 +22,18 @@ const JSON_LD_CONTEXT_HEADER = /<.+>;\s+rel="http:\/\/www\.w3\.org\/ns\/json-ld#
 const JSON = /application\/json(;.*)?/;
 
 function assertCreated(response, id) {
-  expect(response).toHaveProperty('statusCode', 201);
-  expect(response.headers).toHaveProperty('location', '/' + ngsild + '/entities/' + id);
+  expect(response).toHaveProperty("statusCode", 201);
+  expect(response.headers).toHaveProperty(
+    "location",
+    "/" + ngsild + "/entities/" + id
+  );
 }
 
 function assertResponse(response, mimeType) {
   const mType = mimeType || JSON;
 
-  expect(response.response).toHaveProperty('statusCode', 200);
-  expect(response.response.headers['content-type']).toMatch(mType);
+  expect(response.response).toHaveProperty("statusCode", 200);
+  expect(response.response.headers["content-type"]).toMatch(mType);
 
   // response.response.headers['link'] =
   // '<http://json-ld.org/contexts/person.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
@@ -64,10 +64,10 @@ function assertNoResultsQuery(response, mimeType) {
 }
 
 function serializeParams(query) {
-  let out = '';
+  let out = "";
   Object.keys(query).forEach(function(key) {
-    out += key + '=' + encodeURIComponent(query[key]);
-    out += '&';
+    out += key + "=" + encodeURIComponent(query[key]);
+    out += "&";
   });
 
   return out.substring(0, out.length - 1);

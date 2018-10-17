@@ -6,18 +6,16 @@
  *
  */
 
-
-
-const request = require('request');
+const request = require("request");
 
 function post(resource, data, headers) {
   headers = headers || {
-    'Content-Type': 'application/json'
+    "Content-Type": "application/json"
   };
-  
+
   return new Promise(function(resolve, reject) {
     const options = {
-      method: 'POST',
+      method: "POST",
       uri: resource,
       body: data,
       headers,
@@ -26,10 +24,12 @@ function post(resource, data, headers) {
     };
 
     request(options, function(error, response, body) {
-      return error ? reject(error) : resolve({
-        response,
-        body
-      });
+      return error
+        ? reject(error)
+        : resolve({
+            response,
+            body
+          });
     });
   });
 }
@@ -37,17 +37,19 @@ function post(resource, data, headers) {
 function get(resource, headers) {
   return new Promise(function(resolve, reject) {
     const options = {
-      method: 'GET',
+      method: "GET",
       uri: resource,
       headers,
       json: true
     };
 
     request(options, function(error, response, body) {
-      return error ? reject(error) : resolve({
-        response,
-        body
-      });
+      return error
+        ? reject(error)
+        : resolve({
+            response,
+            body
+          });
     });
   });
 }
@@ -55,17 +57,19 @@ function get(resource, headers) {
 function del(resource, headers) {
   return new Promise(function(resolve, reject) {
     const options = {
-      method: 'DELETE',
+      method: "DELETE",
       uri: resource,
       headers,
       json: true
     };
 
     request(options, function(error, response, body) {
-      return error ? reject(error) : resolve({
-        response,
-        body
-      });
+      return error
+        ? reject(error)
+        : resolve({
+            response,
+            body
+          });
     });
   });
 }
@@ -73,7 +77,7 @@ function del(resource, headers) {
 function patch(resource, data, headers) {
   return new Promise(function(resolve, reject) {
     const options = {
-      method: 'PATCH',
+      method: "PATCH",
       uri: resource,
       body: data,
       headers,
@@ -82,10 +86,12 @@ function patch(resource, data, headers) {
     };
 
     request(options, function(error, response, body) {
-      return error ? reject(error) : resolve({
-        response,
-        body
-      });
+      return error
+        ? reject(error)
+        : resolve({
+            response,
+            body
+          });
     });
   });
 }
@@ -93,6 +99,6 @@ function patch(resource, data, headers) {
 module.exports = {
   post,
   get,
-  'delete': del,
+  delete: del,
   patch
 };
