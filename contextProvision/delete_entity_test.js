@@ -1,12 +1,12 @@
-const testedResource = require("../common.js").testedResource;
-const http = require("../http.js");
+const testedResource = require('../common.js').testedResource;
+const http = require('../http.js');
 
-const entitiesResource = testedResource + "/entities/";
+const entitiesResource = testedResource + '/entities/';
 
-describe("Delete Entity.", () => {
+describe('Delete Entity.', () => {
   const entity = {
-    id: "urn:ngsi-ld:T:" + new Date().getTime(),
-    type: "T"
+    id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+    type: 'T'
   };
 
   const entityId = encodeURIComponent(entity.id);
@@ -15,13 +15,13 @@ describe("Delete Entity.", () => {
     return http.post(entitiesResource, entity);
   });
 
-  it("should delete the entity", async function() {
+  it('should delete the entity', async function() {
     const response = await http.delete(entitiesResource + entityId);
-    expect(response.response).toHaveProperty("statusCode", 204);
+    expect(response.response).toHaveProperty('statusCode', 204);
   });
 
-  it("should return 404 if entity does not exist", async function() {
+  it('should return 404 if entity does not exist', async function() {
     const response = await http.delete(entitiesResource + entityId);
-    expect(response.response).toHaveProperty("statusCode", 404);
+    expect(response.response).toHaveProperty('statusCode', 404);
   });
 });

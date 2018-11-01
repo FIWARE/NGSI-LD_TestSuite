@@ -1,22 +1,22 @@
-const testedResource = require("../common.js").testedResource;
-const http = require("../http.js");
+const testedResource = require('../common.js').testedResource;
+const http = require('../http.js');
 
-const entitiesResource = testedResource + "/entities/";
+const entitiesResource = testedResource + '/entities/';
 
-describe("Append Entity Attributes. JSON. Default @context", () => {
+describe('Append Entity Attributes. JSON. Default @context', () => {
   const entity = {
-    id: "urn:ngsi-ld:T:" + new Date().getTime(),
-    type: "T",
+    id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+    type: 'T',
     P1: {
-      type: "Property",
+      type: 'Property',
       value: 12,
-      observedAt: "2018-12-04T12:00:00",
+      observedAt: '2018-12-04T12:00:00',
       P1_R1: {
-        type: "Relationship",
-        object: "urn:ngsi-ld:T2:6789"
+        type: 'Relationship',
+        object: 'urn:ngsi-ld:T2:6789'
       },
       P1_P1: {
-        type: "Property",
+        type: 'Property',
         value: 0.79
       }
     }
@@ -24,21 +24,21 @@ describe("Append Entity Attributes. JSON. Default @context", () => {
 
   const appendedAttributes = {
     R1: {
-      type: "Relationship",
-      object: "urn:ngsi-ld:T2:6789",
+      type: 'Relationship',
+      object: 'urn:ngsi-ld:T2:6789',
       R1_R1: {
-        type: "Relationship",
-        object: "urn:ngsi-ld:T3:A2345"
+        type: 'Relationship',
+        object: 'urn:ngsi-ld:T3:A2345'
       },
       R1_P1: {
-        type: "Property",
+        type: 'Property',
         value: false
       }
     },
     location: {
-      type: "GeoProperty",
+      type: 'GeoProperty',
       value: {
-        type: "Point",
+        type: 'Point',
         coordinates: [-8.01, 40.01]
       }
     }
@@ -55,13 +55,13 @@ describe("Append Entity Attributes. JSON. Default @context", () => {
     return http.delete(entitiesResource + entityId);
   });
 
-  it("append Entity Attributes", async function() {
+  it('append Entity Attributes', async function() {
     const response = await http.post(
-      entitiesResource + entityId + "/attrs/",
+      entitiesResource + entityId + '/attrs/',
       appendedAttributes
     );
 
-    expect(response.response).toHaveProperty("statusCode", 204);
+    expect(response.response).toHaveProperty('statusCode', 204);
 
     const checkResponse = await http.get(entitiesResource + entityId);
 
@@ -69,58 +69,58 @@ describe("Append Entity Attributes. JSON. Default @context", () => {
     expect(checkResponse.body).toEqual(finalEntity);
   });
 
-  it("append Entity Attributes. Target entity does not exist", async function() {
+  it('append Entity Attributes. Target entity does not exist', async function() {
     const response = await http.post(
-      entitiesResource + "urn:ngsi-ld:doesnotexist/attrs/",
+      entitiesResource + 'urn:ngsi-ld:doesnotexist/attrs/',
       appendedAttributes
     );
 
-    expect(response.response).toHaveProperty("statusCode", 404);
+    expect(response.response).toHaveProperty('statusCode', 404);
   });
 
-  it("append Entity Attributes. Empty Payload", async function() {
+  it('append Entity Attributes. Empty Payload', async function() {
     const response = await http.post(
-      entitiesResource + entityId + "/attrs/",
+      entitiesResource + entityId + '/attrs/',
       {}
     );
 
-    expect(response.response).toHaveProperty("statusCode", 400);
+    expect(response.response).toHaveProperty('statusCode', 400);
   });
 
-  it("append Entity Attributes. Attributes are overwritten", async function() {
+  it('append Entity Attributes. Attributes are overwritten', async function() {
     const overwrittenAttrs = {
       P1: {
-        type: "Property",
-        value: "Hola"
+        type: 'Property',
+        value: 'Hola'
       }
     };
     const response = await http.post(
-      entitiesResource + entityId + "/attrs/",
+      entitiesResource + entityId + '/attrs/',
       overwrittenAttrs
     );
-    expect(response.response).toHaveProperty("statusCode", 204);
+    expect(response.response).toHaveProperty('statusCode', 204);
 
     const checkResponse = await http.get(entitiesResource + entityId);
     const finalEntity = Object.assign(entity, overwrittenAttrs);
     expect(checkResponse.body).toEqual(finalEntity);
   });
 
-  it("append Entity Attributes. Attributes should not be overwritten. Partial success", async function() {
+  it('append Entity Attributes. Attributes should not be overwritten. Partial success', async function() {
     const overwrittenAttrs = {
       P1: {
-        type: "Property",
-        value: "Hola"
+        type: 'Property',
+        value: 'Hola'
       },
       P2: {
-        type: "Property",
-        value: "Adios"
+        type: 'Property',
+        value: 'Adios'
       }
     };
     const response = await http.post(
-      entitiesResource + entityId + "/attrs/?options=noOverwrite",
+      entitiesResource + entityId + '/attrs/?options=noOverwrite',
       overwrittenAttrs
     );
-    expect(response.response).toHaveProperty("statusCode", 207);
+    expect(response.response).toHaveProperty('statusCode', 207);
 
     const finalEntity = Object.assign(entity, {});
     finalEntity.P2 = overwrittenAttrs.P2;

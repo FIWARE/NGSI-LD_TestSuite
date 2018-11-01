@@ -26,7 +26,7 @@
     "test:coverage": "jest --coverage",
     "lint": "eslint . --cache --fix",
     "precommit": "lint-staged",
-    "prettier": "prettier --single-quote --trailing-comma es5 --write **/*.js *.js"
+    "prettier": "prettier --single-quote --parser flow --write **/*.js *.js"
   },
   "husky": {
     "hooks": {
@@ -36,7 +36,7 @@
   "lint-staged": {
     "*.js": [
       "eslint --fix",
-      "prettier --parser flow --write",
+      "prettier --single-quote --parser flow --write",
       "git add"
     ]
   },

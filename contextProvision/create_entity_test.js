@@ -1,27 +1,27 @@
-const testedResource = require("../common.js").testedResource;
-const assertCreated = require("../common.js").assertCreated;
-const http = require("../http.js");
+const testedResource = require('../common.js').testedResource;
+const assertCreated = require('../common.js').assertCreated;
+const http = require('../http.js');
 
-const entitiesResource = testedResource + "/entities/";
+const entitiesResource = testedResource + '/entities/';
 
-describe("Create Entity. JSON", () => {
-  it("should create an empty entity", async function() {
+describe('Create Entity. JSON', () => {
+  it('should create an empty entity', async function() {
     const entity = {
-      id: "urn:ngsi-ld:T:" + new Date().getTime(),
-      type: "T"
+      id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+      type: 'T'
     };
 
     const response = await http.post(entitiesResource, entity);
     assertCreated(response.response, entity.id);
   });
 
-  it("should create an entity. One Property", async function() {
+  it('should create an entity. One Property', async function() {
     const entity = {
-      id: "urn:ngsi-ld:T:" + new Date().getTime(),
-      type: "T",
+      id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+      type: 'T',
       P1: {
-        type: "Property",
-        value: "Hola"
+        type: 'Property',
+        value: 'Hola'
       }
     };
 
@@ -29,14 +29,14 @@ describe("Create Entity. JSON", () => {
     assertCreated(response.response, entity.id);
   });
 
-  it("should create an entity. One GeoProperty", async function() {
+  it('should create an entity. One GeoProperty', async function() {
     const entity = {
-      id: "urn:ngsi-ld:T:" + new Date().getTime(),
-      type: "T",
+      id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+      type: 'T',
       location: {
-        type: "GeoProperty",
+        type: 'GeoProperty',
         value: {
-          type: "Point",
+          type: 'Point',
           coordinates: [-8, 40]
         }
       }
@@ -46,15 +46,15 @@ describe("Create Entity. JSON", () => {
     assertCreated(response.response, entity.id);
   });
 
-  it("should create an entity. One Property. DateTime", async function() {
+  it('should create an entity. One Property. DateTime', async function() {
     const entity = {
-      id: "urn:ngsi-ld:T:" + new Date().getTime(),
-      type: "T",
+      id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+      type: 'T',
       P1: {
-        type: "Property",
+        type: 'Property',
         value: {
-          "@type": "DateTime",
-          "@value": "2018-12-04T12:00:00"
+          '@type': 'DateTime',
+          '@value': '2018-12-04T12:00:00'
         }
       }
     };
@@ -63,17 +63,17 @@ describe("Create Entity. JSON", () => {
     assertCreated(response.response, entity.id);
   });
 
-  it("should create an entity. Property. Relationship", async function() {
+  it('should create an entity. Property. Relationship', async function() {
     const entity = {
-      id: "urn:ngsi-ld:T:" + new Date().getTime(),
-      type: "T",
+      id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+      type: 'T',
       P1: {
-        type: "Property",
-        value: "Hola"
+        type: 'Property',
+        value: 'Hola'
       },
       R1: {
-        type: "Relationship",
-        object: "urn:ngsi-ld:T2:6789"
+        type: 'Relationship',
+        object: 'urn:ngsi-ld:T2:6789'
       }
     };
 
@@ -81,14 +81,14 @@ describe("Create Entity. JSON", () => {
     assertCreated(response.response, entity.id);
   });
 
-  it("should create an entity. Property. observedAt", async function() {
+  it('should create an entity. Property. observedAt', async function() {
     const entity = {
-      id: "urn:ngsi-ld:T:" + new Date().getTime(),
-      type: "T",
+      id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+      type: 'T',
       P1: {
-        type: "Property",
+        type: 'Property',
         value: 12,
-        observedAt: "2018-12-04T12:00:00"
+        observedAt: '2018-12-04T12:00:00'
       }
     };
 
@@ -96,14 +96,14 @@ describe("Create Entity. JSON", () => {
     assertCreated(response.response, entity.id);
   });
 
-  it("should create an entity. Property. unitCode", async function() {
+  it('should create an entity. Property. unitCode', async function() {
     const entity = {
-      id: "urn:ngsi-ld:T:" + new Date().getTime(),
-      type: "T",
+      id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+      type: 'T',
       P1: {
-        type: "Property",
+        type: 'Property',
         value: 12.45,
-        unitCode: "m"
+        unitCode: 'm'
       }
     };
 
@@ -111,14 +111,14 @@ describe("Create Entity. JSON", () => {
     assertCreated(response.response, entity.id);
   });
 
-  it("should create an entity. Relationship. observedAt", async function() {
+  it('should create an entity. Relationship. observedAt', async function() {
     const entity = {
-      id: "urn:ngsi-ld:T:" + new Date().getTime(),
-      type: "T",
+      id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+      type: 'T',
       R1: {
-        type: "Relationship",
-        object: "urn:ngsi-ld:T2:6789",
-        observedAt: "2018-12-04T12:00:00"
+        type: 'Relationship',
+        object: 'urn:ngsi-ld:T2:6789',
+        observedAt: '2018-12-04T12:00:00'
       }
     };
 
@@ -126,16 +126,16 @@ describe("Create Entity. JSON", () => {
     assertCreated(response.response, entity.id);
   });
 
-  it("should create an entity. Property. Property", async function() {
+  it('should create an entity. Property. Property', async function() {
     const entity = {
-      id: "urn:ngsi-ld:T:" + new Date().getTime(),
-      type: "T",
+      id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+      type: 'T',
       P1: {
-        type: "Property",
+        type: 'Property',
         value: 12,
-        observedAt: "2018-12-04T12:00:00",
+        observedAt: '2018-12-04T12:00:00',
         P1_P1: {
-          type: "Property",
+          type: 'Property',
           value: 0.89
         }
       }
@@ -145,16 +145,16 @@ describe("Create Entity. JSON", () => {
     assertCreated(response.response, entity.id);
   });
 
-  it("should create an entity. Relationship. Property", async function() {
+  it('should create an entity. Relationship. Property', async function() {
     const entity = {
-      id: "urn:ngsi-ld:T:" + new Date().getTime(),
-      type: "T",
+      id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+      type: 'T',
       R1: {
-        type: "Relationship",
-        object: "urn:ngsi-ld:T2:6789",
+        type: 'Relationship',
+        object: 'urn:ngsi-ld:T2:6789',
         R1_P1: {
-          type: "Property",
-          value: "V"
+          type: 'Property',
+          value: 'V'
         }
       }
     };
@@ -163,17 +163,17 @@ describe("Create Entity. JSON", () => {
     assertCreated(response.response, entity.id);
   });
 
-  it("should create an entity. Property. Relationship", async function() {
+  it('should create an entity. Property. Relationship', async function() {
     const entity = {
-      id: "urn:ngsi-ld:T:" + new Date().getTime(),
-      type: "T",
+      id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+      type: 'T',
       P1: {
-        type: "Property",
+        type: 'Property',
         value: 12,
-        observedAt: "2018-12-04T12:00:00",
+        observedAt: '2018-12-04T12:00:00',
         P1_R1: {
-          type: "Relationship",
-          object: "urn:ngsi-ld:T2:6789"
+          type: 'Relationship',
+          object: 'urn:ngsi-ld:T2:6789'
         }
       }
     };
@@ -182,16 +182,16 @@ describe("Create Entity. JSON", () => {
     assertCreated(response.response, entity.id);
   });
 
-  it("should create an entity. Relationship. Relationship", async function() {
+  it('should create an entity. Relationship. Relationship', async function() {
     const entity = {
-      id: "urn:ngsi-ld:T:" + new Date().getTime(),
-      type: "T",
+      id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+      type: 'T',
       R1: {
-        type: "Relationship",
-        object: "urn:ngsi-ld:T2:6789",
+        type: 'Relationship',
+        object: 'urn:ngsi-ld:T2:6789',
         R1_R1: {
-          type: "Relationship",
-          object: "urn:ngsi-ld:T3:A2345"
+          type: 'Relationship',
+          object: 'urn:ngsi-ld:T3:A2345'
         }
       }
     };
@@ -200,15 +200,15 @@ describe("Create Entity. JSON", () => {
     assertCreated(response.response, entity.id);
   });
 
-  it("should report an error if Entity already exists", async function() {
+  it('should report an error if Entity already exists', async function() {
     const entity = {
-      id: "urn:ngsi-ld:T:" + new Date().getTime(),
-      type: "T"
+      id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+      type: 'T'
     };
 
     await http.post(entitiesResource, entity);
     const response2 = await http.post(entitiesResource, entity);
 
-    expect(response2.response).toHaveProperty("statusCode", 409);
+    expect(response2.response).toHaveProperty('statusCode', 409);
   });
 });

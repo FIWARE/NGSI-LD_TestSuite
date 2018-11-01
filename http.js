@@ -6,16 +6,16 @@
  *
  */
 
-const request = require("request");
+const request = require('request');
 
 function post(resource, data, headers) {
   headers = headers || {
-    "Content-Type": "application/json"
+    'Content-Type': 'application/json'
   };
 
   return new Promise(function(resolve, reject) {
     const options = {
-      method: "POST",
+      method: 'POST',
       uri: resource,
       body: data,
       headers,
@@ -37,7 +37,7 @@ function post(resource, data, headers) {
 function get(resource, headers) {
   return new Promise(function(resolve, reject) {
     const options = {
-      method: "GET",
+      method: 'GET',
       uri: resource,
       headers,
       json: true
@@ -57,7 +57,7 @@ function get(resource, headers) {
 function del(resource, headers) {
   return new Promise(function(resolve, reject) {
     const options = {
-      method: "DELETE",
+      method: 'DELETE',
       uri: resource,
       headers,
       json: true
@@ -77,7 +77,7 @@ function del(resource, headers) {
 function patch(resource, data, headers) {
   return new Promise(function(resolve, reject) {
     const options = {
-      method: "PATCH",
+      method: 'PATCH',
       uri: resource,
       body: data,
       headers,
