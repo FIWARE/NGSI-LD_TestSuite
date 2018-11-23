@@ -72,6 +72,9 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
     'type': entity.type,
     '@context': entity['@context']
   };
+  
+  const entityNoContext = Object.assign({}, entity);
+  delete entityNoContext['@context'];
 
   beforeAll(() => {
     return http.post(entitiesResource, entity, JSON_LD_HEADERS_POST);
@@ -88,7 +91,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
     
   it('should retrieve the entity. JSON MIME type (default)', async function() {
     const response = await http.get(entitiesResource + entityId);
-    assertRetrieved(response,entity);
+    assertRetrieved(response,entityNoContext);
   });
     
   it('should retrieve the entity key values mode', async function() {
