@@ -46,7 +46,7 @@ describe('Create Entity. JSON-LD @context', () => {
         'type':  'Property',
         'value': {
           '@type': 'DateTime',
-          '@value': '2018-12-04T12:00:00'
+          '@value': '2018-12-04T12:00:00Z'
         }
       },
       'P2': {
@@ -77,7 +77,7 @@ describe('Create Entity. JSON-LD @context', () => {
       'type': 'T',
       'DateProp': {
         'type': 'Property',
-        'value': '2018-12-04T12:00:00'
+        'value': '2018-12-04T12:00:00Z'
       },
       '@context': ['https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld']
     };
