@@ -56,7 +56,7 @@ describe('Create Entity. JSON', () => {
         'type': 'Property',
         'value': {
           '@type': 'DateTime',
-          '@value': '2018-12-04T12:00:00'
+          '@value': '2018-12-04T12:00:00Z'
         }
       }
     };
@@ -90,7 +90,7 @@ describe('Create Entity. JSON', () => {
       'P1': {
         'type': 'Property',
         'value': 12,
-        'observedAt': '2018-12-04T12:00:00'
+        'observedAt': '2018-12-04T12:00:00Z'
       }
     };
 
@@ -120,7 +120,7 @@ describe('Create Entity. JSON', () => {
       'R1': {
         'type': 'Relationship',
         'object': 'urn:ngsi-ld:T2:6789',
-        'observedAt': '2018-12-04T12:00:00'
+        'observedAt': '2018-12-04T12:00:00Z'
       }
     };
 
@@ -135,7 +135,7 @@ describe('Create Entity. JSON', () => {
       'P1': {
         'type': 'Property',
         'value': 12,
-        'observedAt': '2018-12-04T12:00:00',
+        'observedAt': '2018-12-04T12:00:00Z',
         'P1_P1': {
           'type': 'Property',
           'value': 0.89
@@ -173,7 +173,7 @@ describe('Create Entity. JSON', () => {
       'P1': {
         'type': 'Property',
         'value': 12,
-        'observedAt': '2018-12-04T12:00:00',
+        'observedAt': '2018-12-04T12:00:00Z',
         'P1_R1': {
           'type': 'Relationship',
           'object': 'urn:ngsi-ld:T2:6789'
