@@ -1,5 +1,3 @@
-
-
 const testedResource = require('../common.js').testedResource;
 const http = require('../http.js');
 
@@ -15,6 +13,13 @@ const JSON_LD_HEADERS_POST = {
 const JSON_LD_HEADERS_GET = {
   'Accept': 'application/ld+json'
 };
+
+// Patches the object and returns a new copy of the patched object
+// TECHNICAL DEBT: It should be imported from common.js
+function patchObj(target, patch) {  
+  const copy = JSON.parse(JSON.stringify(target));
+  return Object.assign(copy, patch);
+}
 
 describe('Retrieve Entity. JSON-LD. @context ', () => {
   const entity = {
@@ -73,7 +78,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
     '@context': entity['@context']
   };
   
-  const entityNoContext = Object.assign({}, entity);
+  const entityNoContext = patchObj({}, entity);
   delete entityNoContext['@context'];
 
   beforeAll(() => {

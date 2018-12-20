@@ -3,6 +3,13 @@ const http = require('../http.js');
 
 const entitiesResource = testedResource + '/entities/';
 
+// Patches the object and returns a new copy of the patched object
+// TECHNICAL DEBT: It should be imported from common.js
+function patchObj(target, patch) {  
+  const copy = JSON.parse(JSON.stringify(target));
+  return Object.assign(copy, patch);
+}
+
 describe('Update Entity Attributes. JSON. Default @context', () => {
   const entity = {
     'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
@@ -52,7 +59,7 @@ describe('Update Entity Attributes. JSON. Default @context', () => {
         
     const checkResponse = await http.get(entitiesResource + entityId);
         
-    const finalEntity = Object.assign(entity, {});
+    const finalEntity = patchObj(entity, {});
     finalEntity.P1 = updatedAttributes.P1;
     expect(checkResponse.body).toEqual(finalEntity);
   });
@@ -83,7 +90,7 @@ describe('Update Entity Attributes. JSON. Default @context', () => {
     expect(response.response).toHaveProperty('statusCode', 204);
         
     const checkResponse = await http.get(entitiesResource + entityId);
-    const finalEntity = Object.assign(entity, overwrittenAttrs);
+    const finalEntity = patchObj(entity, overwrittenAttrs);
     expect(checkResponse.body).toEqual(finalEntity);
   });
 });

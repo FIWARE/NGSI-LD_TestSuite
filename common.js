@@ -7,7 +7,7 @@
  */
 
 const endpoint = process.env.TEST_ENDPOINT;
-let ngsild = 'ngsi-ld/v1';
+const ngsild = 'ngsi-ld/v1';
 
 const testedResource = endpoint + '/' + ngsild;
 
@@ -70,7 +70,7 @@ function serializeParams(query) {
 // global object is not found
 // TECHNICAL DEBT
 function patchObj(target, patch) {
-  var copy = JSON.parse(JSON.stringify(target));
+  const copy = JSON.parse(JSON.stringify(target));
   return Object.assign(copy, patch);
 }
 
