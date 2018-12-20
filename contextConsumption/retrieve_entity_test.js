@@ -1,5 +1,3 @@
-
-
 const testedResource = require('../common.js').testedResource;
 const http = require('../http.js');
 

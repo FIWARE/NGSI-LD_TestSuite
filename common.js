@@ -6,16 +6,8 @@
  *
  */
 
-
-
-
 const endpoint = process.env.TEST_ENDPOINT;
 let ngsild = 'ngsi-ld/v1';
-
-// Just to test an old NGSIv2 endpoint
-if (process.env.FAKE_LD === 'yes') {
-  ngsild = 'v2';
-}
 
 const testedResource = endpoint + '/' + ngsild;
 
@@ -73,11 +65,21 @@ function serializeParams(query) {
   return out.substring(0, out.length - 1);
 }
 
+// Patches the object and returns a new copy of the patched object
+// For some reason when invoking this function from the tests the JSON
+// global object is not found
+// TECHNICAL DEBT
+function patchObj(target, patch) {
+  var copy = JSON.parse(JSON.stringify(target));
+  return Object.assign(copy, patch);
+}
+
 module.exports = {
   testedResource,
   assertCreated,
   assertRetrieved,
   assertRetrievedQuery,
   assertNoResultsQuery,
-  serializeParams
+  serializeParams,
+  patchObj
 };

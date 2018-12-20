@@ -3,6 +3,13 @@ const http = require('../http.js');
 
 const subscriptionsResource = testedResource + '/subscriptions/';
 
+// Patches the object and returns a new copy of the patched object
+// TECHNICAL DEBT: It should be imported from common.js
+function patchObj(target, patch) {  
+  var copy = JSON.parse(JSON.stringify(target));
+  return Object.assign(copy, patch);
+}
+
 describe('Create Subscription. Errors. JSON', () => {
   // Base subscription (mutable to make errors happen)
   const subscription = {
@@ -21,14 +28,14 @@ describe('Create Subscription. Errors. JSON', () => {
   };
     
   it('should reject a subscription which id is not a URI', async function() {
-    const testSubscription = Object.assign(subscription, {'id': '1234'});
+    const testSubscription = patchObj(subscription, {'id': '1234'});
     
     const response = await http.post(subscriptionsResource, testSubscription);
     expect(response.response).toHaveProperty('statusCode', 400);
   });
 
   it('should reject a subscription which type is not Subscription', async function() {
-    const testSubscription = Object.assign(subscription, {'type': 'T'}); 
+    const testSubscription = patchObj(subscription, {'type': 'T'}); 
 
     const response = await http.post(subscriptionsResource, testSubscription);
     expect(response.response).toHaveProperty('statusCode', 400);
@@ -50,21 +57,21 @@ describe('Create Subscription. Errors. JSON', () => {
   });
 
   it('should reject a subscription which watched attributes is null', async function() {
-    const testSubscription = Object.assign(subscription, {'watchedAttributes': null}); 
+    const testSubscription = patchObj(subscription, {'watchedAttributes': null}); 
 
     const response = await http.post(subscriptionsResource, testSubscription);
     expect(response.response).toHaveProperty('statusCode', 400);
   });
 
  it('should reject a subscription which watched attributes array is 0 length', async function() {
-    const testSubscription = Object.assign(subscription, {'watchedAttributes': []});
+    const testSubscription = patchObj(subscription, {'watchedAttributes': []});
     
     const response = await http.post(subscriptionsResource, testSubscription);
     expect(response.response).toHaveProperty('statusCode', 400);
   });
  
  it('should reject a subscription which entities array is 0 length', async function() {
-    const testSubscription = Object.assign(subscription, {'entities': []});
+    const testSubscription = patchObj(subscription, {'entities': []});
 
     const response = await http.post(subscriptionsResource, testSubscription);
     expect(response.response).toHaveProperty('statusCode', 400);
@@ -98,7 +105,15 @@ describe('Create Subscription. Errors. JSON', () => {
   });
    
   it('should reject a subscription which "isActive" field is not a boolean', async function() {
-    const testSubscription = Object.assign(subscription, {'isActive': 'abcde'});
+    const testSubscription = patchObj(subscription, {'isActive': 'abcde'});
+
+    const response = await http.post(subscriptionsResource, testSubscription);
+    expect(response.response).toHaveProperty('statusCode', 400);
+  });
+  
+  it('should reject a subscription which "endpoint" is not a URI', async function() {
+    const notification = patchObj(subscription.notification, { 'endpoint': {'uri': 'abcde'} });
+    const testSubscription = patchObj(subscription,{ 'notification': notification });
 
     const response = await http.post(subscriptionsResource, testSubscription);
     expect(response.response).toHaveProperty('statusCode', 400);
