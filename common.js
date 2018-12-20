@@ -16,9 +16,15 @@ const JSON_LD_CONTEXT_HEADER = /<.+>;\s+rel="http:\/\/www\.w3\.org\/ns\/json-ld#
 
 const JSON = /application\/json(;.*)?/;
 
-function assertCreated(response, id) {
+function assertCreated(response, id, resource) {
+  const resourceTest = resource || '/entities/';
+  
   expect(response).toHaveProperty('statusCode', 201);
-  expect(response.headers).toHaveProperty('location', '/' + ngsild + '/entities/' + id);
+  expect(response.headers).toHaveProperty('location', '/' + ngsild + resourceTest + id);
+}
+
+function assertSubscriptionCreated(response, id) {
+  assertCreated(response,id,'/subscriptions/');
 }
 
 function assertResponse(response, mimeType) {
@@ -77,9 +83,11 @@ function patchObj(target, patch) {
 module.exports = {
   testedResource,
   assertCreated,
+  assertSubscriptionCreated,
   assertRetrieved,
   assertRetrievedQuery,
   assertNoResultsQuery,
   serializeParams,
+  // TECHNICAL DEBT
   patchObj
 };
