@@ -24,6 +24,10 @@ describe('Query Entity. JSON. Default @context', () => {
         'value': 0.79
       }
     },
+    'P1': {
+      'type': 'Property',
+      'value': 45
+    },
     'R100': {
       'type': 'Relationship',
       'object': 'urn:ngsi-ld:T2:6789',
@@ -86,6 +90,26 @@ describe('Query Entity. JSON. Default @context', () => {
     const queryParams = {
       id: entity.id,  
       q: 'P100>5'  
+    };
+        
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+    assertRetrievedQuery(response, entity);
+  });
+  
+  it('query by condition over values. And Condition', async function() {
+    const queryParams = {
+      id: entity.id,  
+      q: 'P100>5;P1>40'  
+    };
+        
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+    assertRetrievedQuery(response, entity);
+  });
+  
+  it('query by condition over values. Or Condition', async function() {
+    const queryParams = {
+      id: entity.id,  
+      q: 'P100>5|P1>50'  
     };
         
     const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
