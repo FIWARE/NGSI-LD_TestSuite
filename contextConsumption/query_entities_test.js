@@ -115,6 +115,16 @@ describe('Query Entity. JSON. Default @context', () => {
     const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
     assertRetrievedQuery(response, entity);
   });
+  
+  it('query by condition over values. Parenthesis Association', async function() {
+    const queryParams = {
+      id: entity.id,  
+      q: '(P100>5|P1<=0);(P1>40|P1<=45)'  
+    };
+        
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+    assertRetrievedQuery(response, entity);
+  });
     
   it('query by condition over object', async function() {
     const queryParams = {

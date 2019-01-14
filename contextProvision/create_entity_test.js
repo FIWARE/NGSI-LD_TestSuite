@@ -202,7 +202,54 @@ describe('Create Entity. JSON', () => {
     const response = await http.post(entitiesResource, entity);
     assertCreated(response.response, entity.id);
   });
+  
+  
+  it('should create an entity. Structured Property Value', async function() {
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
+      'type': 'T',
+      'SP1': {
+        'type': 'Property',
+        'value': {
+          'type': 'PostalAddress',
+          'addressLocality': 'Berlin',
+          'addressCountry': 'DE'
+        }
+      }
+    };
 
+    const response = await http.post(entitiesResource, entity);
+    assertCreated(response.response, entity.id);
+  });
+
+  it('should create an entity. Array Property Value', async function() {
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
+      'type': 'T',
+      'AP1': {
+        'type': 'Property',
+        'value': [1,2,3,4]
+      }
+    };
+
+    const response = await http.post(entitiesResource, entity);
+    assertCreated(response.response, entity.id);
+  });
+  
+  it('should create an entity. Array Objects', async function() {
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
+      'type': 'T',
+      'AR1': {
+        'type': 'Relationship',
+        'object': ['urn:ngsi-ld:T:1234', 'urn:ngsi-ld:T:5678']
+      }
+    };
+
+    const response = await http.post(entitiesResource, entity);
+    assertCreated(response.response, entity.id);
+  });
+  
   it('should report an error if Entity already exists', async function() {
     const entity = {
       'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
