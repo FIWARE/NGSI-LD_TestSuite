@@ -221,6 +221,21 @@ describe('Create Entity. JSON', () => {
     const response = await http.post(entitiesResource, entity);
     assertCreated(response.response, entity.id);
   });
+  
+  it('should create an entity. Structured Property Value. Empty', async function() {
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
+      'type': 'T',
+      'SP1': {
+        'type': 'Property',
+        'value': {
+        }
+      }
+    };
+
+    const response = await http.post(entitiesResource, entity);
+    assertCreated(response.response, entity.id);
+  });
 
   it('should create an entity. Array Property Value', async function() {
     const entity = {
@@ -236,7 +251,21 @@ describe('Create Entity. JSON', () => {
     assertCreated(response.response, entity.id);
   });
   
-  it('should create an entity. Array Objects', async function() {
+  it('should create an entity. Empty Array Property Value', async function() {
+    const entity = {
+      'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
+      'type': 'T',
+      'AP1': {
+        'type': 'Property',
+        'value': []
+      }
+    };
+
+    const response = await http.post(entitiesResource, entity);
+    assertCreated(response.response, entity.id);
+  });
+  
+  it('should create an entity. Array Relationship Objects', async function() {
     const entity = {
       'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
       'type': 'T',
