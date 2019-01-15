@@ -5,6 +5,7 @@ const http = require('../http.js');
 
 const entitiesResource = testedResource + '/entities/';
 const assertRetrievedQuery = require('../common.js').assertRetrievedQuery;
+const assertNoResultsQuery = require('../common.js').assertNoResultsQuery;
 const serializeParams = require('../common.js').serializeParams;
 
 describe('Query Entity. JSON. Default @context', () => {
@@ -94,6 +95,16 @@ describe('Query Entity. JSON. Default @context', () => {
         
     const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
     assertRetrievedQuery(response, entity);
+  });
+  
+  it('query by condition over value. No results', async function() {
+    const queryParams = {
+      id: entity.id,  
+      q: 'P100<=5'  
+    };
+        
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+    assertNoResultsQuery(response, 'application/json');
   });
   
   it('query by condition over values. And Condition', async function() {
