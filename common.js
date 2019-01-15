@@ -61,6 +61,10 @@ function assertNoResultsQuery(response, mimeType) {
   expect(response.body.length).toBe(0);
 }
 
+function assertResultsQuery(response, numResults) {
+  expect(response.body.length).toBe(numResults);
+}
+
 function serializeParams(query) {
   let out = '';
   Object.keys(query).forEach(function(key) {
@@ -86,6 +90,7 @@ module.exports = {
   assertSubscriptionCreated,
   assertRetrieved,
   assertRetrievedQuery,
+  assertResultsQuery,
   assertNoResultsQuery,
   serializeParams,
   // TECHNICAL DEBT
