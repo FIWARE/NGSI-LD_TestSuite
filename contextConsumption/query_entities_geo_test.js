@@ -46,7 +46,11 @@ describe('Query Entity. Geo. JSON. Default @context', () => {
   };
   
   const entities = [entity1, entity2, entity3];
-  const entityIds = [entity1.id, entity2.id, entity3.id];
+  const entityIds = [
+                     encodeURIComponent(entity1.id),
+                     encodeURIComponent(entity2.id),
+                     encodeURIComponent(entity3.id)
+  ];
   
   beforeAll(() => {
     let requests = [];
