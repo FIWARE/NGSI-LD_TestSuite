@@ -68,6 +68,31 @@ describe('Query Entity. JSON. Default @context', () => {
     const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
     assertRetrievedQuery(response,entity); 
   });
+  
+  it('query by type. No results', async function() {
+    const queryParams = {
+      type: 'T_Non_Present',
+    };
+            
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+    assertNoResultsQuery(response); 
+  });
+  
+  it('query by attributes.', async function() {
+    const queryParams = {
+      attrs: 'P100',
+    };
+            
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+    
+    const result = {
+      id: entity.id,
+      type: entity.type,
+      'P100': entity.P100
+    };
+    
+    assertRetrievedQuery(response,result);
+  });
    
   it('query by id', async function() {
     const queryParams = {
@@ -77,6 +102,15 @@ describe('Query Entity. JSON. Default @context', () => {
     const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
     assertRetrievedQuery(response,entity);
   });
+  
+  it('query by id. No results', async function() {
+    const queryParams = {
+      id: 'urn:ngsi-ld:T_Non_Present:890' 
+    };
+        
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+    assertNoResultsQuery(response);
+  });
     
   it('query by idPattern', async function() {
     const queryParams = {
@@ -85,6 +119,15 @@ describe('Query Entity. JSON. Default @context', () => {
         
     const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
     assertRetrievedQuery(response, entity);
+  });
+  
+  it('query by idPattern. No results', async function() {
+    const queryParams = {
+      idPattern: '.*:T_Non_Present:EntityForQuery.*'
+    };
+        
+    const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
+    assertNoResultsQuery(response);
   });
     
   it('query by condition over value', async function() {
@@ -104,7 +147,7 @@ describe('Query Entity. JSON. Default @context', () => {
     };
         
     const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
-    assertNoResultsQuery(response, 'application/json');
+    assertNoResultsQuery(response);
   });
   
   it('query by condition over values. And Condition', async function() {
