@@ -29,6 +29,20 @@ describe('Create Entity. Errors. JSON', () => {
     const response = await http.post(entitiesResource, entity);
     expect(response.response).toHaveProperty('statusCode', 400);
   });
+  
+  it('should reject an entity which contain attributes with forbidden characters', async function() {
+    const entity = {
+      'id': 'urn:ngsi-ld:T4:9000',
+      'type': 'T',
+      'P?|{{': {
+        'type': 'Property',
+        'value': 345
+      }
+    };
+
+    const response = await http.post(entitiesResource, entity);
+    expect(response.response).toHaveProperty('statusCode', 400);
+  });
 
   it('should reject an entity with a property value equal to null', async function() {
     const entity = {
