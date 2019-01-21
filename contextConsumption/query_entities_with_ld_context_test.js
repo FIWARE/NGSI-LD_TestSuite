@@ -46,7 +46,7 @@ describe('Query Entity. JSON-LD. @context', () => {
     
   it('query by type. Default @context. Not found as @context does not match.', async function() {
     const queryParams = {
-      type: 'T_Query',
+      type: entity.type,
     };
             
     const response = await http.get(entitiesResource + '?' + serializeParams(queryParams), ACCEPT_JSON_LD);
@@ -55,7 +55,7 @@ describe('Query Entity. JSON-LD. @context', () => {
     
   it('query by type. Right @context', async function() {
     const queryParams = {
-      type: 'T_Query',
+      type: entity.type,
     };
         
     const headers = {
@@ -69,6 +69,7 @@ describe('Query Entity. JSON-LD. @context', () => {
     
   it('query by condition over value. Default @context. Not found as @context does not match for the attribute.', async function() {
     const queryParams = {
+      type: entity.type,
       q: 'P100>5'  
     };
         
@@ -79,7 +80,7 @@ describe('Query Entity. JSON-LD. @context', () => {
     
   it('query by condition over value. Right @context. ', async function() {
     const queryParams = {
-      id: entity.id,  
+      type: entity.type,  
       q: 'P100>5'  
     };
         
