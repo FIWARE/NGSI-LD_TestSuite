@@ -132,7 +132,7 @@ describe('Query Entity. JSON. Default @context', () => {
     
   it('query by condition over value', async function() {
     const queryParams = {
-      id: entity.id,  
+      type: 'T_Query',  
       q: 'P100>5'  
     };
         
@@ -142,7 +142,7 @@ describe('Query Entity. JSON. Default @context', () => {
   
   it('query by condition over value. No results', async function() {
     const queryParams = {
-      id: entity.id,  
+      type: 'T_Query',  
       q: 'P100<=5'  
     };
         
@@ -152,7 +152,7 @@ describe('Query Entity. JSON. Default @context', () => {
   
   it('query by condition over values. And Condition', async function() {
     const queryParams = {
-      id: entity.id,  
+      type: 'T_Query',
       q: 'P100>5;P1>40'  
     };
         
@@ -162,7 +162,7 @@ describe('Query Entity. JSON. Default @context', () => {
   
   it('query by condition over values. Or Condition', async function() {
     const queryParams = {
-      id: entity.id,  
+      type: 'T_Query',
       q: 'P100>5|P1>50'  
     };
         
@@ -172,7 +172,7 @@ describe('Query Entity. JSON. Default @context', () => {
   
   it('query by condition over values. Parenthesis Association', async function() {
     const queryParams = {
-      id: entity.id,  
+      type: 'T_Query',  
       q: '(P100>5|P1<=0);(P1>40|P1<=45)'  
     };
         
@@ -182,7 +182,7 @@ describe('Query Entity. JSON. Default @context', () => {
     
   it('query by condition over object', async function() {
     const queryParams = {
-      id: entity.id,
+      type: 'T_Query',
       q: 'R100=="urn:ngsi-ld:T2:6789"'
     };
         
@@ -192,7 +192,7 @@ describe('Query Entity. JSON. Default @context', () => {
     
   it('query by condition over observedAt', async function() {
     const queryParams = {
-      id: entity.id,
+      type: 'T_Query',
       q: 'P100.observedAt>2018-12-03'
     };
         
@@ -202,7 +202,7 @@ describe('Query Entity. JSON. Default @context', () => {
     
   it('query by condition over property of property', async function() {
     const queryParams = {
-      id: entity.id,
+      type: 'T_Query',
       q: 'P100.P1_P1 > 0.70'
     };
         
@@ -212,6 +212,7 @@ describe('Query Entity. JSON. Default @context', () => {
 
   it('geoQuery near', async function() {
     const queryParams = {
+      type: 'T_Query',
       geometry: 'Point',
       coordinates: '[-30,75]',
       georel: 'near;maxDistance==3000'
