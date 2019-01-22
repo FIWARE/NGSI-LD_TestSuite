@@ -56,7 +56,7 @@ function assertRetrievedQuery(response, entity, mimeType) {
 }
 
 function assertNoResultsQuery(response, mimeType) {
-  let checkedMimeType = mimeType || 'application/json';
+  const checkedMimeType = mimeType || 'application/json';
   
   assertResponse(response, checkedMimeType);
   // Check first query result
@@ -65,6 +65,24 @@ function assertNoResultsQuery(response, mimeType) {
 
 function assertResultsQuery(response, numResults) {
   expect(response.body.length).toBe(numResults);
+}
+
+function assertBatchOperation(response, success, errors) {
+  expect(typeof response.body).toBe('object');
+  
+  const respSuccess = response.body.success;
+  const respErrors = response.body.errors;
+  
+  expect(respSuccess.length).toBe(success.length);
+  expect(respErrors.length).toBe(errors.length);
+  
+  for (let j = 0; j < success.length; j++) {
+    expect(respSuccess[j]).toBe(success[j]);
+  }
+  
+  for (let j = 0; j < errors.length; j++) {
+    expect(respErrors[j].entityId).toBe(errors[j]);
+  }
 }
 
 function serializeParams(query) {
@@ -95,6 +113,7 @@ module.exports = {
   assertResultsQuery,
   assertNoResultsQuery,
   serializeParams,
+  assertBatchOperation,
   // TECHNICAL DEBT
   patchObj
 };
