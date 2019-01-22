@@ -2,13 +2,11 @@ const testedResource = require('../common.js').testedResource;
 const assertBatchOperation = require('../common.js').assertBatchOperation;
 const http = require('../http.js');
 
-const batchCreationResource = testedResource + '/entityOperations/create';
-const batchUpsertResource   = testedResource + '/entityOperations/upsert';
+const entitiesResource = testedResource + '/entities/';
+
 const batchUpdateResource   = testedResource + '/entityOperations/update';
-const batchDeleteResource   = testedResource + '/entityOperations/delete';
 
-
-describe('Batch Entity Creation. JSON', () => {
+describe('Batch Entity Update. JSON', () => {
   const entity1 = {
     'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
     'type': 'T'
@@ -23,30 +21,34 @@ describe('Batch Entity Creation. JSON', () => {
     }
   };
   
-   
-  it('should create a list of entities', async function() {
-    const entities = [
-      entity1,
-      entity2
-    ];
+  const entities = [
+    entity1,
+    entity2
+  ];
+  
+  const entityIds = [
+    encodeURIComponent(entity1.id),
+    encodeURIComponent(entity2.id)
+  ];
+  
+  beforeAll(() => {
+    const requests = [];
     
-    const response = await http.post(batchCreationResource, entities);
+    for (let j = 0; j < entities.length; j++) {
+      requests.push(http.post(entitiesResource,entities[j]));
+    }
     
-    expect(response.response).toHaveProperty('statusCode', 200);
-    assertBatchOperation(response, [entities[0].id, entities[1].id], []);
+    return Promise.all(requests);
   });
   
-  
-  it('should upsert a list of entities', async function() {
-    const entities = [
-      entity1,
-      entity2
-    ];
-    // Default mode is replace (for upsert)
-    const response = await http.post(batchUpsertResource, entities);
+  afterAll(() => {
+    const requests = [];
     
-    expect(response.response).toHaveProperty('statusCode', 200);
-    assertBatchOperation(response, [entities[0].id, entities[1].id], []);
+    for (let j = 0; j < entityIds.length; j++) {
+      requests.push(http.delete(entitiesResource + entityIds[j]));
+    }
+    
+    return Promise.all(requests);
   });
   
   

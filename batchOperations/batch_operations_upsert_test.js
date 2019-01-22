@@ -2,6 +2,8 @@ const testedResource = require('../common.js').testedResource;
 const assertBatchOperation = require('../common.js').assertBatchOperation;
 const http = require('../http.js');
 
+const entitiesResource = testedResource + '/entities/';
+
 const batchUpsertResource = testedResource + '/entityOperations/upsert';
 
 describe('Batch Entity Upsert. JSON', () => {

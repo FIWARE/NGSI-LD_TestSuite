@@ -2,8 +2,9 @@ const testedResource = require('../common.js').testedResource;
 const assertBatchOperation = require('../common.js').assertBatchOperation;
 const http = require('../http.js');
 
-const batchDeleteResource   = testedResource + '/entityOperations/delete';
+const entitiesResource = testedResource + '/entities/';
 
+const batchDeleteResource   = testedResource + '/entityOperations/delete';
 
 describe('Batch Entity Deletion. JSON', () => {
   

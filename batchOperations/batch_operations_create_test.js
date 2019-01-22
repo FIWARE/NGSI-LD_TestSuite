@@ -2,11 +2,9 @@ const testedResource = require('../common.js').testedResource;
 const assertBatchOperation = require('../common.js').assertBatchOperation;
 const http = require('../http.js');
 
-const batchCreationResource = testedResource + '/entityOperations/create';
-const batchUpsertResource   = testedResource + '/entityOperations/upsert';
-const batchUpdateResource   = testedResource + '/entityOperations/update';
-const batchDeleteResource   = testedResource + '/entityOperations/delete';
+const entitiesResource = testedResource + '/entities/';
 
+const batchCreationResource = testedResource + '/entityOperations/create';
 
 describe('Batch Entity Creation. JSON', () => {
   const entity1 = {
