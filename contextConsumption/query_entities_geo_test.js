@@ -53,7 +53,7 @@ describe('Query Entity. Geo. JSON. Default @context', () => {
   ];
   
   beforeAll(() => {
-    let requests = [];
+    const requests = [];
     
     for (let j = 0; j < entities.length; j++) {
       requests.push(http.post(entitiesResource,entities[j]));
@@ -63,7 +63,7 @@ describe('Query Entity. Geo. JSON. Default @context', () => {
   });
     
   afterAll(() => {
-    let requests = [];
+    const requests = [];
     
     for (let j = 0; j < entityIds.length; j++) {
       requests.push(http.delete(entitiesResource + entityIds[j]));
