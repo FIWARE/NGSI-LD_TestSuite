@@ -104,6 +104,13 @@ function patchObj(target, patch) {
   return Object.assign(copy, patch);
 }
 
+function wait(milliseconds) {
+  var sab = new SharedArrayBuffer(4);
+  var int32 = new Int32Array(sab);
+  
+  Atomics.wait(int32, 0, 0, milliseconds);
+}
+
 module.exports = {
   testedResource,
   assertCreated,
@@ -115,5 +122,6 @@ module.exports = {
   serializeParams,
   assertBatchOperation,
   // TECHNICAL DEBT
-  patchObj
+  patchObj,
+  wait
 };
