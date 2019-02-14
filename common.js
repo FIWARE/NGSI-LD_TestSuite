@@ -105,6 +105,7 @@ function patchObj(target, patch) {
 }
 
 function wait(milliseconds) {
+  /*eslint no-unused-vars: "off"*/
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve();

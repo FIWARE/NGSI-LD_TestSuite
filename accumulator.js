@@ -1,4 +1,5 @@
-
+/*eslint no-console: "off"*/
+/*eslint no-unused-vars: "off"*/
 
 const Hapi = require('hapi');
 
@@ -15,7 +16,7 @@ const init = async () => {
 };
 
 const log = (logStr) => {
-  console.log(new Date().toISOString() + ' ' + 'Accumulator: ' + logStr);
+  console.log(`${new Date().toISOString()} Accumulator:  ${logStr}`);
 };
 
 server.route({
@@ -29,7 +30,7 @@ server.route({
     handler: (request, reply) => {
       log('Accumulate request');
       
-      if (request.payload.type == 'Notification') {
+      if (request.payload.type === 'Notification') {
         log('It is a notification');
         
         if (request.payload.data && Array.isArray(request.payload.data)) {
