@@ -5,10 +5,42 @@ const entitiesResource = testedResource + '/entities/';
 const subscriptionsResource = testedResource + '/subscriptions/';
 
 const accumulatorResource = 'http://localhost:3000/dump';
+const clearAccumulatorResource =  'http://localhost:3000/clear';
 
 const process = require('child_process');
 
 const wait =  require('../common.js').wait;
+
+// Creates a new subscription
+async function createSubscription(subscription) {
+  const response = await http.post(subscriptionsResource, subscription);
+  
+  expect(response.response).toHaveProperty('statusCode', 201);
+}
+
+// Deletes a subscription
+async function deleteSubscription(subscriptionId) {
+  const response = await http.delete(subscriptionsResource + subscriptionId);
+  
+  expect(response.response).toHaveProperty('statusCode', 204);
+}
+
+// Updates an attribute so that a new notification shall be triggered
+async function updateAttribute(entityId, propertyName, newValue) {
+    const overwrittenAttrs = {
+    };
+    
+    overwrittenAttrs[propertyName] = {
+      'type': 'Property',
+      'value': newValue
+    };
+    
+    const response = await http.post(entitiesResource + entityId
+                                       + '/attrs/', overwrittenAttrs);
+    
+    expect(response.response).toHaveProperty('statusCode', 204);
+}
+
 
 describe('Basic Notification. JSON', () => {
    // An entity is created
@@ -18,33 +50,22 @@ describe('Basic Notification. JSON', () => {
     'speed': {
       'type': 'Property',
       'value': 34
+    },
+    'brandName': {
+      'type': 'Property',
+      'value': 'Mercedes'
     }
   };
 
   const entityId = entity.id;
+   
+  let childProcess;
   
-  // A Subscription is created
-  const subscription = {
-    'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
-    'type': 'Subscription',
-    'entities': [
-      {
-        'type': 'Vehicle'
-      }
-    ],
-    'watchedAttributes': ['speed'],
-    'q': 'speed>50',
-    'notification': {
-      'attributes': ['speed'],
-      'endpoint': {
-        'uri': 'http://host.docker.internal:3000/acc',
-        'accept': 'application/json'
-      }
-    }
-  };
+  // Accumulator is cleared before each test
+  beforeEach(() => {
+    return http.post(clearAccumulatorResource);
+  });
   
-  var childProcess;
-    
   beforeAll(() => {
     const requests = [];
     
@@ -62,7 +83,6 @@ describe('Basic Notification. JSON', () => {
     });
     
     requests.push(http.post(entitiesResource, entity));
-    requests.push(http.post(subscriptionsResource, subscription));
     
     return Promise.all(requests);
   });
@@ -74,32 +94,81 @@ describe('Basic Notification. JSON', () => {
     const requests = [];
       
     requests.push(http.delete(entitiesResource + entityId));
-    requests.push(http.delete(subscriptionsResource + subscription.id));
-    
     return Promise.all(requests);
   });
     
     
-  it('should get a notification', async function() {
-    const newSpeed = 65;
-    
-    const overwrittenAttrs = {
-      'speed': {
-        'type': 'Property',
-        'value': newSpeed
+  it('should get a notification. Simple subscription to any attribute', async function() {
+     // A Subscription is created
+    const subscription = {
+      'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+      'type': 'Subscription',
+      'entities': [
+        {
+          'type': 'Vehicle'
+        }
+      ],
+      'notification': {
+        'endpoint': {
+          'uri': 'http://host.docker.internal:3000/acc',
+          'accept': 'application/json'
+        }
       }
     };
-    const response = await http.post(entitiesResource + entityId
-                                       + '/attrs/', overwrittenAttrs);
-    expect(response.response).toHaveProperty('statusCode', 204);
-   
-    // Wait for the notification to arrive   
-    wait(3000);
-      
+    
+    // Once subscription is created the first notification should be received
+    createSubscription(subscription);
+    
+    await wait(2000);
+    
     const checkResponse = await http.get(accumulatorResource);
     
-    expect(response.body).toHaveProperty(entityId);
-    expect(response.body[entityId].speed.value).toBe(newSpeed);
+    // Only one notification corresponding to the subscription
+    expect(checkResponse.response.body[entityId].length).toBe(1);
+    expect(checkResponse.response.body[entityId][0].speed.value).toBe(entity.speed.value);
+    
+    deleteSubscription(subscription.id);
+  });
+
+  
+  it('should get a notification. Subscription to one attribute with query', async function() {
+    // Speed is updated so that the initial notification will not be received
+    updateAttribute(entityId, 'speed', 10);
+   
+     // A Subscription is created
+    const subscription = {
+      'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+      'type': 'Subscription',
+      'entities': [
+        {
+          'type': 'Vehicle'
+        }
+      ],
+      'q': 'speed>80',
+      'notification': {
+        'endpoint': {
+          'uri': 'http://host.docker.internal:3000/acc',
+          'accept': 'application/json'
+        }
+      }
+    };
+    
+    // Here the notification should not be received as the query is not matched
+    createSubscription(subscription);
+
+    const newSpeed = 90;
+    updateAttribute(entityId, 'speed', newSpeed);
+    
+    await wait(2000);
+   
+    // Now checking the content of the accumulator  
+    const checkResponse = await http.get(accumulatorResource);
+      
+    expect(checkResponse.response.body).toHaveProperty(entityId);
+    expect(checkResponse.response.body[entityId].length).toBe(1);
+    expect(checkResponse.response.body[entityId][0].speed.value).toBe(newSpeed);
+      
+    deleteSubscription(subscription.id);
   });
   
 });

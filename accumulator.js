@@ -1,8 +1,8 @@
-'use strict';
+
 
 const Hapi = require('hapi');
 
-const entityData = Object.create(null);
+let entityData = Object.create(null);
 
 const server = Hapi.server({
     port: 3000,
@@ -11,21 +11,60 @@ const server = Hapi.server({
 
 const init = async () => {
     await server.start();
-    console.log(`Server running at: ${server.info.uri}`);
+    console.log(`Accumulator: Server running at: ${server.info.uri}`);
+};
+
+const log = (logStr) => {
+  console.log(new Date().toISOString() + ' ' + 'Accumulator: ' + logStr);
 };
 
 server.route({
     method: 'POST',
     path: '/acc',
+    config: {
+      response: {
+        emptyStatusCode: 204
+      }
+    },
     handler: (request, reply) => {
-        if (request.payload.type == 'Notification') {
-          const data = request.payload.data;
-          data.forEach(aEntity => {
-            entityData[aEntity.id] = aEntity;
-          }); 
-        }
+      log('Accumulate request');
+      
+      if (request.payload.type == 'Notification') {
+        log('It is a notification');
         
-        return 200;
+        if (request.payload.data && Array.isArray(request.payload.data)) {
+          const data = request.payload.data;
+          
+          data.forEach(aEntity => {
+            if (!entityData[aEntity.id]) {
+              entityData[aEntity.id] = [];
+            }
+            entityData[aEntity.id].push(aEntity);
+          });
+        }
+        else {
+          log('Payload does not include data member or it is not an array');
+        }
+      }
+      
+      return null;
+    }
+});
+
+server.route({
+    method: 'POST',
+    path: '/clear',
+    config: {
+      response: {
+        emptyStatusCode: 204
+      }
+    },
+    handler: (request, reply) => {
+      log('Clear request');
+      
+      entityData = Object.create(null);
+      
+      return null;
     }
 });
 
@@ -33,12 +72,14 @@ server.route({
   method: 'GET',
   path: '/dump',
   handler: (request, reply) => {
+    log('Dump request');
+    
     return entityData;
   }
 });
 
 process.on('unhandledRejection', (err) => {
-    console.log(err);
+    log('Error: ' + err);
     process.exit(1);
 });
 

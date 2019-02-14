@@ -105,10 +105,11 @@ function patchObj(target, patch) {
 }
 
 function wait(milliseconds) {
-  var sab = new SharedArrayBuffer(4);
-  var int32 = new Int32Array(sab);
-  
-  Atomics.wait(int32, 0, 0, milliseconds);
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    },milliseconds);
+  });
 }
 
 module.exports = {
