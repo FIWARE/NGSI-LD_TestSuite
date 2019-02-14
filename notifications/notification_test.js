@@ -96,14 +96,14 @@ describe('Basic Notification. JSON', () => {
     
     const requests = [];
       
-    requests.push(http.delete(entitiesResource + entityId));
+    // requests.push(http.delete(entitiesResource + entityId));
     requests.push(http.post(clearAccumulatorResource));
     
     return Promise.all(requests);
   });
     
-    
-  it('should get a notification. Simple subscription to any attribute', async function() {
+   
+  it('should send a notification. Subscription to Entity Type. Any attribute', async function() {
      // A Subscription is created
     const subscription = {
       'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
@@ -122,13 +122,13 @@ describe('Basic Notification. JSON', () => {
     };
     
     // Once subscription is created the first notification should be received
-    createSubscription(subscription);
+    await createSubscription(subscription);
     
     await wait(2000);
     
     const checkResponse = await http.get(accumulatorResource);
     
-    // Only one notification corresponding to the subscription
+    // Only one notification corresponding to the initial subscription
     expect(checkResponse.response.body[entityId].length).toBe(1);
     expect(checkResponse.response.body[entityId][0].speed.value).toBe(entity.speed.value);
     
@@ -136,9 +136,82 @@ describe('Basic Notification. JSON', () => {
   });
 
   
-  it('should get a notification. Subscription to one attribute with query', async function() {
+  it('should not send a notification. Subscription to specific attribute. Update other', async function() {
+     // A Subscription is created
+    const subscription = {
+      'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+      'type': 'Subscription',
+      'entities': [
+        {
+          'type': 'Vehicle'
+        }
+      ],
+      'watchedAttributes': ['speed'],
+      'notification': {
+        'endpoint': {
+          'uri': 'http://host.docker.internal:3000/acc',
+          'accept': 'application/json'
+        }
+      }
+    };
+    
+    // Once subscription is created the first notification should be received
+    await createSubscription(subscription);
+     
+    // Now the brandName property is modified
+    // No additional notification should be received
+    await updateAttribute(entityId, 'brandName', 'Volvo');
+    
+    const checkResponse = await http.get(accumulatorResource);
+    
+    // Only one notification corresponding to the initial subscription shall be present
+    expect(checkResponse.response.body[entityId].length).toBe(1);
+    
+    deleteSubscription(subscription.id);
+  });
+  
+  
+  it('should send a notification. Simple subscription to concrete attribute', async function() {
+     // A Subscription is created
+    const subscription = {
+      'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+      'type': 'Subscription',
+      'entities': [
+        {
+          'type': 'Vehicle'
+        }
+      ],
+      'watchedAttributes': ['speed'],
+      'notification': {
+        'endpoint': {
+          'uri': 'http://host.docker.internal:3000/acc',
+          'accept': 'application/json'
+        }
+      }
+    };
+    
+    // Once subscription is created the first notification should be received
+    await createSubscription(subscription);
+    
+    // Now the speed property is modified
+    // An additional notification should be received
+    const newSpeed = 5;
+    await updateAttribute(entityId, 'speed', newSpeed);
+    
+    await wait(2000);
+    const checkResponse = await http.get(accumulatorResource);
+    
+    // Only one notification corresponding to the subscription
+    expect(checkResponse.response.body[entityId].length).toBe(2);
+    expect(checkResponse.response.body[entityId][1].speed.value).toBe(newSpeed);
+    
+    deleteSubscription(subscription.id);
+  });
+
+
+  it('should send a notification. Subscription to one attribute with filter query', async function() {
     // Speed is updated so that the initial notification will not be received
-    updateAttribute(entityId, 'speed', 10);
+    await updateAttribute(entityId, 'speed', 10);
    
      // A Subscription is created
     const subscription = {
@@ -158,13 +231,11 @@ describe('Basic Notification. JSON', () => {
       }
     };
     
-    // Here the notification should not be received as the query is not matched
-    createSubscription(subscription);
-
+    // Here the initial notification should not be received as the query is not matched
+    await createSubscription(subscription);
+  
     const newSpeed = 90;
-    updateAttribute(entityId, 'speed', newSpeed);
-    
-    await wait(2000);
+    await updateAttribute(entityId, 'speed', newSpeed);
    
     // Now checking the content of the accumulator  
     const checkResponse = await http.get(accumulatorResource);
