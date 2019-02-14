@@ -10,9 +10,10 @@ const accumulatorEndpoint = 'http://localhost:3000';
 const accumulatorResource = accumulatorEndpoint + '/dump';
 const clearAccumulatorResource =  accumulatorEndpoint + '/clear';
 
-const process = require('child_process');
-
 const wait =  require('../common.js').wait;
+
+const spawn =  require('../common.js').spawn;
+
 
 // Creates a new subscription
 async function createSubscription(subscription) {
@@ -70,24 +71,25 @@ describe('Basic Notification. JSON', () => {
   });
   
   beforeAll(() => {
-    const requests = [];
-    
-    childProcess = process.spawn('node', ['./accumulator.js']);
-    childProcess.on('close', (code) => {
-      if (code !== null) {
-        console.error(`Accumulator process exited with code ${code}`);
-      }
-      else {
-        console.log('Accumulator process finished properly');
-      }
+    return new Promise((resolve, reject) => {
+      spawn('node', ['./accumulator.js']).then((pchildProcess) => {
+        childProcess = pchildProcess;
+        
+        childProcess.on('close', (code) => {
+          if (code !== null) {
+            console.error(`Accumulator process exited with code ${code}`);
+          }
+          else {
+            console.log('Accumulator process finished properly');
+          }
+        });
+        childProcess.on('error', () => {
+          console.error('Failed to start accumulator.');
+        });
+      
+        http.post(entitiesResource, entity).then(resolve, reject);
+      });
     });
-    childProcess.on('error', () => {
-      console.error('Failed to start accumulator.');
-    });
-    
-    requests.push(http.post(entitiesResource, entity));
-    
-    return Promise.all(requests);
   });
 
   
@@ -96,7 +98,7 @@ describe('Basic Notification. JSON', () => {
     
     const requests = [];
       
-    // requests.push(http.delete(entitiesResource + entityId));
+    requests.push(http.delete(entitiesResource + entityId));
     requests.push(http.post(clearAccumulatorResource));
     
     return Promise.all(requests);
@@ -132,7 +134,7 @@ describe('Basic Notification. JSON', () => {
     expect(checkResponse.response.body[entityId].length).toBe(1);
     expect(checkResponse.response.body[entityId][0].speed.value).toBe(entity.speed.value);
     
-    deleteSubscription(subscription.id);
+    await deleteSubscription(subscription.id);
   });
 
   
@@ -167,7 +169,7 @@ describe('Basic Notification. JSON', () => {
     // Only one notification corresponding to the initial subscription shall be present
     expect(checkResponse.response.body[entityId].length).toBe(1);
     
-    deleteSubscription(subscription.id);
+    await deleteSubscription(subscription.id);
   });
   
   
@@ -205,7 +207,7 @@ describe('Basic Notification. JSON', () => {
     expect(checkResponse.response.body[entityId].length).toBe(2);
     expect(checkResponse.response.body[entityId][1].speed.value).toBe(newSpeed);
     
-    deleteSubscription(subscription.id);
+    await deleteSubscription(subscription.id);
   });
 
 
@@ -244,7 +246,7 @@ describe('Basic Notification. JSON', () => {
     expect(checkResponse.response.body[entityId].length).toBe(1);
     expect(checkResponse.response.body[entityId][0].speed.value).toBe(newSpeed);
       
-    deleteSubscription(subscription.id);
+    await deleteSubscription(subscription.id);
   });
   
 });
