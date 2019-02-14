@@ -4,8 +4,9 @@ const http = require('../http.js');
 const entitiesResource = testedResource + '/entities/';
 const subscriptionsResource = testedResource + '/subscriptions/';
 
-const accumulatorResource = 'http://localhost:3000/dump';
-const clearAccumulatorResource =  'http://localhost:3000/clear';
+const accumulatorEndpoint = 'http://localhost:3000';
+const accumulatorResource = accumulatorEndpoint + '/dump';
+const clearAccumulatorResource =  accumulatorEndpoint + '/clear';
 
 const process = require('child_process');
 
@@ -27,18 +28,18 @@ async function deleteSubscription(subscriptionId) {
 
 // Updates an attribute so that a new notification shall be triggered
 async function updateAttribute(entityId, propertyName, newValue) {
-    const overwrittenAttrs = {
-    };
+  const overwrittenAttrs = {
+  };
     
-    overwrittenAttrs[propertyName] = {
-      'type': 'Property',
-      'value': newValue
-    };
+  overwrittenAttrs[propertyName] = {
+    'type': 'Property',
+    'value': newValue
+  };
     
-    const response = await http.post(entitiesResource + entityId
+  const response = await http.post(entitiesResource + entityId
                                        + '/attrs/', overwrittenAttrs);
     
-    expect(response.response).toHaveProperty('statusCode', 204);
+  expect(response.response).toHaveProperty('statusCode', 204);
 }
 
 
@@ -94,6 +95,8 @@ describe('Basic Notification. JSON', () => {
     const requests = [];
       
     requests.push(http.delete(entitiesResource + entityId));
+    requests.push(http.post(clearAccumulatorResource));
+    
     return Promise.all(requests);
   });
     
