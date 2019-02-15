@@ -3,11 +3,16 @@
 
 const Hapi = require('hapi');
 
+const url = require('url');
+
 let entityData = Object.create(null);
 
+const endPoint = process.env.ACC_ENDPOINT || 'http://localhost:3000';
+const parsedEndpoint = url.parse(endPoint);
+
 const server = Hapi.server({
-  port: 3000,
-  host: 'localhost'
+  port: parsedEndpoint.port,
+  host: parsedEndpoint.hostname
 });
 
 const init = async () => {

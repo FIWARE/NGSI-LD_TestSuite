@@ -6,12 +6,13 @@ const http = require('../http.js');
 const entitiesResource = testedResource + '/entities/';
 const subscriptionsResource = testedResource + '/subscriptions/';
 
-const accumulatorEndpoint = 'http://localhost:3000';
+const accumulatorEndpoint = require('../common.js').accEndpoint;
 const accumulatorResource = accumulatorEndpoint + '/dump';
 const clearAccumulatorResource =  accumulatorEndpoint + '/clear';
 
-const wait =  require('../common.js').wait;
+const notifyEndpoint = require('../common.js').notifyEndpoint;
 
+const sleep =  require('../common.js').sleep;
 const spawn =  require('../common.js').spawn;
 
 
@@ -117,7 +118,7 @@ describe('Basic Notification. JSON', () => {
       ],
       'notification': {
         'endpoint': {
-          'uri': 'http://host.docker.internal:3000/acc',
+          'uri': notifyEndpoint,
           'accept': 'application/json'
         }
       }
@@ -126,7 +127,7 @@ describe('Basic Notification. JSON', () => {
     // Once subscription is created the first notification should be received
     await createSubscription(subscription);
     
-    await wait(2000);
+    await sleep(2000);
     
     const checkResponse = await http.get(accumulatorResource);
     
@@ -151,7 +152,7 @@ describe('Basic Notification. JSON', () => {
       'watchedAttributes': ['speed'],
       'notification': {
         'endpoint': {
-          'uri': 'http://host.docker.internal:3000/acc',
+          'uri': notifyEndpoint,
           'accept': 'application/json'
         }
       }
@@ -163,6 +164,8 @@ describe('Basic Notification. JSON', () => {
     // Now the brandName property is modified
     // No additional notification should be received
     await updateAttribute(entityId, 'brandName', 'Volvo');
+    
+    await sleep(2000);
     
     const checkResponse = await http.get(accumulatorResource);
     
@@ -186,7 +189,7 @@ describe('Basic Notification. JSON', () => {
       'watchedAttributes': ['speed'],
       'notification': {
         'endpoint': {
-          'uri': 'http://host.docker.internal:3000/acc',
+          'uri': notifyEndpoint,
           'accept': 'application/json'
         }
       }
@@ -200,7 +203,7 @@ describe('Basic Notification. JSON', () => {
     const newSpeed = 5;
     await updateAttribute(entityId, 'speed', newSpeed);
     
-    await wait(2000);
+    await sleep(2000);
     const checkResponse = await http.get(accumulatorResource);
     
     // Only one notification corresponding to the subscription
@@ -227,7 +230,7 @@ describe('Basic Notification. JSON', () => {
       'q': 'speed>80',
       'notification': {
         'endpoint': {
-          'uri': 'http://host.docker.internal:3000/acc',
+          'uri': notifyEndpoint,
           'accept': 'application/json'
         }
       }

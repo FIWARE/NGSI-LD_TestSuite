@@ -6,7 +6,11 @@
  *
  */
 
-const endpoint = process.env.TEST_ENDPOINT;
+const endpoint = process.env.TEST_ENDPOINT || 'http://localhost:1026';
+
+const accEndpoint = process.env.ACC_ENDPOINT || 'http://localhost:3000';
+const notifyEndpoint = process.env.NOTIFY_ENDPOINT || accEndpoint + '/' + 'acc';
+
 const ngsild = 'ngsi-ld/v1';
 
 const testedResource = endpoint + '/' + ngsild;
@@ -106,7 +110,7 @@ function patchObj(target, patch) {
   return Object.assign(copy, patch);
 }
 
-function wait(milliseconds) {
+function sleep(milliseconds) {
   /*eslint no-unused-vars: "off"*/
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -132,6 +136,8 @@ function spawn(process, params) {
 
 module.exports = {
   testedResource,
+  accEndpoint,
+  notifyEndpoint,
   assertCreated,
   assertSubscriptionCreated,
   assertRetrieved,
@@ -142,6 +148,6 @@ module.exports = {
   assertBatchOperation,
   // TECHNICAL DEBT
   patchObj,
-  wait,
-  spawn
+  spawn,
+  sleep
 };
