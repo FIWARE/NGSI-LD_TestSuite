@@ -24,9 +24,18 @@ the evolution of NGSIv2 for supporting Linked Data based on JSON-LD.
 
 ```
 npm install
-export TEST_ENDPOINT=<Your NGSI-LD Broker end point>. Example: `http://localhost:1026`
+export TEST_ENDPOINT=<Your NGSI-LD Broker endpoint>. Example: `http://localhost:1026`
+export ACC_ENDPOINT=<The endpoint of the accumulator>. Example: `http://localhost:3000`
+export NOTIFY_ENDPOINT=<The notification endpoint>. Example: `http://host.docker.internal:3000/acc`
 npm test
 ```
+
+By default, the test endpoint is `http://localhost:1026`.
+By default, the accumulator endpoint is `http://localhost:3000`.
+By default, the notification endpoint is the same as the accumulator endpoint. 
+
+Please note, that if you are running the NGSI-LD endpoint through Docker, the endpoint shall be encoded as `http://host.docker.internal:<port>/acc`, so that the Docker container can get access to the accumulator server running on the host.  
+
 
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-url]: LICENSE
