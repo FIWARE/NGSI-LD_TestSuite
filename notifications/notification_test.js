@@ -253,6 +253,8 @@ describe('Basic Notification. JSON', () => {
   
     const newSpeed = 90;
     await updateAttribute(entityId, 'speed', newSpeed);
+    
+    await sleep(2000);
    
     // Now checking the content of the accumulator  
     const checkResponse = await http.get(accumulatorResource);
