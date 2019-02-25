@@ -20,6 +20,7 @@
     "DateProp": {
       "@id":   "http://example.org/DateProp",
       "@type": "http://uri.etsi.org/ngsi-ld/DateTime"
-    }
+    },
+    "Vehicle": "http://schema.org/Vehicle"
   }
 }
