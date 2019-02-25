@@ -212,7 +212,6 @@ describe('Subscription yields to no Notification. JSON', () => {
       }
     };
     
-    // Here the initial notification should not be received as the query is not matched
     await createSubscription(subscription);
    
     // Now checking the content of the accumulator
@@ -224,5 +223,115 @@ describe('Subscription yields to no Notification. JSON', () => {
     await deleteSubscription(subscription.id);
   });
   
+  
+  it('should not send a notification. Watched attribute does not exist', async function() {   
+     // A Subscription is created
+    const subscription = {
+      'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+      'type': 'Subscription',
+      'entities': [
+        {
+          // type will not match
+          'type': 'Vehicle',
+          'id': entity.id
+        }
+      ],
+      'watchedAttributes': ['doesNotExist'],
+      'notification': {
+        'endpoint': {
+          'uri': notifyEndpoint,
+          'accept': 'application/json'
+        }
+      }
+    };
+    
+    await createSubscription(subscription);
+   
+    // Now checking the content of the accumulator
+    const checkResponse = await http.get(accumulatorResource);
+    
+    // Entity id matches but watched attributes not so no notification
+    expect(checkResponse.response.body).not.toHaveProperty(entityId);
+      
+    await deleteSubscription(subscription.id);
+  });
+  
+  
+   it('should not send a notification. Subscription is not active', async function() {   
+     // A Subscription is created
+    const subscription = {
+      'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+      'type': 'Subscription',
+      'entities': [
+        {
+          // type will not match
+          'type': 'Vehicle',
+          'id': entity.id
+        }
+      ],
+      'isActive': false,
+      'notification': {
+        'endpoint': {
+          'uri': notifyEndpoint,
+          'accept': 'application/json'
+        }
+      }
+    };
+    
+    await createSubscription(subscription);
+   
+    // Now checking the content of the accumulator
+    const checkResponse = await http.get(accumulatorResource);
+    
+    // Entity id matches but watched attributes not so no notification
+    expect(checkResponse.response.body).not.toHaveProperty(entityId);
+      
+    await deleteSubscription(subscription.id);
+  });
+ 
+   
+  it('should not send a notification. Subscription has expired', async function() {   
+     // A Subscription is created
+    const subscription = {
+      'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+      'type': 'Subscription',
+      'entities': [
+        {
+          // type will not match
+          'type': 'Vehicle',
+          'id': entity.id
+        }
+      ],
+      'expires': new Date(new Date().getTime() + 1000).toISOString(),
+      'notification': {
+        'endpoint': {
+          'uri': notifyEndpoint,
+          'accept': 'application/json'
+        }
+      }
+    };
+    
+    // The initial notification should be received
+    await createSubscription(subscription);
+    
+    // After one second subscription expires, so the notification shall not be delivered
+    await sleep(2000);
+    
+    await updateAttribute(entityId, 'speed', 120);
+    
+    await sleep(2000);
+   
+    // Now checking the content of the accumulator
+    const checkResponse = await http.get(accumulatorResource);
+    
+    // Entity id matches but watched attributes not so no notification
+    expect(checkResponse.response.body).toHaveProperty(entityId);
+    // Only the initial notification shall be delivered
+    expect(checkResponse.response.body[entityId].length).toBe(1);
+    expect(checkResponse.response.body[entityId][0].speed.value).toBe(entity.speed.value);
+      
+    await deleteSubscription(subscription.id);
+  }); 
+
   
 });
