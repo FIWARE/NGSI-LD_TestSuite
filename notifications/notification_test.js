@@ -73,7 +73,7 @@ describe('Basic Notification. JSON', () => {
   
   beforeAll(() => {
     return new Promise((resolve, reject) => {
-      spawn('node', ['./accumulator.js']).then((pchildProcess) => {
+      spawn('node', [__dirname + '/' + 'accumulator.js']).then((pchildProcess) => {
         childProcess = pchildProcess;
         
         childProcess.on('close', (code) => {
