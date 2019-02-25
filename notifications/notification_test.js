@@ -15,6 +15,7 @@ const notifyEndpoint = require('../common.js').notifyEndpoint;
 const sleep =  require('../common.js').sleep;
 const spawn =  require('../common.js').spawn;
 
+const path = require('path');
 
 // Creates a new subscription
 async function createSubscription(subscription) {
@@ -73,7 +74,7 @@ describe('Basic Notification. JSON', () => {
   
   beforeAll(() => {
     return new Promise((resolve, reject) => {
-      spawn('node', [__dirname + '/' + 'accumulator.js']).then((pchildProcess) => {
+      spawn('node', [path.join(__dirname, 'accumulator.js')]).then((pchildProcess) => {
         childProcess = pchildProcess;
         
         childProcess.on('close', (code) => {
