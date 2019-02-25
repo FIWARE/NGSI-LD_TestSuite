@@ -206,7 +206,8 @@ describe('Basic Notification. JSON', () => {
     await sleep(2000);
     const checkResponse = await http.get(accumulatorResource);
     
-    // Only one notification corresponding to the subscription
+    // Two notifications one corresponding to the initial subscription another corresponding to
+    // The update of the speed attribute
     expect(checkResponse.response.body[entityId].length).toBe(2);
     expect(checkResponse.response.body[entityId][1].speed.value).toBe(newSpeed);
     
@@ -244,7 +245,8 @@ describe('Basic Notification. JSON', () => {
    
     // Now checking the content of the accumulator  
     const checkResponse = await http.get(accumulatorResource);
-      
+    
+    // Only one notification as it should only be sent when the filter conditions are met
     expect(checkResponse.response.body).toHaveProperty(entityId);
     expect(checkResponse.response.body[entityId].length).toBe(1);
     expect(checkResponse.response.body[entityId][0].speed.value).toBe(newSpeed);
