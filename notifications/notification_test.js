@@ -119,6 +119,77 @@ describe('Basic Notification. JSON', () => {
     
     await deleteSubscription(subscription.id);
   });
+  
+  
+  it('should send a notification. Subscription to Entity Type. Any attribute watched. Only one attribute delivered', async function() {
+     // A Subscription is created
+    const subscription = {
+      'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+      'type': 'Subscription',
+      'entities': [
+        {
+          'type': 'Vehicle'
+        }
+      ],
+      'notification': {
+        'endpoint': {
+          'uri': notifyEndpoint,
+          'accept': 'application/json'
+        },
+        'attributes': ['brandName']
+      }
+    };
+    
+    // Once subscription is created the first notification should be received
+    await createSubscription(subscription);
+    
+    await sleep(2000);
+    
+    const checkResponse = await http.get(accumulatorResource);
+        
+    // Only one notification corresponding to the initial subscription
+    expect(checkResponse.response.body[entityId].length).toBe(1);
+    expect(checkResponse.response.body[entityId][0].speed).toBeUndefined();
+    expect(checkResponse.response.body[entityId][0].brandName.value).toBe(entity.brandName.value);
+    
+    await deleteSubscription(subscription.id);
+  });
+  
+  
+  it('should send a notification. Subscription to Entity Type. Any attribute watched. Non existent attribute asked', async function() {
+     // A Subscription is created
+    const subscription = {
+      'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+      'type': 'Subscription',
+      'entities': [
+        {
+          'type': 'Vehicle'
+        }
+      ],
+      'notification': {
+        'endpoint': {
+          'uri': notifyEndpoint,
+          'accept': 'application/json'
+        },
+        'attributes': ['doesNotExist']
+      }
+    };
+    
+    // Once subscription is created the first notification should be received
+    await createSubscription(subscription);
+    
+    await sleep(2000);
+    
+    const checkResponse = await http.get(accumulatorResource);
+        
+    // Only one notification corresponding to the initial subscription
+    expect(checkResponse.response.body[entityId]).toBeDefined();
+    expect(checkResponse.response.body[entityId].length).toBe(1);
+    expect(checkResponse.response.body[entityId][0].speed).toBeUndefined();
+    expect(checkResponse.response.body[entityId][0].brandName).toBeUndefined();
+    
+    await deleteSubscription(subscription.id);
+  });
 
   
   it('should send a notification. Simple subscription to concrete attribute', async function() {
