@@ -4,7 +4,6 @@ const testedResource = require('../common.js').testedResource;
 const http = require('../http.js');
 
 const entitiesResource = testedResource + '/entities/';
-const subscriptionsResource = testedResource + '/subscriptions/';
 
 const accumulatorEndpoint = require('../common.js').accEndpoint;
 const accumulatorResource = accumulatorEndpoint + '/dump';
@@ -17,39 +16,9 @@ const spawn =  require('../common.js').spawn;
 
 const path = require('path');
 
-// Creates a new subscription
-async function createSubscription(subscription, mimeType) {
-  const mtype = mimeType || 'application/json';
-  
-  const response = await http.post(subscriptionsResource, subscription,{
-    'Content-Type': mtype
-  });
-  
-  expect(response.response).toHaveProperty('statusCode', 201);
-}
-
-// Deletes a subscription
-async function deleteSubscription(subscriptionId) {
-  const response = await http.delete(subscriptionsResource + subscriptionId);
-  
-  expect(response.response).toHaveProperty('statusCode', 204);
-}
-
-// Updates an attribute so that a new notification shall be triggered
-async function updateAttribute(entityId, propertyName, newValue) {
-  const overwrittenAttrs = {
-  };
-    
-  overwrittenAttrs[propertyName] = {
-    'type': 'Property',
-    'value': newValue
-  };
-    
-  const response = await http.post(entitiesResource + entityId
-                                       + '/attrs/', overwrittenAttrs);
-    
-  expect(response.response).toHaveProperty('statusCode', 204);
-}
+const createSubscription = require('./notification_common.js').createSubscription;
+const deleteSubscription = require('./notification_common.js').deleteSubscription;
+const updateAttribute = require('./notification_common.js').updateAttribute;
 
 
 describe('Basic Notification. JSON', () => {
@@ -329,37 +298,5 @@ describe('Basic Notification. JSON', () => {
     await deleteSubscription(subscription.id);
   });
   
-  
-  it('should not send a notification. Subscription to Entity Type. LD Context generates a different mapping', async function() {
-     // A Subscription is created
-    const subscription = {
-      'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
-      'type': 'Subscription',
-      'entities': [
-        {
-          'type': 'Vehicle'
-        }
-      ],
-      'notification': {
-        'endpoint': {
-          'uri': notifyEndpoint,
-          'accept': 'application/json'
-        }
-      },
-      '@context': 'https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld'
-    };
-    
-    // Once subscription is created the first notification should be received
-    await createSubscription(subscription, 'application/ld+json');
-    
-    await sleep(2000);
-    
-    const checkResponse = await http.get(accumulatorResource);
-    
-    // No notification should be delivered as the @context will map Vehicle to a different URI
-    expect(checkResponse.response.body).not.toHaveProperty(entityId);
-    
-    await deleteSubscription(subscription.id);
-  });
   
 });
