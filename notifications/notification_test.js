@@ -51,6 +51,7 @@ describe('Basic Notification. JSON', () => {
   });
   
   beforeAll(() => {
+   /*eslint no-unused-vars: "off"*/
     return new Promise((resolve, reject) => {
       spawn('node', [path.join(__dirname, 'accumulator.js')]).then((pchildProcess) => {
         childProcess = pchildProcess;

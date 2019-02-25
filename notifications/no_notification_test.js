@@ -1,5 +1,6 @@
 /*eslint no-console: "off"*/
 
+
 const testedResource = require('../common.js').testedResource;
 const http = require('../http.js');
 
@@ -51,6 +52,7 @@ describe('Subscription yields to no Notification. JSON', () => {
   });
   
   beforeAll(() => {
+    /*eslint no-unused-vars: "off"*/
     return new Promise((resolve, reject) => {
       spawn('node', [path.join(__dirname, 'accumulator.js')]).then((pchildProcess) => {
         childProcess = pchildProcess;
