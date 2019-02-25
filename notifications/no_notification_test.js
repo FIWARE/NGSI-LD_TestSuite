@@ -21,7 +21,7 @@ const deleteSubscription = require('./notification_common.js').deleteSubscriptio
 const updateAttribute = require('./notification_common.js').updateAttribute;
 
 
-describe('Basic Notification. JSON', () => {
+describe('Subscription yields to no Notification. JSON', () => {
    // An entity is created
   const entity = {
     'id': 'urn:ngsi-ld:Vehicle:V1234',
@@ -81,42 +81,9 @@ describe('Basic Notification. JSON', () => {
   afterEach(() => {
     return http.delete(entitiesResource + entityId);
   });
-
   
-  it('should send a notification. Subscription to Entity Type. Any attribute', async function() {
-     // A Subscription is created
-    const subscription = {
-      'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
-      'type': 'Subscription',
-      'entities': [
-        {
-          'type': 'Vehicle'
-        }
-      ],
-      'notification': {
-        'endpoint': {
-          'uri': notifyEndpoint,
-          'accept': 'application/json'
-        }
-      }
-    };
-    
-    // Once subscription is created the first notification should be received
-    await createSubscription(subscription);
-    
-    await sleep(2000);
-    
-    const checkResponse = await http.get(accumulatorResource);
-    
-    // Only one notification corresponding to the initial subscription
-    expect(checkResponse.response.body[entityId].length).toBe(1);
-    expect(checkResponse.response.body[entityId][0].speed.value).toBe(entity.speed.value);
-    
-    await deleteSubscription(subscription.id);
-  });
-
   
-  it('should send a notification. Simple subscription to concrete attribute', async function() {
+  it('should not send a notification. Subscription to specific attribute. Update other', async function() {
      // A Subscription is created
     const subscription = {
       'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
@@ -137,104 +104,34 @@ describe('Basic Notification. JSON', () => {
     
     // Once subscription is created the first notification should be received
     await createSubscription(subscription);
-    
-    // Now the speed property is modified
-    // An additional notification should be received
-    const newSpeed = 5;
-    await updateAttribute(entityId, 'speed', newSpeed);
-    
-    await sleep(2000);
-    const checkResponse = await http.get(accumulatorResource);
-    
-    // Two notifications one corresponding to the initial subscription another corresponding to
-    // The update of the speed attribute
-    expect(checkResponse.response.body[entityId].length).toBe(2);
-    expect(checkResponse.response.body[entityId][1].speed.value).toBe(newSpeed);
-    
-    await deleteSubscription(subscription.id);
-  });
-  
-  
-  it('should send a notification. Simple subscription to entity id', async function() {
-     // A Subscription is created
-    const subscription = {
-      'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
-      'type': 'Subscription',
-      'entities': [
-        {
-          'id': entityId,
-          'type': 'Vehicle'
-        }
-      ],
-      'notification': {
-        'endpoint': {
-          'uri': notifyEndpoint,
-          'accept': 'application/json'
-        }
-      }
-    };
-    
-    // Once subscription is created the first notification should be received
-    await createSubscription(subscription);
+     
+    // Now the brandName property is modified
+    // No additional notification should be received
+    await updateAttribute(entityId, 'brandName', 'Volvo');
     
     await sleep(2000);
+    
     const checkResponse = await http.get(accumulatorResource);
     
-    // Only one notification corresponding to the initial subscription
+    // Only one notification corresponding to the initial subscription shall be present
     expect(checkResponse.response.body[entityId].length).toBe(1);
-    expect(checkResponse.response.body[entityId][0].speed.value).toBe(entity.speed.value);
     
     await deleteSubscription(subscription.id);
   });
 
-
- it('should send a notification. Simple subscription to idPattern', async function() {
+  
+  it('should not send a notification. Subscription to entity which id does not match', async function() {   
      // A Subscription is created
     const subscription = {
       'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
       'type': 'Subscription',
       'entities': [
         {
-          'idPattern': '.*:V1234',
-          'type': 'Vehicle'
+          'type': 'Vehicle',
+          // Id will not match
+          'id': entity.id + 'x'
         }
       ],
-      'notification': {
-        'endpoint': {
-          'uri': notifyEndpoint,
-          'accept': 'application/json'
-        }
-      }
-    };
-    
-    // Once subscription is created the first notification should be received
-    await createSubscription(subscription);
-    
-    await sleep(2000);
-    const checkResponse = await http.get(accumulatorResource);
-    
-    // Only one notification corresponding to the initial subscription
-    expect(checkResponse.response.body[entityId].length).toBe(1);
-    expect(checkResponse.response.body[entityId][0].speed.value).toBe(entity.speed.value);
-    
-    await deleteSubscription(subscription.id);
-  });
- 
-
-  it('should send a notification. Subscription to one attribute with filter query', async function() {
-    // Speed is updated so that the initial notification will not be received
-    await updateAttribute(entityId, 'speed', 10);
-   
-     // A Subscription is created
-    const subscription = {
-      'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
-      'type': 'Subscription',
-      'entities': [
-        {
-          'type': 'Vehicle'
-        }
-      ],
-      'q': 'speed>80',
       'notification': {
         'endpoint': {
           'uri': notifyEndpoint,
@@ -245,17 +142,79 @@ describe('Basic Notification. JSON', () => {
     
     // Here the initial notification should not be received as the query is not matched
     await createSubscription(subscription);
-  
-    const newSpeed = 90;
-    await updateAttribute(entityId, 'speed', newSpeed);
    
     // Now checking the content of the accumulator  
     const checkResponse = await http.get(accumulatorResource);
     
     // Only one notification as it should only be sent when the filter conditions are met
-    expect(checkResponse.response.body).toHaveProperty(entityId);
-    expect(checkResponse.response.body[entityId].length).toBe(1);
-    expect(checkResponse.response.body[entityId][0].speed.value).toBe(newSpeed);
+    expect(checkResponse.response.body).not.toHaveProperty(entityId);
+    expect(checkResponse.response.body).not.toHaveProperty(entityId + 'x');
+      
+    await deleteSubscription(subscription.id);
+  });
+  
+  
+  it('should not send a notification. Subscription to idPattern does not match', async function() {
+     // A Subscription is created
+    const subscription = {
+      'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+      'type': 'Subscription',
+      'entities': [
+        {
+          'type': 'Vehicle',
+          // idPattern will not match
+          'idPattern': '.*:V4567'
+        }
+      ],
+      'notification': {
+        'endpoint': {
+          'uri': notifyEndpoint,
+          'accept': 'application/json'
+        }
+      }
+    };
+    
+    // Here the initial notification should not be received as the query is not matched
+    await createSubscription(subscription);
+   
+    // Now checking the content of the accumulator  
+    const checkResponse = await http.get(accumulatorResource);
+    
+    // Only one notification as it should only be sent when the filter conditions are met
+    expect(checkResponse.response.body).not.toHaveProperty(entityId);
+      
+    await deleteSubscription(subscription.id);
+  });
+  
+  
+  it('should not send a notification. Subscription to entity which type does not match', async function() {   
+     // A Subscription is created
+    const subscription = {
+      'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+      'type': 'Subscription',
+      'entities': [
+        {
+          // type will not match
+          'type': 'Vehicle1',
+          'id': entity.id
+        }
+      ],
+      'notification': {
+        'endpoint': {
+          'uri': notifyEndpoint,
+          'accept': 'application/json'
+        }
+      }
+    };
+    
+    // Here the initial notification should not be received as the query is not matched
+    await createSubscription(subscription);
+   
+    // Now checking the content of the accumulator
+    const checkResponse = await http.get(accumulatorResource);
+    
+    // Entity id matches but entity type does not match ... so ... no notification
+    expect(checkResponse.response.body).not.toHaveProperty(entityId);
       
     await deleteSubscription(subscription.id);
   });

@@ -1,24 +1,28 @@
 /*eslint no-console: "off"*/
 
-const testedResource = require('../common.js').testedResource;
+const common = require('../common.js');
+
+const testedResource = common.testedResource;
 const http = require('../http.js');
 
 const entitiesResource = testedResource + '/entities/';
 
-const accumulatorEndpoint = require('../common.js').accEndpoint;
+const accumulatorEndpoint = common.accEndpoint;
 const accumulatorResource = accumulatorEndpoint + '/dump';
 const clearAccumulatorResource =  accumulatorEndpoint + '/clear';
 
-const notifyEndpoint = require('../common.js').notifyEndpoint;
+const notifyEndpoint = common.notifyEndpoint;
 
-const sleep =  require('../common.js').sleep;
-const spawn =  require('../common.js').spawn;
+const sleep =  common.sleep;
+const spawn =  common.spawn;
 
 const path = require('path');
 
 
-const createSubscription = require('./notification_common.js').createSubscription;
-const deleteSubscription = require('./notification_common.js').deleteSubscription;
+const notifsCommon = require('./notification_common.js');
+
+const createSubscription = notifsCommon.createSubscription;
+const deleteSubscription = notifsCommon.deleteSubscription;
 
 
 describe('Basic Notification. JSON-LD @context', () => {
@@ -42,7 +46,12 @@ describe('Basic Notification. JSON-LD @context', () => {
   
   // Accumulator is cleared before each test
   beforeEach(() => {
-    return http.post(clearAccumulatorResource);
+    const requests = [];
+    requests.push(http.post(clearAccumulatorResource));
+    // Entity is recreated to start from a known state
+    requests.push(http.post(entitiesResource, entity));
+    
+    return Promise.all(requests);
   });
   
   beforeAll(() => {
@@ -62,7 +71,7 @@ describe('Basic Notification. JSON-LD @context', () => {
           console.error('Failed to start accumulator.');
         });
       
-        http.post(entitiesResource, entity).then(resolve, reject);
+        resolve();
       });
     });
   });
@@ -70,13 +79,11 @@ describe('Basic Notification. JSON-LD @context', () => {
   
   afterAll(() => {
     childProcess.kill();
-    
-    const requests = [];
-      
-    requests.push(http.delete(entitiesResource + entityId));
-    requests.push(http.post(clearAccumulatorResource));
-    
-    return Promise.all(requests);
+  });
+  
+  
+  afterEach(() => {
+    return http.delete(entitiesResource + entityId);
   });
   
   
