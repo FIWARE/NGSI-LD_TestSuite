@@ -5,7 +5,8 @@ const Hapi = require('hapi');
 
 const url = require('url');
 
-let entityData = Object.create(null);
+// Notifications indexed by subscription id
+let allNotifications = Object.create(null);
 
 const endPoint = process.env.ACC_ENDPOINT || 'http://localhost:3000';
 const parsedEndpoint = url.parse(endPoint);
@@ -34,12 +35,26 @@ server.route({
   },
   handler: (request, reply) => {
     log('Accumulate request');
+    const payload = request.payload;
       
-    if (request.payload.type === 'Notification') {
-      log('It is a notification');
-        
-      if (request.payload.data && Array.isArray(request.payload.data)) {
-        const data = request.payload.data;
+    if (payload.type === 'Notification' && payload.subscriptionId) {
+      const subscriptionId = payload.subscriptionId;
+      
+      log('It is an NGSI-LD notification: ' + subscriptionId);
+      
+      if (!allNotifications[subscriptionId]) {
+        allNotifications[subscriptionId] = {
+          notifications: [],
+          entityData: Object.create(null)
+        }
+      }
+      
+      allNotifications[subscriptionId].notifications.push(payload);
+      
+      const entityData = allNotifications[subscriptionId].entityData;
+      
+      if (payload.data && Array.isArray(payload.data)) {
+        const data = payload.data;
           
         data.forEach(aEntity => {
           if (!entityData[aEntity.id]) {
@@ -67,7 +82,7 @@ server.route({
   handler: (request, reply) => {
     log('Clear request');
       
-    entityData = Object.create(null);
+    allNotifications = Object.create(null);
       
     return null;
   }
@@ -79,7 +94,7 @@ server.route({
   handler: (request, reply) => {
     log('Dump request');
     
-    return entityData;
+    return allNotifications;
   }
 });
 

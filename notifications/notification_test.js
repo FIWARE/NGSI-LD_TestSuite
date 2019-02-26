@@ -24,6 +24,10 @@ const createSubscription = notifCommon.createSubscription;
 const deleteSubscription = notifCommon.deleteSubscription;
 const updateAttribute = notifCommon.updateAttribute;
 
+const assertNotification = notifCommon.assertNotification;
+const assertNotificationContent = notifCommon.assertNotificationContent;
+const assertNotificationNoContent = notifCommon.assertNotificationNoContent;
+
 
 describe('Basic Notification. JSON', () => {
    // An entity is created
@@ -112,10 +116,17 @@ describe('Basic Notification. JSON', () => {
     await sleep(2000);
     
     const checkResponse = await http.get(accumulatorResource);
+    const accPayload = checkResponse.response.body;
     
     // Only one notification corresponding to the initial subscription
-    expect(checkResponse.response.body[entityId].length).toBe(1);
-    expect(checkResponse.response.body[entityId][0].speed.value).toBe(entity.speed.value);
+    assertNotification(accPayload, subscription.id, 1);
+    const entityValue = {
+      entityId,
+      index: 0,
+      attribute: 'speed',
+      value: entity.speed.value
+    };
+    assertNotificationContent(accPayload, subscription.id, entityValue);
     
     await deleteSubscription(subscription.id);
   });
@@ -146,11 +157,25 @@ describe('Basic Notification. JSON', () => {
     await sleep(2000);
     
     const checkResponse = await http.get(accumulatorResource);
+    const accPayload = checkResponse.response.body;
         
     // Only one notification corresponding to the initial subscription
-    expect(checkResponse.response.body[entityId].length).toBe(1);
-    expect(checkResponse.response.body[entityId][0].speed).toBeUndefined();
-    expect(checkResponse.response.body[entityId][0].brandName.value).toBe(entity.brandName.value);
+    assertNotification(accPayload, subscription.id, 1);
+    
+    const entityValue = {
+      entityId,
+      index: 0,
+      attribute: 'brandName',
+      value: entity.brandName.value
+    };
+    assertNotificationContent(accPayload, subscription.id, entityValue);
+    
+    // speed attribute should not have been received
+    assertNotificationNoContent(accPayload, subscription.id, {
+      entityId,
+      index: 0,
+      attribute: 'speed'
+    });
     
     await deleteSubscription(subscription.id);
   });
@@ -180,19 +205,29 @@ describe('Basic Notification. JSON', () => {
     
     await sleep(2000);
     
-    const checkResponse = await http.get(accumulatorResource);
+    const checkResponse = await http.get(accumulatorResource);   
+    const accPayload = checkResponse.response.body;
         
     // Only one notification corresponding to the initial subscription
-    expect(checkResponse.response.body[entityId]).toBeDefined();
-    expect(checkResponse.response.body[entityId].length).toBe(1);
-    expect(checkResponse.response.body[entityId][0].speed).toBeUndefined();
-    expect(checkResponse.response.body[entityId][0].brandName).toBeUndefined();
+    assertNotification(accPayload, subscription.id, 1);
+    
+    assertNotificationNoContent(accPayload, subscription.id, {
+     entityId: entity.id,
+     index: 0,
+     attribute: 'speed'
+    });
+    
+    assertNotificationNoContent(accPayload, subscription.id, {
+     entityId: entity.id,
+     index: 0,
+     attribute: 'brandName'
+    });
     
     await deleteSubscription(subscription.id);
   });
 
   
-  it('should send a notification. Simple subscription to concrete attribute', async function() {
+  it('should send a notification. Simple subscription to concrete attribute. Subsequent update', async function() {
      // A Subscription is created
     const subscription = {
       'id': 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
@@ -221,11 +256,19 @@ describe('Basic Notification. JSON', () => {
     
     await sleep(2000);
     const checkResponse = await http.get(accumulatorResource);
+    const accPayload = checkResponse.response.body;
+
     
     // Two notifications one corresponding to the initial subscription another corresponding to
     // The update of the speed attribute
-    expect(checkResponse.response.body[entityId].length).toBe(2);
-    expect(checkResponse.response.body[entityId][1].speed.value).toBe(newSpeed);
+    assertNotification(accPayload, subscription.id, 2);
+    
+    assertNotificationContent(accPayload, subscription.id,{
+      entityId,
+      index: 1,
+      attribute: 'speed',
+      value: newSpeed
+    });
     
     await deleteSubscription(subscription.id);
   });
@@ -255,10 +298,19 @@ describe('Basic Notification. JSON', () => {
     
     await sleep(2000);
     const checkResponse = await http.get(accumulatorResource);
+    const accPayload = checkResponse.response.body;
     
     // Only one notification corresponding to the initial subscription
-    expect(checkResponse.response.body[entityId].length).toBe(1);
-    expect(checkResponse.response.body[entityId][0].speed.value).toBe(entity.speed.value);
+    // Only one notification corresponding to the initial subscription
+    assertNotification(accPayload, subscription.id, 1);
+    
+    // Only one notification as it should only be sent when the filter conditions are met
+    assertNotificationContent(accPayload, subscription.id,{
+      entityId,
+      index: 0,
+      attribute: 'speed',
+      value: entity.speed.value
+    });
     
     await deleteSubscription(subscription.id);
   });
@@ -288,10 +340,18 @@ describe('Basic Notification. JSON', () => {
     
     await sleep(2000);
     const checkResponse = await http.get(accumulatorResource);
+    const accPayload = checkResponse.response.body;
     
     // Only one notification corresponding to the initial subscription
-    expect(checkResponse.response.body[entityId].length).toBe(1);
-    expect(checkResponse.response.body[entityId][0].speed.value).toBe(entity.speed.value);
+    assertNotification(accPayload, subscription.id, 1);
+    
+    // Only one notification as it should only be sent when the filter conditions are met
+    assertNotificationContent(accPayload, subscription.id,{
+      entityId,
+      index: 0,
+      attribute: 'speed',
+      value: entity.speed.value
+    });
     
     await deleteSubscription(subscription.id);
   });
@@ -329,14 +389,20 @@ describe('Basic Notification. JSON', () => {
    
     // Now checking the content of the accumulator  
     const checkResponse = await http.get(accumulatorResource);
+    const accPayload = checkResponse.response.body;
+    
+    // Only one notification corresponding to the initial subscription
+    assertNotification(accPayload, subscription.id, 1);
     
     // Only one notification as it should only be sent when the filter conditions are met
-    expect(checkResponse.response.body).toHaveProperty(entityId);
-    expect(checkResponse.response.body[entityId].length).toBe(1);
-    expect(checkResponse.response.body[entityId][0].speed.value).toBe(newSpeed);
+    assertNotificationContent(accPayload, subscription.id,{
+      entityId,
+      index: 0,
+      attribute: 'speed',
+      value: newSpeed
+    });
       
     await deleteSubscription(subscription.id);
   });
-  
   
 });

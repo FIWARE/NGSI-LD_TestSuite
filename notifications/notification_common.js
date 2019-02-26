@@ -46,8 +46,66 @@ async function updateAttribute(entityId, propertyName, newValue) {
   expect(response.response).toHaveProperty('statusCode', 204);
 }
 
+// Checks whether under that subscriptionId
+// such number of notifications have been delivered
+function assertNotification(accumPayload, subscriptionId, numNotifications) {
+  const notifData = accumPayload[subscriptionId];
+  expect(notifData).toBeDefined();
+  
+  expect(notifData.notifications.length).toBe(numNotifications);
+}
+
+// Common logics for asserting existence of elements in notifications
+function assertExistence(accumPayload, subscriptionId, entityInfo) {
+  const notifications = accumPayload[subscriptionId];
+  expect(notifications).toBeDefined();
+  
+  const entityData = notifications.entityData;
+  expect(entityData).toBeDefined();
+  
+  const entityId = entityInfo.entityId;
+  const index = entityInfo.index;
+  
+  expect(entityData[entityId]).toBeDefined();
+  expect(entityData[entityId][index]).toBeDefined();
+}
+
+
+// Checks whether a certain subscriptionId entity content with a certain value
+// has been received
+function assertNotificationContent(accumPayload, subscriptionId, entityValue) {
+  assertExistence(accumPayload, subscriptionId, entityValue);
+  
+  const entityData = accumPayload[subscriptionId].entityData;
+  
+  const entityId = entityValue.entityId;
+  const index = entityValue.index;
+  const attribute = entityValue.attribute;
+  const value = entityValue.value;
+  
+  expect(entityData[entityId][index][attribute].value).toBe(value);
+}
+
+
+// Checks whether a certain subscriptionId entity content
+// has NOT been received
+function assertNotificationNoContent(accumPayload, subscriptionId, entityInfo) {
+  assertExistence(accumPayload, subscriptionId, entityInfo);
+  
+  const entityId = entityInfo.entityId;
+  const index = entityInfo.index;
+  const attribute = entityInfo.attribute;
+
+  const entityData = accumPayload[subscriptionId].entityData;
+  
+  expect(entityData[entityId][index][attribute]).toBeUndefined();
+}
+
 module.exports = {
   createSubscription,
   deleteSubscription,
-  updateAttribute
+  updateAttribute,
+  assertNotification,
+  assertNotificationContent,
+  assertNotificationNoContent
 }
