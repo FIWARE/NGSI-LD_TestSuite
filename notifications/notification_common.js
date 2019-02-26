@@ -49,6 +49,11 @@ async function updateAttribute(entityId, propertyName, newValue) {
 // Checks whether under that subscriptionId
 // such number of notifications have been delivered
 function assertNotification(accumPayload, subscriptionId, numNotifications) {
+  if (numNotifications === 0) {
+    expect(accumPayload[subscriptionId]).toBeUndefined();
+    return;
+  }
+  
   const notifData = accumPayload[subscriptionId];
   expect(notifData).toBeDefined();
   

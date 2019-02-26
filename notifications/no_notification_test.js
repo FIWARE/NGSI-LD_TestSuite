@@ -24,6 +24,8 @@ const createSubscription = notifCommon.createSubscription;
 const deleteSubscription = notifCommon.deleteSubscription;
 const updateAttribute = notifCommon.updateAttribute;
 
+const assertNotification = notifCommon.assertNotification;
+const assertNotificationContent = notifCommon.assertNotificationContent;
 
 describe('Subscription yields to no Notification. JSON', () => {
    // An entity is created
@@ -117,9 +119,10 @@ describe('Subscription yields to no Notification. JSON', () => {
     await sleep(2000);
     
     const checkResponse = await http.get(accumulatorResource);
+    const accPayload = checkResponse.response.body;
     
     // Only one notification corresponding to the initial subscription shall be present
-    expect(checkResponse.response.body[entityId].length).toBe(1);
+    assertNotification(accPayload, subscription.id, 1);
     
     await deleteSubscription(subscription.id);
   });
@@ -150,10 +153,9 @@ describe('Subscription yields to no Notification. JSON', () => {
    
     // Now checking the content of the accumulator  
     const checkResponse = await http.get(accumulatorResource);
+    const accPayload = checkResponse.response.body;
     
-    // Only one notification as it should only be sent when the filter conditions are met
-    expect(checkResponse.response.body).not.toHaveProperty(entityId);
-    expect(checkResponse.response.body).not.toHaveProperty(entityId + 'x');
+    assertNotification(accPayload, subscription.id, 0);
       
     await deleteSubscription(subscription.id);
   });
@@ -184,9 +186,9 @@ describe('Subscription yields to no Notification. JSON', () => {
    
     // Now checking the content of the accumulator  
     const checkResponse = await http.get(accumulatorResource);
+    const accPayload = checkResponse.response.body;
     
-    // Only one notification as it should only be sent when the filter conditions are met
-    expect(checkResponse.response.body).not.toHaveProperty(entityId);
+    assertNotification(accPayload, subscription.id, 0);
       
     await deleteSubscription(subscription.id);
   });
@@ -216,10 +218,11 @@ describe('Subscription yields to no Notification. JSON', () => {
    
     // Now checking the content of the accumulator
     const checkResponse = await http.get(accumulatorResource);
+    const accPayload = checkResponse.response.body;
     
-    // Entity id matches but entity type does not match ... so ... no notification
-    expect(checkResponse.response.body).not.toHaveProperty(entityId);
-      
+     // Entity id matches but entity type does not match ... so ... no notification
+    assertNotification(accPayload, subscription.id, 0);
+         
     await deleteSubscription(subscription.id);
   });
   
@@ -249,9 +252,10 @@ describe('Subscription yields to no Notification. JSON', () => {
    
     // Now checking the content of the accumulator
     const checkResponse = await http.get(accumulatorResource);
+    const accPayload = checkResponse.response.body;
     
     // Entity id matches but watched attributes not so no notification
-    expect(checkResponse.response.body).not.toHaveProperty(entityId);
+    assertNotification(accPayload, subscription.id, 0);
       
     await deleteSubscription(subscription.id);
   });
@@ -282,10 +286,11 @@ describe('Subscription yields to no Notification. JSON', () => {
    
     // Now checking the content of the accumulator
     const checkResponse = await http.get(accumulatorResource);
-    
+    const accPayload = checkResponse.response.body;
+
     // Entity id matches but watched attributes not so no notification
-    expect(checkResponse.response.body).not.toHaveProperty(entityId);
-      
+    assertNotification(accPayload, subscription.id, 0);
+  
     await deleteSubscription(subscription.id);
   });
  
@@ -323,12 +328,16 @@ describe('Subscription yields to no Notification. JSON', () => {
    
     // Now checking the content of the accumulator
     const checkResponse = await http.get(accumulatorResource);
+    const accPayload = checkResponse.response.body;
     
-    // Entity id matches but watched attributes not so no notification
-    expect(checkResponse.response.body).toHaveProperty(entityId);
-    // Only the initial notification shall be delivered
-    expect(checkResponse.response.body[entityId].length).toBe(1);
-    expect(checkResponse.response.body[entityId][0].speed.value).toBe(entity.speed.value);
+    // Only one notification delivered as the subscription later had expired
+    assertNotification(accPayload, subscription.id, 1);
+    assertNotificationContent(accPayload, subscription.id, {
+      entityId,
+      index: 0,
+      attribute: 'speed',
+      value: entity.speed.value
+    });
       
     await deleteSubscription(subscription.id);
   }); 
