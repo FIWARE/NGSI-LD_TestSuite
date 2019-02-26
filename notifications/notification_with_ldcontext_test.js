@@ -24,6 +24,8 @@ const notifsCommon = require('./notification_common.js');
 const createSubscription = notifsCommon.createSubscription;
 const deleteSubscription = notifsCommon.deleteSubscription;
 
+const assertNotification = notifsCommon.assertNotification;
+
 
 describe('Basic Notification. JSON-LD @context', () => {
    // An entity is created
@@ -113,9 +115,10 @@ describe('Basic Notification. JSON-LD @context', () => {
     await sleep(2000);
     
     const checkResponse = await http.get(accumulatorResource);
+    const accPayload = checkResponse.response.body;
     
     // No notification should be delivered as the @context will map Vehicle to a different URI
-    expect(checkResponse.response.body).not.toHaveProperty(entityId);
+    assertNotification(accPayload, subscription.id, 0);
     
     await deleteSubscription(subscription.id);
   });
