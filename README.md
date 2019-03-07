@@ -4,7 +4,7 @@ This project is intended to define a test suite for [NGSI-LD](https://www.etsi.o
 the evolution of NGSIv2 for supporting Linked Data based on JSON-LD.
 
 [![MIT license][license-image]][license-url]
-[![Build badge](https://img.shields.io/travis/Fiware/NGSI-LD_TestSuite.svg?branch=master "Travis build status")](https://travis-ci.org/Fiware/NGSI-LD_Tests/?branch=master)
+[![Build badge](https://img.shields.io/travis/Fiware/NGSI-LD_TestSuite.svg?branch=master "Travis build status")](https://travis-ci.org/Fiware/NGSI-LD_TestSuite/?branch=master)
 [![NGSI-LD badge](https://img.shields.io/badge/NGSI-LD-red.svg)](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.01.01_60/gs_CIM009v010101p.pdf)
 
 ## Test Summary

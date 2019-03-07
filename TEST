@@ -1,0 +1,122 @@
+progName=$(basename $0)
+
+
+
+# -----------------------------------------------------------------------------
+#
+# usage -
+#
+function usage()
+{
+  sfile="Usage: "$progName
+  empty=$(echo $sfile | tr 'a-zA-z/0-9.:' ' ')
+  echo "$sfile [-u (usage)]"
+  echo "$empty [-v (verbose)]"
+  echo "$empty [--suite <suite>]"
+  echo "$empty [--suites (list suites)]"
+  echo "$empty [--case <case>]"
+  echo ""
+  exit $1
+}
+
+
+
+# -----------------------------------------------------------------------------
+#
+# Command line args
+#
+suite=ALL
+case=ALL
+listSuites=off
+while [ "$#" != 0 ]
+do
+  if   [ "$1" == "-u" ];             then usage 0;
+  elif [ "$1" == "-v" ];             then verbose=on;
+  elif [ "$1" == "--suite" ];        then suite="$2"; shift;
+  elif [ "$1" == "--suites" ];       then listSuites=on;
+  elif [ "$1" == "--case" ];         then case="$2"; shift;
+  else
+    echo $0: bad parameter/option: "'"${1}"'";
+    echo
+    usage 1
+  fi
+
+  shift
+done
+
+
+if [ "$listSuites" == "on" ]
+then
+  ls */*.js | awk -F/ '{ print $2 }'
+  exit 0
+fi
+
+if [ -f /tmp/canteraTests ]
+then
+  mv /tmp/canteraTests /tmp/canteraTests.old
+fi
+
+~/git/context.Orion-LD/scripts/dbReset.sh orion
+\rm -f /tmp/contextBroker.pid
+
+echo "Please start orionld and press the <RETURN> key once ready"
+read X
+
+if [ "$suite" == ALL ] && [ "$case" == ALL ]
+then
+  npm test 2>&1 | tee /tmp/canteraTests
+elif [ "$suite" != ALL ] && [ "$case" == ALL ]
+then
+  jest $suite 2>&1 | tee /tmp/canteraTests
+elif [ "$suite" != ALL ] && [ "$case" != ALL ]
+then
+  echo "suite:$suite, case:$case"
+  jest "$suite" -t "$case" 2>&1 | tee /tmp/canteraTests
+else
+  # Lookup the suite for "$case", then run jest $suite -t $case
+  echo "Name of the test suite is missing"
+  echo "Does this help?"
+  echo "----------------------------------------------------------------"
+  echo 'grep "'$case'" */*.js:'
+  grep "$case" */*.js
+  echo "----------------------------------------------------------------"
+  exit 1
+fi
+clear
+
+#
+# The test output lists every error twice ... :(
+# We need to fix this
+#
+typeset -i startLine
+typeset -i noOfLines
+typeset -i lastLines
+
+startLine=$(grep -n "Summary of all failing tests" /tmp/canteraTests | awk -F: '{ print $1 }')
+noOfLines=$(wc -l /tmp/canteraTests | awk '{ print $1 }')
+lastLines=$noOfLines-$startLine
+tail -$lastLines /tmp/canteraTests > /tmp/canteraTests2
+mv /tmp/canteraTests2 /tmp/canteraTests
+
+grep "^Test Suites:" /tmp/canteraTests
+grep "^Tests:"       /tmp/canteraTests
+echo "========================================================================================"
+grep "●" /tmp/canteraTests
+
+if [ -f LAST_RUN ]
+then
+  mv LAST_RUN LAST_RUN.old
+fi
+
+grep "^Test Suites:" /tmp/canteraTests > LAST_RUN
+grep "^Tests:"       /tmp/canteraTests >> LAST_RUN
+echo "========================================================================================" >> LAST_RUN
+grep "●" /tmp/canteraTests | egrep -v 'Append|Update|Batch' | sort >> LAST_RUN
+
+
+# for line in $(grep "●" /tmp/canteraTests)
+# do
+#   testCase=$(echo $line | awk -F' › ' '{ print $2  }')
+#   suite=$(grep "$testCase" */*.js | awk -F: '{ print $2  }')
+#   echo "./TEST --suite $suite --case \"$testCase\""
+# done

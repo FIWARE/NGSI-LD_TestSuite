@@ -39,7 +39,7 @@ describe('Retrieve Subscription. JSON-LD. @context', () => {
         'accept': 'application/json'
       }
     },
-    '@context': 'https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld'
+    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
   };
   
   const subscriptionId = encodeURIComponent(subscription.id);

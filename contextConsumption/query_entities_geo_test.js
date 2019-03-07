@@ -76,7 +76,7 @@ describe('Query Entity. Geo. JSON. Default @context', () => {
     const queryParams = {
       type: 'T_City',
       geometry: 'Point',
-      coordinates: '[-3.691944, 40.418889]',
+      coordinates: '[-3.691944, 41.418889]',
       georel: 'near;maxDistance==15'
     };
         

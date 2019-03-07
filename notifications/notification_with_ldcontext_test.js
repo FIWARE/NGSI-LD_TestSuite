@@ -106,7 +106,7 @@ describe('Basic Notification. JSON-LD @context', () => {
           'accept': 'application/json'
         }
       },
-      '@context': 'https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld'
+      '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
     };
     
     // Once subscription is created the first notification should be received
