@@ -21,7 +21,7 @@
     "node": ">=8.6"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand",
     "test:coverage": "jest --coverage",
     "lint": "eslint . --cache --fix"
   },
