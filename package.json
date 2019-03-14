@@ -27,12 +27,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fiware/NGSI-LD_Tests.git"
+    "url": "git+https://github.com/fiware/NGSI-LD_TestSuite.git"
   },
   "author": "FIWARE Foundation e.V.",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/fiware/NGSI-LD_Tests/issues"
+    "url": "https://github.com/fiware/NGSI-LD_TestSuite/issues"
   },
-  "homepage": "https://github.com/fiware/NGSI-LD_Tests#readme"
+  "homepage": "https://github.com/fiware/NGSI-LD_TestSuite#readme"
 }

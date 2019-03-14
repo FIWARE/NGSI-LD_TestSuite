@@ -31,7 +31,7 @@ describe('Create Entity. JSON-LD @context', () => {
         'type': 'Relationship',
         'object': 'urn:ngsi-ld:T2:6789'
       },
-      '@context': 'https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld'
+      '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
     };
 
     const response = await http.post(entitiesResource, entity, JSON_LD_HEADERS);
@@ -64,7 +64,7 @@ describe('Create Entity. JSON-LD @context', () => {
         'type': 'Relationship',
         'object': 'urn:ngsi-ld:T2:6789'
       },
-      '@context': 'https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld'
+      '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
     };
 
     const response = await http.post(entitiesResource, entity, JSON_LD_HEADERS);
@@ -79,7 +79,7 @@ describe('Create Entity. JSON-LD @context', () => {
         'type': 'Property',
         'value': '2018-12-04T12:00:00Z'
       },
-      '@context': ['https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld']
+      '@context': ['https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld']
     };
 
     const response = await http.post(entitiesResource, entity, JSON_LD_HEADERS);

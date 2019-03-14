@@ -50,7 +50,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         'value': false
       }
     },
-    '@context': 'https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld'
+    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
   };
   
   const entityId = encodeURIComponent(entity.id);
@@ -107,7 +107,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
   it('should retrieve the entity attribute projection', async function() {
     const headers = {
       'Accept': 'application/ld+json',
-      'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+      'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
     };
     const response = await http.get(entitiesResource + entityId + '?attrs=P1', headers);
     assertRetrieved(response,entityOneAttr, JSON_LD);
@@ -116,7 +116,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
   it('should retrieve the entity no attribute matches', async function() {
     const headers = {
       'Accept': 'application/ld+json',
-      'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+      'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
     };
     const response = await http.get(entitiesResource + entityId + '?attrs=notFoundAttr', headers);
     assertRetrieved(response, entityNoAttr, JSON_LD);
@@ -126,7 +126,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
     const headers = {
       'Accept': 'application/ld+json',
       // Observe that the provided @context will make the attribute not to match
-      'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testContext2.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+      'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext2.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
     };
     const response = await http.get(entitiesResource + entityId + '?attrs=P1', headers);
     assertRetrieved(response,entityNoAttr, JSON_LD);

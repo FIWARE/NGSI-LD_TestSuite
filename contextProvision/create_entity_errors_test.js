@@ -133,7 +133,7 @@ describe('Create Entity. Errors. JSON', () => {
 
     const response = await http.post(entitiesResource, entity, {
       'Content-Type': 'application/ld+json',
-      'Link': '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+      'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
     });
 
     expect(response.response).toHaveProperty('statusCode', 400);

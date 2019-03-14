@@ -10,7 +10,7 @@ const serializeParams = require('../common.js').serializeParams;
 
 const JSON_LD = /application\/ld\+json(;.*)?/;
 
-const JSON_LD_HEADER_CONTEXT = '<https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
+const JSON_LD_HEADER_CONTEXT = '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
 
 const ACCEPT_JSON_LD = {
   'Accept': 'application/ld+json'
@@ -28,7 +28,7 @@ describe('Query Entity. JSON-LD. @context', () => {
       'type': 'Relationship',
       'object': 'urn:ngsi-ld:T2:6789',
     },
-    '@context': 'https://fiware.github.io/NGSI-LD_Tests/ldContext/testFullContext.jsonld'
+    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
   };
   
   const entityId = encodeURIComponent(entity.id);
