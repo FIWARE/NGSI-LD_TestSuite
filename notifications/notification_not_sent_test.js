@@ -14,9 +14,6 @@ const clearAccumulatorResource =  accumulatorEndpoint + '/clear';
 const notifyEndpoint = common.notifyEndpoint;
 
 const sleep =  common.sleep;
-const spawn =  common.spawn;
-
-const path = require('path');
 
 const notifCommon = require('./notification_common.js');
 
@@ -43,8 +40,6 @@ describe('Subscription yields to no Notification. JSON', () => {
   };
 
   const entityId = entity.id;
-   
-  let childProcess;
   
   // Accumulator is cleared before each test
   beforeEach(() => {
@@ -55,35 +50,6 @@ describe('Subscription yields to no Notification. JSON', () => {
     
     return Promise.all(requests);
   });
-  
-  beforeAll(() => {
-    /*eslint no-unused-vars: "off"*/
-    return new Promise((resolve, reject) => {
-      spawn('node', [path.join(__dirname, 'accumulator.js')]).then((pchildProcess) => {
-        childProcess = pchildProcess;
-        
-        childProcess.on('close', (code) => {
-          if (code !== null) {
-            console.error(`Accumulator process exited with code ${code}`);
-          }
-          else {
-            console.log('Accumulator process finished properly');
-          }
-        });
-        childProcess.on('error', () => {
-          console.error('Failed to start accumulator.');
-        });
-      
-        resolve();
-      });
-    });
-  });
-
-  
-  afterAll(() => {
-    childProcess.kill();
-  });
-  
   
   afterEach(() => {
     return http.delete(entitiesResource + entityId);

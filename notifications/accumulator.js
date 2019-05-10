@@ -16,6 +16,7 @@ const server = Hapi.server({
   host: parsedEndpoint.hostname
 });
 
+
 const init = async () => {
   await server.start();
   console.log(`Accumulator: Server running at: ${server.info.uri}`);
@@ -97,6 +98,27 @@ server.route({
     return allNotifications;
   }
 });
+
+server.route({
+  method: 'POST',
+  path: '/kill',
+  config: {
+    response: {
+      emptyStatusCode: 204
+    }
+  },
+  handler: (request, reply) => {
+    log('Kill request');
+    
+    setTimeout(() => {
+      log('Dying...');
+      process.exit(0);
+    }, 2000);
+    
+    return null;
+  }
+});
+
 
 process.on('unhandledRejection', (err) => {
   log('Error: ' + err);
