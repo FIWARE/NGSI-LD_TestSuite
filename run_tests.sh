@@ -1,9 +1,9 @@
 #!/bin/bash
 
 if [ -f accumulator.pid ]; then
-# Ensure the Accumulator is not already running
-process_exist=`pgrep -F accumulator.pid`
-old_process=`cat accumulator.pid`
+  # Ensure the Accumulator is not already running
+  process_exist=`pgrep -F accumulator.pid`
+  old_process=`cat accumulator.pid`
 
   if [ "$process_exist" ==  "$old_process" ]; then
     kill -9 `cat accumulator.pid`
