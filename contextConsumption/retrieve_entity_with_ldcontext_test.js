@@ -141,12 +141,12 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
     };
     const expectedEntityNoAttr = {
     'id': entity.id,
-    'type': 'http://example.org/T'
-    '@context': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext2.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+    'type': 'http://example.org/T',
+    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext2.jsonld'
   };
     
     const response = await http.get(entitiesResource + entityId + '?attrs=P1', headers);
-    assertRetrieved(response,entityNoAttr, JSON_LD);
+    assertRetrieved(response, expectedEntityNoAttr, JSON_LD);
   });
   
 });
