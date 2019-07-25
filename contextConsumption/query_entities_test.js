@@ -80,7 +80,8 @@ describe('Query Entity. JSON. Default @context', () => {
   
   it('query by attributes.', async function() {
     const queryParams = {
-      attrs: 'P100',
+      type: 'T_Query',
+      attrs: 'P100'
     };
             
     const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
@@ -187,7 +188,7 @@ describe('Query Entity. JSON. Default @context', () => {
   it('query by condition over object', async function() {
     const queryParams = {
       type: entity.type,
-      q: 'R100=="urn:ngsi-ld:T2:6789"'
+      q: 'R100==urn:ngsi-ld:T2:6789'
     };
         
     const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));
