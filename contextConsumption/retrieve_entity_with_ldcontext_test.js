@@ -10,10 +10,6 @@ const JSON_LD_HEADERS_POST = {
   'Content-Type': 'application/ld+json'
 };
 
-const JSON_LD_HEADERS_GET = {
-  'Accept': 'application/ld+json'
-};
-
 // Patches the object and returns a new copy of the patched object
 // TECHNICAL DEBT: It should be imported from common.js
 function patchObj(target, patch) {  
