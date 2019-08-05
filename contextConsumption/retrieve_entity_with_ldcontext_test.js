@@ -10,10 +10,6 @@ const JSON_LD_HEADERS_POST = {
   'Content-Type': 'application/ld+json'
 };
 
-const JSON_LD_HEADERS_GET = {
-  'Accept': 'application/ld+json'
-};
-
 // Patches the object and returns a new copy of the patched object
 // TECHNICAL DEBT: It should be imported from common.js
 function patchObj(target, patch) {  
@@ -90,17 +86,28 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
   });
   
   it('should retrieve the entity. JSON-LD MIME Type requested', async function() {
-    const response = await http.get(entitiesResource + entityId, JSON_LD_HEADERS_GET);
+    const headers = {
+      'Accept': 'application/ld+json',
+      'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+    };
+    const response = await http.get(entitiesResource + entityId, headers);
     assertRetrieved(response,entity, JSON_LD);
   });
     
   it('should retrieve the entity. JSON MIME type (default)', async function() {
-    const response = await http.get(entitiesResource + entityId);
+    const headers = {
+      'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+    };
+    const response = await http.get(entitiesResource + entityId, headers);
     assertRetrieved(response,entityNoContext);
   });
     
   it('should retrieve the entity key values mode', async function() {
-    const response = await http.get(entitiesResource + entityId + '?options=keyValues', JSON_LD_HEADERS_GET);
+    const headers = {
+      'Accept': 'application/ld+json',
+      'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+    };
+    const response = await http.get(entitiesResource + entityId + '?options=keyValues', headers);
     assertRetrieved(response,entityKeyValues,JSON_LD);
   });
     
@@ -128,8 +135,14 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
       // Observe that the provided @context will make the attribute not to match
       'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext2.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
     };
+    const expectedEntityNoAttr = {
+    'id': entity.id,
+    'type': 'http://example.org/T',
+    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext2.jsonld'
+  };
+    
     const response = await http.get(entitiesResource + entityId + '?attrs=P1', headers);
-    assertRetrieved(response,entityNoAttr, JSON_LD);
+    assertRetrieved(response, expectedEntityNoAttr, JSON_LD);
   });
   
 });

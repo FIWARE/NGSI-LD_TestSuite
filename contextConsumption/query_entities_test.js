@@ -80,7 +80,8 @@ describe('Query Entity. JSON. Default @context', () => {
   
   it('query by attributes.', async function() {
     const queryParams = {
-      attrs: 'P100',
+      type: 'T_Query',
+      attrs: 'P100'
     };
             
     const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));

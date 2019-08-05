@@ -53,7 +53,11 @@ describe('Retrieve Subscription. JSON-LD. @context', () => {
   });
     
   it('should retrieve the subscription', async function() {
-    const response = await http.get(subscriptionsResource + subscriptionId, JSON_LD_HEADERS_GET);
+    const headers = {
+      'Accept': 'application/ld+json',
+      'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+    };
+    const response = await http.get(subscriptionsResource + subscriptionId, headers);
     assertRetrieved(response, subscription, JSON_LD);
   });
     
