@@ -16,13 +16,7 @@ describe("Create Registration. JSON", () => {
             {
               'id': 'urn:ngsi-ld:Vehicle:A456',
               'type': 'Vehicle'
-            }
-          ],
-          'properties': ['brandName', 'speed'],
-          'relationships': ['isParked']
-        },
-        {
-          'entities': [
+            },
             {
               'idPattern': '.*downtown$',
               'type': 'OffStreetParking'
@@ -32,8 +26,8 @@ describe("Create Registration. JSON", () => {
               'type': 'OffStreetParking'
             }
           ],
-          'properties': ['availableSotNumber', 'totalSpotNumber'],
-          'relationships': ['isNextToBuilding']
+          'properties': ['brandName', 'speed', 'availableSpotNumber', 'totalSpotNumber'],
+          'relationships': ['isParked', 'isNextToBuilding']
         }
       ],
       'endpoint': 'http://my.csource.org:1026',
