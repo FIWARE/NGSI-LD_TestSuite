@@ -5,6 +5,7 @@ const entitiesResource = testedResource + '/entities/';
 const assertRetrieved = require('../common.js').assertRetrieved;
 
 const JSON_LD = /application\/ld\+json(;.*)?/;
+const PLAIN_JSON = /application\/json(;.*)?/;
 
 const JSON_LD_HEADERS_POST = {
   'Content-Type': 'application/ld+json'
@@ -85,22 +86,101 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
     return http.delete(entitiesResource + entityId);
   });
   
-  it('should retrieve the entity. JSON-LD MIME Type requested', async function() {
+  it('should retrieve the entity. application/ld+json MIME Type Accepted. JSON-LD', async function() {
     const headers = {
       'Accept': 'application/ld+json',
       'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
     };
     const response = await http.get(entitiesResource + entityId, headers);
-    assertRetrieved(response,entity, JSON_LD);
+    assertRetrieved(response, entity, JSON_LD);
   });
     
-  it('should retrieve the entity. JSON MIME type (default)', async function() {
+  it('should retrieve the entity. (non-present accept header). JSON', async function() {
     const headers = {
       'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
     };
     const response = await http.get(entitiesResource + entityId, headers);
-    assertRetrieved(response,entityNoContext);
+    assertRetrieved(response, entityNoContext, PLAIN_JSON);
   });
+  
+  it('should retrieve the entity. Any Media Type Accepted. JSON-LD', async function() {
+    const headers = {
+      'Accept': '*/*',
+      'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+    };
+    const response = await http.get(entitiesResource + entityId, headers);
+    assertRetrieved(response,entity, JSON_LD);
+  });
+  
+  it('should retrieve the entity. Any application/* Media Type Accepted. JSON-LD', async function() {
+    const headers = {
+      'Accept': 'application/*',
+      'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+    };
+    const response = await http.get(entitiesResource + entityId, headers);
+    assertRetrieved(response, entity, JSON_LD);
+  });
+  
+  
+  it('should retrieve the entity. application/json MIME Type Accepted. JSON', async function() {
+    const headers = {
+      'Accept': 'application/json',
+      'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+    };
+    const response = await http.get(entitiesResource + entityId, headers);
+    assertRetrieved(response, entityNoContext, PLAIN_JSON);
+  });
+  
+  
+  it('should retrieve the entity. application/ld+json MIME Type Accepted. JSON-LD', async function() {
+    const headers = {
+      'Accept': 'application/ld+json, application/json',
+      'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+    };
+    const response = await http.get(entitiesResource + entityId, headers);
+    assertRetrieved(response, entity, JSON_LD);
+  });
+  
+  
+   it('should retrieve the entity. application/json MIME Type wins as it is more specific. JSON', async function() {
+    const headers = {
+      'Accept': '*/*, application/json',
+      'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+    };
+    const response = await http.get(entitiesResource + entityId, headers);
+    assertRetrieved(response, entityNoContext, PLAIN_JSON);
+  });
+   
+   
+  it('should retrieve the entity. application/json MIME Type wins as it is more specific. JSON', async function() {
+    const headers = {
+      'Accept': 'application/*, application/json',
+      'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+    };
+    const response = await http.get(entitiesResource + entityId, headers);
+    assertRetrieved(response, entityNoContext, PLAIN_JSON);
+  });
+
+  
+  it('should retrieve the entity. application/ld+json MIME Type expanded from range. JSON-LD', async function() {
+    const headers = {
+      'Accept': 'text/plain, application/*',
+      'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+    };
+    const response = await http.get(entitiesResource + entityId, headers);
+    assertRetrieved(response, entity, JSON_LD);
+  }); 
+  
+  
+  it('should retrieve the entity. application/json MIME Type wins as it has more weight. JSON', async function() {
+    const headers = {
+      'Accept': 'application/json, application/ld+json; q=0.8',
+      'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+    };
+    const response = await http.get(entitiesResource + entityId, headers);
+    assertRetrieved(response, entityNoContext, PLAIN_JSON);
+  }); 
+
     
   it('should retrieve the entity key values mode', async function() {
     const headers = {
@@ -108,8 +188,9 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
       'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
     };
     const response = await http.get(entitiesResource + entityId + '?options=keyValues', headers);
-    assertRetrieved(response,entityKeyValues,JSON_LD);
+    assertRetrieved(response,entityKeyValues, JSON_LD);
   });
+ 
     
   it('should retrieve the entity attribute projection', async function() {
     const headers = {
@@ -119,6 +200,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
     const response = await http.get(entitiesResource + entityId + '?attrs=P1', headers);
     assertRetrieved(response,entityOneAttr, JSON_LD);
   });
+
     
   it('should retrieve the entity no attribute matches', async function() {
     const headers = {
@@ -129,6 +211,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
     assertRetrieved(response, entityNoAttr, JSON_LD);
   });
 
+  
   it('should retrieve the entity no attribute matches as @context differs', async function() {
     const headers = {
       'Accept': 'application/ld+json',
