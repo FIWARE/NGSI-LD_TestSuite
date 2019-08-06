@@ -14,7 +14,7 @@ describe('Query Entity. Errors', () => {
       'Accept': 'text/plain'
     };
     const response = await http.get(entitiesResource, headers);
-    expect(response.response).toHaveProperty('statusCode', 416);
+    expect(response.response).toHaveProperty('statusCode', 406);
   });
   
   it('Should raise error when no entity type nor entity attributes provided. ', async function() {
