@@ -9,6 +9,14 @@ const serializeParams = require('../common.js').serializeParams;
 
 describe('Query Entity. Errors', () => {
   
+  it('Should raise error when Accept header does not imply application/json or application/ld+json. ', async function() {
+    const headers = {
+      'Accept': 'text/plain'
+    };
+    const response = await http.get(entitiesResource, headers);
+    expect(response.response).toHaveProperty('statusCode', 416);
+  });
+  
   it('Should raise error when no entity type nor entity attributes provided. ', async function() {
     const response = await http.get(entitiesResource);
     expect(response.response).toHaveProperty('statusCode', 400);
