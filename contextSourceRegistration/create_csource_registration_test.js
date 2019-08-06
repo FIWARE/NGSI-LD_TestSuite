@@ -1,6 +1,5 @@
 const testedResource = require("../common.js").testedResource;
-const assertRegistrationCreated = require("../common.js")
-  .assertRegistrationCreated;
+const assertRegistrationCreated = require("../common.js").assertRegistrationCreated;
 const http = require("../http.js");
 
 const registrationsResource = testedResource + "/csourceRegistrations/";

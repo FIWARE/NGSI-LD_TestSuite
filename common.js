@@ -33,6 +33,10 @@ function assertSubscriptionCreated(response, id) {
   assertCreated(response,id,'/subscriptions/');
 }
 
+function assertRegistrationCreated(response, id) {
+  assertCreated(response,id,'/csourceRegistrations/');
+}
+
 function assertResponse(response, mimeType) {
   const mType = mimeType || JSON;
 
@@ -140,6 +144,7 @@ module.exports = {
   notifyEndpoint,
   assertCreated,
   assertSubscriptionCreated,
+  assertRegistrationCreated,
   assertRetrieved,
   assertRetrievedQuery,
   assertResultsQuery,
