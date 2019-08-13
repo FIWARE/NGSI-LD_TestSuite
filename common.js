@@ -112,6 +112,15 @@ function patchObj(target, patch) {
   return Object.assign(copy, patch);
 }
 
+function sleep(milliseconds) {
+  /*eslint no-unused-vars: "off"*/
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    },milliseconds);
+  });
+}
+
 module.exports = {
   testedResource,
   accEndpoint,
@@ -127,5 +136,6 @@ module.exports = {
   assertBatchOperation,
   // TECHNICAL DEBT
   patchObj,
+  sleep,
   assertResponse
 };
