@@ -20,8 +20,6 @@ const JSON_LD_CONTEXT_HEADER = /<.+>;\s+rel="http:\/\/www\.w3\.org\/ns\/json-ld#
 
 const JSON = /application\/json(;.*)?/;
 
-const child = require('child_process');
-
 function assertCreated(response, id, resource) {
   const resourceTest = resource || '/entities/';
   
@@ -123,21 +121,6 @@ function sleep(milliseconds) {
   });
 }
 
-function spawn(process, params) {
-  return new Promise((resolve, reject) => {
-    const childProcess = child.spawn(process, params);
-    
-    childProcess.stdout.on('data', (data) => {
-      resolve(childProcess);
-    });
-    
-    childProcess.stderr.on('data', (data) => {
-      reject(childProcess);
-    });
-    
-  });
-}
-
 module.exports = {
   testedResource,
   accEndpoint,
@@ -153,6 +136,6 @@ module.exports = {
   assertBatchOperation,
   // TECHNICAL DEBT
   patchObj,
-  spawn,
-  sleep
+  sleep,
+  assertResponse
 };
