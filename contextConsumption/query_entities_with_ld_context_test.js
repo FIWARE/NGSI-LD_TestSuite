@@ -51,7 +51,7 @@ describe('Query Entity. JSON-LD. @context', () => {
     };
             
     const response = await http.get(entitiesResource + '?' + serializeParams(queryParams), ACCEPT_JSON_LD);
-    assertNoResultsQuery(response,JSON_LD); 
+    assertNoResultsQuery(response, JSON_LD); 
   });
     
   it('query by type name. Right @context', async function() {
@@ -65,7 +65,7 @@ describe('Query Entity. JSON-LD. @context', () => {
     };
         
     const response = await http.get(entitiesResource + '?' + serializeParams(queryParams), headers);
-    assertRetrievedQuery(response,entity,JSON_LD); 
+    assertRetrievedQuery(response, entity, JSON_LD); 
   });
   
   it('query by type URI', async function() {
@@ -79,10 +79,10 @@ describe('Query Entity. JSON-LD. @context', () => {
     };
         
     const response = await http.get(entitiesResource + '?' + serializeParams(queryParams), headers);
-    assertRetrievedQuery(response,entity,JSON_LD); 
+    assertRetrievedQuery(response,entity, JSON_LD); 
   });
   
-  it('query by type URI. No @context supplied', async function() {
+  it('query by type URI. No @context supplied but matches', async function() {
     const queryParams = {
       type: 'http://example.org/T_Query',
     };
