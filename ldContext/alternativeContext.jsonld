@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "AltT": "http://example.org/T",
+    "AltT2": "http://example.org/T2",
+    "AltT3": "http://example.org/T3",
+    "AltP1": "http://example.org/P1",
+    "AltP2": "http://example.org/P2",
+    "AltP3": "http://example.org/P3",
+    "AltR1": "http://example.org/R1",
+    "AltR2": "http://example.org/R2",
+    "AltR3": "http://example.org/R3",
+    "AltP1_R1": "http://example.org/P1_R1",
+    "AltP1_P1": "http://example.org/P1_P1",
+    "AltR1_P1": "http://example.org/R1_P1",
+    "AltR1_R1": "http://example.org/R1_R1",
+    "AltT_Query": "http://example.org/T_Query",
+    "AltP100": "http://example.org/P100",
+    "AltR100": "http://example.org/R100",
+    "AltDateProp": {
+      "@id":   "http://example.org/DateProp",
+      "@type": "http://uri.etsi.org/ngsi-ld/DateTime"
+    },
+    "AltVehicle": "http://schema.org/Vehicle"
+  }
+}
