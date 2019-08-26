@@ -58,6 +58,7 @@ function assertRetrieved(response, entity, mimeType) {
 
 function assertRetrievedQuery(response, entity, mimeType) {
   assertResponse(response, mimeType);
+  expect(response.body).toBeDefined();
   // Check first query result
   expect(response.body[0]).toBeDefined();
   expect(response.body[0]).toEqual(entity);
@@ -67,11 +68,13 @@ function assertNoResultsQuery(response, mimeType) {
   const checkedMimeType = mimeType || 'application/json';
   
   assertResponse(response, checkedMimeType);
+  expect(response.body).toBeDefined();
   // Check first query result
   expect(response.body.length).toBe(0);
 }
 
 function assertResultsQuery(response, numResults) {
+  expect(response.body).toBeDefined();
   expect(response.body.length).toBe(numResults);
 }
 
