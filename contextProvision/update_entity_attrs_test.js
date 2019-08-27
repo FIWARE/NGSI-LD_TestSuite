@@ -52,8 +52,9 @@ describe('Update Entity Attributes. JSON. Default @context', () => {
   afterAll(() => {
     return http.delete(entitiesResource + entityId);
   });
+  
     
-  it('Update Entity Attributes. Partial success', async function() {
+  it('Update Entity Attributes. Partial success. Only P1 updated', async function() {
     const response = await http.patch(entitiesResource + entityId + '/attrs/', updatedAttributes);
     expect(response.response).toHaveProperty('statusCode', 207);
         
@@ -93,4 +94,17 @@ describe('Update Entity Attributes. JSON. Default @context', () => {
     const finalEntity = patchObj(entity, overwrittenAttrs);
     expect(checkResponse.body).toEqual(finalEntity);
   });
+  
+  it('Update Entity Attributes. No Attribute known. 404', async function() {
+    const overwrittenAttrs = {
+      'P2': {
+        'type': 'Property',
+        'value': 'Hola'
+      }
+    };
+    const response = await http.patch(entitiesResource + entityId
+                                       + '/attrs/', overwrittenAttrs);
+    expect(response.response).toHaveProperty('statusCode', 404);
+  });
+  
 });
