@@ -59,7 +59,7 @@ describe('Update Entity Attributes. JSON-LD @context', () => {
     return http.delete(entitiesResource + entityId);
   });
     
-  it('Update Entity Attributes. @context matches. Partial success', async function() {
+  it('@context matches. Partial success. Only P1 updated', async function() {
     const response = await http.patch(entitiesResource + entityId + '/attrs/', updatedAttributes);
     expect(response.response).toHaveProperty('statusCode', 207); 
         
@@ -69,10 +69,14 @@ describe('Update Entity Attributes. JSON-LD @context', () => {
     finalEntity.P1 = updatedAttributes.P1;
     
     expect(checkResponse.body).toEqual(finalEntity);
+    
+    expect(checkResponse.body).toHaveProperty('updated', ['P1']);
+    expect(checkResponse.body.notUpdated).toHaveLength(1);
+    expect(response.body.notUpdated[0]).toHaveProperty('attributeName', 'location');
   });
   
   
-  it('Update Entity Attributes. @context does not match', async function() {
+  it('Update Entity Attributes. @context does not match. 207. No Attribute updated', async function() {
     // @context is changed so now P1 points to a different FQN 
     const updatedAttrsCtx = patchObj(updatedAttributes, {
       '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext2.jsonld'
@@ -80,7 +84,11 @@ describe('Update Entity Attributes. JSON-LD @context', () => {
     
     const response = await http.patch(entitiesResource + entityId + '/attrs/', updatedAttrsCtx);
     expect(response.response).toHaveProperty('statusCode', 207);
-        
+    expect(response.body).toHaveProperty('updated', []);
+    expect(checkResponse.body.notUpdated).toHaveLength(2);
+    expect(response.body.notUpdated[0]).toHaveProperty('attributeName', 'P1');
+    expect(response.body.notUpdated[0]).toHaveProperty('attributeName', 'location');
+    
     const checkResponse = await http.get(entitiesResource + entityId, JSON_LD_HEADERS);
     expect(checkResponse.body).toEqual(entity);
   });  
@@ -105,20 +113,4 @@ describe('Update Entity Attributes. JSON-LD @context', () => {
   });
 
   
-  it('Update Entity Attributes. @context matches. No overwrite', async function() {
-    const overwrittenAttrs = {
-      'P1': {
-        'type': 'Property',
-        'value': 'Hola'
-      },
-      '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
-    };
-    const response = await http.patch(entitiesResource + entityId
-                                       + '/attrs/', overwrittenAttrs);
-    expect(response.response).toHaveProperty('statusCode', 204);
-        
-    const checkResponse = await http.get(entitiesResource + entityId);
-    const finalEntity = patchObj(entity, overwrittenAttrs);
-    expect(checkResponse.body).toEqual(finalEntity);
-  });
 });
