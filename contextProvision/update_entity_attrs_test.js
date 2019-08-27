@@ -116,7 +116,7 @@ describe('Update Entity Attributes. JSON. Default @context', () => {
     expect(response.response).toHaveProperty('statusCode', 207);
     
     expect(response.body).toHaveProperty('updated', []);
-    expect(checkResponse.body.notUpdated).toHaveLength(1);
+    expect(response.body.notUpdated).toHaveLength(1);
     expect(response.body.notUpdated[0]).toHaveProperty('attributeName', 'P2');
   });
   
