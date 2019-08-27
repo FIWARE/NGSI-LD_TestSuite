@@ -110,6 +110,7 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
     const finalEntity = patchObj(entity, overwrittenAttrs);
     expect(checkResponse.body).toEqual(finalEntity);
   });
+
     
   it('append Entity Attributes. Attributes should not be overwritten. Partial success', async function() {
     const overwrittenAttrs = {
