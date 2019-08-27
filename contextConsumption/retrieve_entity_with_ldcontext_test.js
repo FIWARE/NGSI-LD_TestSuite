@@ -297,7 +297,6 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
   it('should retrieve the entity but compaction shall use an alternative @context', async function() {
     const headers = {
       'Accept': 'application/ld+json',
-      // Observe that the provided @context will make the attribute not to match
       'Link': '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/alternativeContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
     };
     
