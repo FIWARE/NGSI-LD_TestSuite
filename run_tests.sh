@@ -11,9 +11,7 @@ if [ -f accumulator.pid ]; then
   fi
 fi
 
-if [ -z "$ACC_ENDPOINT" ]; then
-  export ACC_ENDPOINT=http://localhost:3000
-fi
+ACC_ENDPOINT=${ACC_ENDPOINT:-http://localhost:3000}
 
 echo "Starting accumulator ..."
 node ./notifications/accumulator.js $ACC_ENDPOINT > accumulator.log & 
