@@ -11,13 +11,15 @@ if [ -f accumulator.pid ]; then
   fi
 fi
 
+ACC_ENDPOINT=${ACC_ENDPOINT:-http://localhost:3000}
+
 echo "Starting accumulator ..."
-node ./notifications/accumulator.js > accumulator.log & 
+node ./notifications/accumulator.js $ACC_ENDPOINT > accumulator.log & 
 echo $! > ./accumulator.pid
 
 sleep 2
 
-echo "Accumulator started ..."
+echo "Accumulator started ... at $ACC_ENDPOINT"
 
 jest --runInBand
 

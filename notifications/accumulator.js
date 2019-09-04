@@ -8,7 +8,12 @@ const url = require('url');
 // Notifications indexed by subscription id
 let allNotifications = Object.create(null);
 
-const endPoint = process.env.ACC_ENDPOINT || 'http://localhost:3000';
+if (process.argv.length < 3) {
+  console.log('Please provide the listening endpoint. Ex: http://localhost:3000');
+  process.exit(2);
+}
+
+const endPoint = process.argv[2];
 const parsedEndpoint = url.parse(endPoint);
 
 const server = Hapi.server({
