@@ -87,7 +87,7 @@ describe('Update Entity Attributes. JSON-LD @context', () => {
     expect(response.body).toHaveProperty('updated', []);
     expect(checkResponse.body.notUpdated).toHaveLength(2);
     expect(response.body.notUpdated[0]).toHaveProperty('attributeName', 'P1');
-    expect(response.body.notUpdated[0]).toHaveProperty('attributeName', 'location');
+    expect(response.body.notUpdated[1]).toHaveProperty('attributeName', 'location');
     
     const checkResponse = await http.get(entitiesResource + entityId, JSON_LD_HEADERS);
     expect(checkResponse.body).toEqual(entity);

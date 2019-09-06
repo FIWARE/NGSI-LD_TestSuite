@@ -60,14 +60,6 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
     },
     '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
   };
-
-  const appendedAttributesOtherContext = {
-    'P3': {
-      'type': 'Relationship',
-      'object': 'urn:ngsi-ld:T2:6789',
-    },
-    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext2.jsonld'
-  };
   
   // The Entity Id has to be properly encoded
   const entityId = encodeURIComponent(entity.id);
@@ -117,44 +109,37 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
       'P1': {
         'type': 'Property',
         'value': 'Hola'
-      },
-      'P2': {
-        'type': 'Property',
-        'value': 'Adios'
-      },
+      }
       '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
     };
     const response = await http.post(`${entitiesResource}${entityId}/attrs/?options=noOverwrite`,
                                        overwrittenAttrs, JSON_LD_HEADERS);
     expect(response.response).toHaveProperty('statusCode', 207);
-        
-    const finalEntity = patchObj(entity, {});
-    finalEntity.P2 = overwrittenAttrs.P2;
-    const checkResponse = await http.get(entitiesResource + entityId, ACCEPT_LD);     
-    expect(checkResponse.body).toEqual(finalEntity);
+    
+    expect(response.body).toHaveProperty('updated', []);
+    expect(checkResponse.body.notUpdated).toHaveLength(1);
+    expect(response.body.notUpdated[0]).toHaveProperty('attributeName', 'P1');
   });
   
   
-  it('append Entity Attributes. Attributes should not be overwritten. Partial success', async function() {
+  it('append Entity Attributes in another JSON-LD @context. 204', async function() {
     const overwrittenAttrs = {
-      'P1': {
+      'areaServed': {
         'type': 'Property',
-        'value': 'Hola'
+        'value': 'A1'
       },
-      'P2': {
-        'type': 'Property',
-        'value': 'Adios'
-      },
-      '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
+      '@context': 'https://schema.org'
     };
-    const response = await http.post(`${entitiesResource}${entityId}/attrs/?options=noOverwrite`,
+    const response = await http.post(`${entitiesResource}${entityId}/attrs/`,
                                        overwrittenAttrs, JSON_LD_HEADERS);
-    expect(response.response).toHaveProperty('statusCode', 207);
-        
-    const finalEntity = patchObj(entity, {});
-    finalEntity.P2 = overwrittenAttrs.P2;
-    const checkResponse = await http.get(entitiesResource + entityId, ACCEPT_LD);     
-    expect(checkResponse.body).toEqual(finalEntity);
+    expect(response.response).toHaveProperty('statusCode', 204);
+    
+    const checkResponse = await http.get(entitiesResource + entityId, ACCEPT_LD);
+    const responseEntity = checkResponse.body;
+    expect(responseEntity['@context']).toContain('https://schema.org');
+    
+    expect(responseEntity.areaServed).toBeDefined();
+    expect(responseEntity.areaServed).toHaveProperty('value', overwrittenAttrs.areaServed.value);
   });
   
 });
