@@ -109,7 +109,7 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
       'P1': {
         'type': 'Property',
         'value': 'Hola'
-      }
+      },
       '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
     };
     const response = await http.post(`${entitiesResource}${entityId}/attrs/?options=noOverwrite`,
