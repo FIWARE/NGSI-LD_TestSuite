@@ -24,7 +24,7 @@ describe('Name prefixes test', () => {
     },
     'R100': {
       'type': 'Relationship',
-      'object': 'urn:ngsi-ld:T2:6789',
+      'object': 'urn:ngsi-ld:T2:6789'
     },
     'schema:name': {
       'type': 'Property',
@@ -57,7 +57,7 @@ describe('Name prefixes test', () => {
     
   it('query by type. Right @context', async function() {
     const queryParams = {
-      type: 'T_Query',
+      type: 'ex:T_Query',
     };
         
     const headers = {
