@@ -25,6 +25,12 @@ echo "Accumulator started ... at $ACC_ENDPOINT"
 echo "NGSI-LD Broker endpoint ... at $TEST_ENDPOINT"
 echo "The notification endpoint ... at $NOTIFY_ENDPOINT"
 
+while [ `curl -s -o /dev/null -w %{http_code} $TEST_ENDPOINT` -eq 000 ]
+do 
+  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} $TEST_ENDPOINT` " (waiting for 200)"
+  sleep 1
+done
+
 jest --runInBand
 
 # Killing the Accumulator
