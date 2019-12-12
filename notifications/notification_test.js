@@ -11,7 +11,7 @@ const accumulatorEndpoint = common.accEndpoint;
 const accumulatorResource = accumulatorEndpoint + '/dump';
 const clearAccumulatorResource =  accumulatorEndpoint + '/clear';
 
-const notifyEndpoint = common.notifyEndpoint;
+const notifyEndpoint = common.notifyEndpoint; // 'http://host.docker.internal:3000/acc'; // 
 
 const sleep =  common.sleep;
 
