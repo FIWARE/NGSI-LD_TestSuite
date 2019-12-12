@@ -25,7 +25,7 @@ echo "Accumulator started ... at $ACC_ENDPOINT"
 echo "NGSI-LD Broker endpoint ... at $TEST_ENDPOINT"
 echo "The notification endpoint ... at $NOTIFY_ENDPOINT"
 
-# ./services start
+#./services start
 
 while [ `curl -s -o /dev/null -w %{http_code} $TEST_ENDPOINT` -eq 000 ]
 do 
@@ -33,7 +33,7 @@ do
   sleep 1
 done
 
-jest   --runInBand --verbose
+jest  --runInBand --verbose
 
 # Killing the Accumulator
 curl -X POST $ACC_ENDPOINT/kill 

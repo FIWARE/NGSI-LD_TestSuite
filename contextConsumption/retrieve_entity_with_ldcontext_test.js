@@ -49,7 +49,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         'value': false
       }
     },
-    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
+    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext.jsonld'
   };
   
   const entityId = encodeURIComponent(entity.id);
