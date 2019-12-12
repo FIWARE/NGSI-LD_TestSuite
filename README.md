@@ -9,7 +9,7 @@ the evolution of NGSIv2 for supporting Linked Data based on JSON-LD.
 
 ## Test Summary
 
-* [contextProvision. Section 5.6](./contextProvision)
+* [contextProvision. Section 5.6](./)
 * [contextConsumption. Section 5.7](./contextConsumption)
 * [contextSubscription. Section 5.8](./contextSubscription)
 * [contextSourceRegistration. Section 5.9](./contextSourceRegistration)
