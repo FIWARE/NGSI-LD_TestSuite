@@ -3,6 +3,10 @@ const http = require('../http.js');
 
 const entitiesResource = testedResource + '/entities/';
 
+const JSON_LD_HEADERS = {
+  'Content-Type': 'application/ld+json'
+};
+
 // Patches the object and returns a new copy of the patched object
 // TECHNICAL DEBT: It should be imported from common.js
 function patchObj(target, patch) {  
@@ -10,7 +14,7 @@ function patchObj(target, patch) {
   return Object.assign(copy, patch);
 }
 
-describe('Update Entity Attributes. JSON. Default @context', () => {
+describe('Update Entity Attributes. JSON-LD @context', () => {
   const entity = {
     'id': 'urn:ngsi-ld:T:' + new Date().getTime(),
     'type': 'T',
@@ -26,7 +30,8 @@ describe('Update Entity Attributes. JSON. Default @context', () => {
         'type': 'Property',
         'value': 0.79
       }
-    }
+    },
+    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
   };
 
   const updatedAttributes = {
@@ -40,7 +45,8 @@ describe('Update Entity Attributes. JSON. Default @context', () => {
         'type': 'Point',
         'coordinates': [-8.01, 40.01]
       }
-    }
+    },
+    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
   };
   
   const entityId = encodeURIComponent(entity.id);
@@ -52,46 +58,49 @@ describe('Update Entity Attributes. JSON. Default @context', () => {
   afterAll(() => {
     return http.delete(entitiesResource + entityId);
   });
-  
     
-  it('Partial success. Only P1 updated', async function() {
+  it('@context matches. Partial success. Only P1 updated', async function() {
     const response = await http.patch(entitiesResource + entityId + '/attrs/', updatedAttributes);
-    expect(response.response).toHaveProperty('statusCode', 207);
+    expect(response.response).toHaveProperty('statusCode', 207); 
         
-    const checkResponse = await http.get(entitiesResource + entityId);
+    const checkResponse = await http.get(entitiesResource + entityId, JSON_LD_HEADERS);
         
     const finalEntity = patchObj(entity, {});
     finalEntity.P1 = updatedAttributes.P1;
+    
     expect(checkResponse.body).toEqual(finalEntity);
     
     expect(checkResponse.body).toHaveProperty('updated', ['P1']);
     expect(checkResponse.body.notUpdated).toHaveLength(1);
     expect(response.body.notUpdated[0]).toHaveProperty('attributeName', 'location');
   });
+  
+  
+  it('Update Entity Attributes. @context does not match. 207. No Attribute updated', async function() {
+    // @context is changed so now P1 points to a different FQN 
+    const updatedAttrsCtx = patchObj(updatedAttributes, {
+      '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext2.jsonld'
+    });
+    
+    const response = await http.patch(entitiesResource + entityId + '/attrs/', updatedAttrsCtx);
+    expect(response.response).toHaveProperty('statusCode', 207);
+    expect(response.body).toHaveProperty('updated', []);
+    expect(checkResponse.body.notUpdated).toHaveLength(2);
+    expect(response.body.notUpdated[0]).toHaveProperty('attributeName', 'P1');
+    expect(response.body.notUpdated[1]).toHaveProperty('attributeName', 'location');
+    
+    const checkResponse = await http.get(entitiesResource + entityId, JSON_LD_HEADERS);
+    expect(checkResponse.body).toEqual(entity);
+  });  
 
     
-  it('Target entity does not exist', async function() {
-    const response = await http.patch(entitiesResource + 'urn:ngsi-ld:doesnotexist'
-                                       + '/attrs/', updatedAttributes);
-        
-    expect(response.response).toHaveProperty('statusCode', 404);
-  });
-
-    
-  it('Update Entity Attributes. Empty Payload', async function() {
-    const response = await http.patch(entitiesResource + entityId
-                                       + '/attrs/', {});
-        
-    expect(response.response).toHaveProperty('statusCode', 400);
-  });
-
-    
-  it('All Attributes are overwritten', async function() {
+  it('Update Entity Attributes. @context matches. All Attributes are overwritten', async function() {
     const overwrittenAttrs = {
       'P1': {
         'type': 'Property',
         'value': 'Hola'
-      }
+      },
+      '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
     };
     const response = await http.patch(entitiesResource + entityId
                                        + '/attrs/', overwrittenAttrs);
@@ -103,21 +112,5 @@ describe('Update Entity Attributes. JSON. Default @context', () => {
     expect(checkResponse.body).toEqual(finalEntity);
   });
 
-  
-  it('No Attribute known. 207', async function() {
-    const overwrittenAttrs = {
-      'P2': {
-        'type': 'Property',
-        'value': 'Hola'
-      }
-    };
-    const response = await http.patch(entitiesResource + entityId
-                                       + '/attrs/', overwrittenAttrs);
-    expect(response.response).toHaveProperty('statusCode', 207);
-    
-    expect(response.body).toHaveProperty('updated', []);
-    expect(response.body.notUpdated).toHaveLength(1);
-    expect(response.body.notUpdated[0]).toHaveProperty('attributeName', 'P2');
-  });
   
 });
