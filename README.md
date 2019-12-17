@@ -32,7 +32,7 @@ npm test
 
 By default, the test endpoint is `http://localhost:1026`.
 By default, the accumulator endpoint is `http://localhost:3000`.
-By default, the notification endpoint is the same as the accumulator endpoint. 
+By default, the notification endpoint is `http://host.docker.internal:3000/acc`
 
 Please note, that if you are running the NGSI-LD endpoint through Docker, the endpoint shall be encoded as `http://host.docker.internal:<port>/acc`, so that the Docker container can get access to the accumulator server running on the host.  
 
