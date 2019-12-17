@@ -60,15 +60,6 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
         },
         '@context': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld'
     };
-    /*  
-  const appendedAttributesOtherContext = {
-    'P3': {
-      'type': 'Relationship',
-      'object': 'urn:ngsi-ld:T2:6789',
-    },
-    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext2.jsonld'
-  };
-  */
 
     // The Entity Id has to be properly encoded
     const entityId = encodeURIComponent(entity.id);
@@ -81,7 +72,7 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
         return http.delete(entitiesResource + entityId);
     });
 
-    it('append Entity Attributes', async function() {
+    it('All Attributes are appended. Same JSON-LD @context. 204', async function() {
         const response = await http.post(`${entitiesResource}${entityId}/attrs/`, appendedAttributes, JSON_LD_HEADERS);
 
         expect(response.response).toHaveProperty('statusCode', 204);
@@ -92,7 +83,7 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
         expect(checkResponse.body).toEqual(finalEntity);
     });
 
-    it('append Entity Attributes. Attributes are overwritten', async function() {
+    it('Attributes are overwritten. Same JSON-LD @context. 204', async function() {
         const overwrittenAttrs = {
             P1: {
                 type: 'Property',
@@ -108,15 +99,11 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
         expect(checkResponse.body).toEqual(finalEntity);
     });
 
-    it('append Entity Attributes. Attributes should not be overwritten. Partial success', async function() {
+    it('Attributes should not be overwritten. Partial success. 207', async function() {
         const overwrittenAttrs = {
             P1: {
                 type: 'Property',
                 value: 'Hola'
-            },
-            P2: {
-                type: 'Property',
-                value: 'Adios'
             },
             '@context': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld'
         };
@@ -127,9 +114,27 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
         );
         expect(response.response).toHaveProperty('statusCode', 207);
 
-        const finalEntity = patchObj(entity, {});
-        finalEntity.P2 = overwrittenAttrs.P2;
+        expect(response.body).toHaveProperty('updated', []);
+        expect(response.body.notUpdated).toHaveLength(1);
+        expect(response.body.notUpdated[0]).toHaveProperty('attributeName', 'P1');
+    });
+
+    it('append Entity Attributes in another JSON-LD @context. 204', async function() {
+        const overwrittenAttrs = {
+            areaServed: {
+                type: 'Property',
+                value: 'A1'
+            },
+            '@context': 'https://schema.org'
+        };
+        const response = await http.post(`${entitiesResource}${entityId}/attrs/`, overwrittenAttrs, JSON_LD_HEADERS);
+        expect(response.response).toHaveProperty('statusCode', 204);
+
         const checkResponse = await http.get(entitiesResource + entityId, ACCEPT_LD);
-        expect(checkResponse.body).toEqual(finalEntity);
+        const responseEntity = checkResponse.body;
+        expect(responseEntity['@context']).toContain('https://schema.org');
+
+        expect(responseEntity.areaServed).toBeDefined();
+        expect(responseEntity.areaServed).toHaveProperty('value', overwrittenAttrs.areaServed.value);
     });
 });
