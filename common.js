@@ -6,14 +6,15 @@
  *
  */
 
-const endpoint = process.env.TEST_ENDPOINT || 'http://localhost:1026';
+const endpoint = process.env.TEST_ENDPOINT || "http://localhost:1026";
 
-const accEndpoint = process.env.ACC_ENDPOINT || 'http://localhost:3000';
-const notifyEndpoint = process.env.NOTIFY_ENDPOINT || 'http://host.docker.internal:3000/acc';
+const accEndpoint = process.env.ACC_ENDPOINT || "http://localhost:3000";
+const notifyEndpoint =
+  process.env.NOTIFY_ENDPOINT || "http://host.docker.internal:3000/acc";
 
-const ngsild = 'ngsi-ld/v1';
+const ngsild = "ngsi-ld/v1";
 
-const testedResource = endpoint + '/' + ngsild;
+const testedResource = endpoint + "/" + ngsild;
 
 // Regular expression for matching the link header pointing to the JSON-LD @context
 const JSON_LD_CONTEXT_HEADER = /<.+>;\s+rel="http:\/\/www\.w3\.org\/ns\/json-ld#context";\s+type="application\/ld\+json"/;
@@ -21,25 +22,28 @@ const JSON_LD_CONTEXT_HEADER = /<.+>;\s+rel="http:\/\/www\.w3\.org\/ns\/json-ld#
 const JSON = /application\/json(;.*)?/;
 
 function assertCreated(response, id, resource) {
-  const resourceTest = resource || '/entities/';
-  
-  expect(response).toHaveProperty('statusCode', 201);
-  expect(response.headers).toHaveProperty('location', '/' + ngsild + resourceTest + id);
+  const resourceTest = resource || "/entities/";
+
+  expect(response).toHaveProperty("statusCode", 201);
+  expect(response.headers).toHaveProperty(
+    "location",
+    "/" + ngsild + resourceTest + id
+  );
 }
 
 function assertSubscriptionCreated(response, id) {
-  assertCreated(response,id,'/subscriptions/');
+  assertCreated(response, id, "/subscriptions/");
 }
 
 function assertRegistrationCreated(response, id) {
-  assertCreated(response,id,'/csourceRegistrations/');
+  assertCreated(response, id, "/csourceRegistrations/");
 }
 
 function assertResponse(response, mimeType) {
   const mType = mimeType || JSON;
 
-  expect(response.response).toHaveProperty('statusCode', 200);
-  expect(response.response.headers['content-type']).toMatch(mType);
+  expect(response.response).toHaveProperty("statusCode", 200);
+  expect(response.response.headers["content-type"]).toMatch(mType);
 
   // response.response.headers['link'] =
   // '<http://json-ld.org/contexts/person.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
@@ -65,8 +69,8 @@ function assertRetrievedQuery(response, entity, mimeType) {
 }
 
 function assertNoResultsQuery(response, mimeType) {
-  const checkedMimeType = mimeType || 'application/json';
-  
+  const checkedMimeType = mimeType || "application/json";
+
   assertResponse(response, checkedMimeType);
   expect(response.body).toBeDefined();
   // Check first query result
@@ -79,28 +83,28 @@ function assertResultsQuery(response, numResults) {
 }
 
 function assertBatchOperation(response, success, errors) {
-  expect(typeof response.body).toBe('object');
-  
+  expect(typeof response.body).toBe("object");
+
   const respSuccess = response.body.success;
   const respErrors = response.body.errors;
-  
+
   expect(respSuccess.length).toBe(success.length);
   expect(respErrors.length).toBe(errors.length);
-  
+
   for (let j = 0; j < success.length; j++) {
     expect(respSuccess[j]).toBe(success[j]);
   }
-  
+
   for (let j = 0; j < errors.length; j++) {
     expect(respErrors[j].entityId).toBe(errors[j]);
   }
 }
 
 function serializeParams(query) {
-  let out = '';
+  let out = "";
   Object.keys(query).forEach(function(key) {
-    out += key + '=' + encodeURIComponent(query[key]);
-    out += '&';
+    out += key + "=" + encodeURIComponent(query[key]);
+    out += "&";
   });
 
   return out.substring(0, out.length - 1);
@@ -120,7 +124,7 @@ function sleep(milliseconds) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve();
-    },milliseconds);
+    }, milliseconds);
   });
 }
 

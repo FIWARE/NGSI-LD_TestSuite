@@ -29,6 +29,25 @@
     "type": "git",
     "url": "git+https://github.com/fiware/NGSI-LD_TestSuite.git"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --config .prettierrc.json --write",
+      "git add"
+    ],
+    "*.md": [
+      "prettier --no-config --tab-width 4 --print-width 120 --write --prose-wrap always",
+      "git add"
+    ],
+    "*.yml": [
+      "prettier --no-config --write",
+      "git add"
+    ]
+  },
   "author": "FIWARE Foundation e.V.",
   "license": "MIT",
   "bugs": {
