@@ -35,7 +35,7 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
         'value': 0.79
       }
     },
-    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
+    '@context': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld'
   };
 
   const appendedAttributes = {
@@ -58,7 +58,7 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
         'coordinates': [-8.01, 40.01]
       }
     },
-    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
+    '@context': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld'
   };
 /*  
   const appendedAttributesOtherContext = {
@@ -67,7 +67,8 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
       'object': 'urn:ngsi-ld:T2:6789',
     },
     '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext2.jsonld'
-  };*/
+  };
+  */
   
   // The Entity Id has to be properly encoded
   const entityId = encodeURIComponent(entity.id);
@@ -100,7 +101,7 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
         'type': 'Property',
         'value': 'Hola'
       },
-      '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
+      '@context': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld'
     };
     const response = await http.post(`${entitiesResource}${entityId}/attrs/`,
                                      overwrittenAttrs, JSON_LD_HEADERS);
@@ -121,7 +122,7 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
         'type': 'Property',
         'value': 'Adios'
       },
-      '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
+      '@context': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld'
     };
     const response = await http.post(`${entitiesResource}${entityId}/attrs/?options=noOverwrite`,
                                        overwrittenAttrs, JSON_LD_HEADERS);

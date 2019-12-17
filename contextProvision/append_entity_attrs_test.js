@@ -54,11 +54,11 @@ describe('Append Entity Attributes. JSON. Default @context', () => {
   // The Entity Id has to be properly encoded
   const entityId = encodeURIComponent(entity.id);
 
-  beforeAll(() => {
+  beforeEach(() => {
     return http.post(entitiesResource, entity);
   });
     
-  afterAll(() => {
+  afterEach(() => {
     return http.delete(entitiesResource + entityId);
   });
     
@@ -87,7 +87,8 @@ describe('Append Entity Attributes. JSON. Default @context', () => {
     expect(response.response).toHaveProperty('statusCode', 400);
   });
     
-  it('append Entity Attributes. Attributes are overwritten', async function() {
+  // Github Issue is created https://github.com/FIWARE/context.Orion-LD/issues/279
+  xit('append Entity Attributes. Attributes are overwritten', async function() {
     const overwrittenAttrs = {
       'P1': {
         'type': 'Property',
@@ -117,7 +118,7 @@ describe('Append Entity Attributes. JSON. Default @context', () => {
     const response = await http.post(entitiesResource + entityId
                                        + '/attrs/?options=noOverwrite',
     overwrittenAttrs);
-    expect(response.response).toHaveProperty('statusCode', 207);
+    expect(response.response).toHaveProperty('statusCode', 204);
         
     const finalEntity = patchObj(entity, {});
     finalEntity.P2 = overwrittenAttrs.P2;

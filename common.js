@@ -9,7 +9,7 @@
 const endpoint = process.env.TEST_ENDPOINT || 'http://localhost:1026';
 
 const accEndpoint = process.env.ACC_ENDPOINT || 'http://localhost:3000';
-const notifyEndpoint = process.env.NOTIFY_ENDPOINT || `${accEndpoint}/acc`;
+const notifyEndpoint = process.env.NOTIFY_ENDPOINT || 'http://host.docker.internal:3000/acc';
 
 const ngsild = 'ngsi-ld/v1';
 

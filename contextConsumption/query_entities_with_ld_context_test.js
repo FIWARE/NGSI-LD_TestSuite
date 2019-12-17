@@ -17,6 +17,8 @@ const ACCEPT_JSON_LD = {
   'Accept': 'application/ld+json'
 };
 
+// Note - the testFullContext.json also includes the core context. This is not returned
+  // in the subscription since it is assumed by default.
 describe('Query Entity. JSON-LD. @context', () => {
   const entity = {
     'id': 'urn:ngsi-ld:T:I123k467:Context',
@@ -29,7 +31,7 @@ describe('Query Entity. JSON-LD. @context', () => {
       'type': 'Relationship',
       'object': 'urn:ngsi-ld:T2:6789',
     },
-    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
+    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext.jsonld'
   };
   
   const entityId = encodeURIComponent(entity.id);

@@ -39,7 +39,7 @@ describe('Retrieve Subscription. JSON-LD. @context', () => {
         'accept': 'application/json'
       }
     },
-    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld'
+    '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext.jsonld'
   };
   
   const subscriptionId = encodeURIComponent(subscription.id);
@@ -51,7 +51,9 @@ describe('Retrieve Subscription. JSON-LD. @context', () => {
   afterAll(() => {
     return http.delete(subscriptionsResource + subscriptionId);
   });
-    
+  
+  // Note - the testFullContext.json also includes the core context. This is not returned
+  // in the subscription since it is assumed by default.
   it('should retrieve the subscription', async function() {
     const headers = {
       'Accept': 'application/ld+json',
