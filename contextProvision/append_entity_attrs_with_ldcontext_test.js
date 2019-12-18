@@ -64,11 +64,11 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
     // The Entity Id has to be properly encoded
     const entityId = encodeURIComponent(entity.id);
 
-    beforeAll(() => {
-        return http.post(entitiesResource, entity, JSON_LD_HEADERS);
+    beforeEach(() => {
+        return http.post(entitiesResource, entity);
     });
 
-    afterAll(() => {
+    afterEach(() => {
         return http.delete(entitiesResource + entityId);
     });
 
@@ -119,7 +119,7 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
         expect(response.body.notUpdated[0]).toHaveProperty('attributeName', 'P1');
     });
 
-    it('append Entity Attributes in another JSON-LD @context. 204', async function() {
+    xit('append Entity Attributes in another JSON-LD @context. 204', async function() {
         const overwrittenAttrs = {
             areaServed: {
                 type: 'Property',

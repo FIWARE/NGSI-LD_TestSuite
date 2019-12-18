@@ -51,11 +51,11 @@ describe('Update Entity Attributes. JSON-LD @context', () => {
 
     const entityId = encodeURIComponent(entity.id);
 
-    beforeAll(() => {
+    beforeEach(() => {
         return http.post(entitiesResource, entity);
     });
 
-    afterAll(() => {
+    afterEach(() => {
         return http.delete(entitiesResource + entityId);
     });
 

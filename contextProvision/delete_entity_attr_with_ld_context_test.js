@@ -20,7 +20,7 @@ describe('Delete Entity Attribute. JSON-LD @context', () => {
 
     const entityId = encodeURIComponent(entity.id);
 
-    beforeAll(() => {
+    beforeEach(() => {
         return http.post(entitiesResource, entity, JSON_LD_HEADERS);
     });
 

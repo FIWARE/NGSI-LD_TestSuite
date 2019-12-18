@@ -35,11 +35,11 @@ describe('Partial Entity Attribute Update. JSON. Default @context', () => {
         value: 55
     };
 
-    beforeAll(() => {
+    beforeEach(() => {
         return http.post(entitiesResource, entity);
     });
 
-    afterAll(() => {
+    afterEach(() => {
         return http.delete(entitiesResource + entityId);
     });
 
