@@ -5,3 +5,7 @@ install:
   - npm install
 script:
   - npm run lint
+
+after_success:
+  - ./services start
+  - npm test
