@@ -109,13 +109,13 @@ describe('Name prefixes test', () => {
 
         const response = await http.get(entitiesResource + '?' + serializeParams(queryParams), headers);
         expect(response.body[0]).toBeDefined();
-        expect(response.body[0]).toHaveProperty('schema:name.value', 'XX');
+        expect(response.body[0]).toHaveProperty('name.value', 'XX');
     });
 
     it('query by condition over prefixed attribute. Right @context. ', async function() {
         const queryParams = {
             type: 'http://example.org/T_Query',
-            q: 'schema:name==XX'
+            q: 'schema:name=="XX"'
         };
 
         const headers = {
@@ -130,7 +130,7 @@ describe('Name prefixes test', () => {
     it('query by condition over prefixed attribute. No @context. ', async function() {
         const queryParams = {
             type: 'http://example.org/T_Query',
-            q: 'schema:name==XX'
+            q: 'schema:name=="XX"'
         };
 
         const headers = {
