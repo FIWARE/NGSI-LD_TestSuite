@@ -53,7 +53,7 @@ describe('Retrieve Subscription. JSON-LD. @context', () => {
 
     // Note - the testFullContext.json also includes the core context. This is not returned
     // in the subscription since it is assumed by default.
-    it('should retrieve the subscription', async function() {
+    it('should retrieve the subscription 147', async function() {
         const headers = {
             Accept: 'application/ld+json',
             Link:
@@ -63,7 +63,7 @@ describe('Retrieve Subscription. JSON-LD. @context', () => {
         assertRetrieved(response, subscription, JSON_LD);
     });
 
-    it('should report an error if the subscription does not exist', async function() {
+    it('should report an error if the subscription does not exist 148', async function() {
         const response = await http.get(
             subscriptionsResource + encodeURIComponent('urn:ngsi-ld:xxxxxxx'),
             JSON_LD_HEADERS_GET

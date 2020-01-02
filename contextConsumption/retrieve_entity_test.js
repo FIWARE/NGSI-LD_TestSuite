@@ -65,27 +65,27 @@ describe('Retrieve Entity. JSON. Default @context', () => {
         return http.delete(entitiesResource + entityId);
     });
 
-    it('should retrieve the entity', async function() {
+    it('should retrieve the entity 052', async function() {
         const response = await http.get(entitiesResource + entityId);
         assertRetrieved(response, entity);
     });
 
-    it('should retrieve the entity key values mode', async function() {
+    it('should retrieve the entity key values mode 053', async function() {
         const response = await http.get(entitiesResource + entityId + '?options=keyValues');
         assertRetrieved(response, entityKeyValues);
     });
 
-    it('should retrieve the entity attribute projection', async function() {
+    it('should retrieve the entity attribute projection 054', async function() {
         const response = await http.get(entitiesResource + entityId + '?attrs=P1');
         assertRetrieved(response, entityOneAttr);
     });
 
-    it('should retrieve the entity no attribute matches', async function() {
+    it('should retrieve the entity no attribute matches 055', async function() {
         const response = await http.get(entitiesResource + entityId + '?attrs=notFoundAttr');
         assertRetrieved(response, entityNoAttr);
     });
 
-    it('should report an error if the entity does not exist', async function() {
+    it('should report an error if the entity does not exist 056', async function() {
         const response = await http.get(entitiesResource + encodeURIComponent('urn:ngsi-ld:xxxxxxx'));
         expect(response.response).toHaveProperty('statusCode', 404);
     });

@@ -53,7 +53,7 @@ describe('Update Entity Attributes. JSON. Default @context', () => {
         return http.delete(entitiesResource + entityId);
     });
 
-    it('Update Entity Attributes. Partial success', async function() {
+    it('Update Entity Attributes. Partial success 126', async function() {
         const response = await http.patch(entitiesResource + entityId + '/attrs/', updatedAttributes);
         expect(response.response).toHaveProperty('statusCode', 207);
 
@@ -64,19 +64,19 @@ describe('Update Entity Attributes. JSON. Default @context', () => {
         expect(checkResponse.body).toEqual(finalEntity);
     });
 
-    it('Update Entity Attributes. Target entity does not exist', async function() {
+    it('Update Entity Attributes. Target entity does not exist 127', async function() {
         const response = await http.patch(entitiesResource + 'urn:ngsi-ld:doesnotexist/attrs/', updatedAttributes);
 
         expect(response.response).toHaveProperty('statusCode', 404);
     });
 
-    it('Update Entity Attributes. Empty Payload', async function() {
+    it('Update Entity Attributes. Empty Payload 128', async function() {
         const response = await http.patch(entitiesResource + entityId + '/attrs/', {});
 
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('Update Entity Attributes. All Attributes are overwritten', async function() {
+    it('Update Entity Attributes. All Attributes are overwritten 129', async function() {
         const overwrittenAttrs = {
             P1: {
                 type: 'Property',

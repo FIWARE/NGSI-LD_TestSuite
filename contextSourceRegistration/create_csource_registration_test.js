@@ -5,7 +5,7 @@ const http = require('../http.js');
 const registrationsResource = testedResource + '/csourceRegistrations/';
 
 describe('Create Registration. JSON', () => {
-    it('should create registration from ETSI Example', async function() {
+    it('should create registration from ETSI Example 130', async function() {
         const registration = {
             id: 'urn:ngsi-ld:ContextSourceRegistration:csr1a3456',
             type: 'ContextSourceRegistration',

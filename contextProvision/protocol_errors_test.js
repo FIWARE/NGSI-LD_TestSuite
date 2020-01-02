@@ -4,7 +4,7 @@ const http = require('../http.js');
 const entitiesResource = testedResource + '/entities/';
 
 describe('NGSI-LD Protocol. Errors', () => {
-    it('should reject content which is not JSON nor JSON-LD', async function() {
+    it('should reject content which is not JSON nor JSON-LD 125', async function() {
         const data = {
             id: 'abcdef',
             type: 'T'

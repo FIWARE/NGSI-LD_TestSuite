@@ -81,7 +81,7 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
         return http.delete(entitiesResource + entityId);
     });
 
-    it('append Entity Attributes', async function() {
+    it('append Entity Attributes 079', async function() {
         const response = await http.post(`${entitiesResource}${entityId}/attrs/`, appendedAttributes, JSON_LD_HEADERS);
 
         expect(response.response).toHaveProperty('statusCode', 204);
@@ -92,7 +92,7 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
         expect(checkResponse.body).toEqual(finalEntity);
     });
 
-    it('append Entity Attributes. Attributes are overwritten', async function() {
+    it('append Entity Attributes. Attributes are overwritten 080', async function() {
         const overwrittenAttrs = {
             P1: {
                 type: 'Property',
@@ -108,7 +108,7 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
         expect(checkResponse.body).toEqual(finalEntity);
     });
 
-    it('append Entity Attributes. Attributes should not be overwritten. Partial success', async function() {
+    it('append Entity Attributes. Attributes should not be overwritten. Partial success 081', async function() {
         const overwrittenAttrs = {
             P1: {
                 type: 'Property',

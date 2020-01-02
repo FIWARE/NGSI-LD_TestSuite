@@ -45,7 +45,7 @@ describe('Batch Entity Upsert. JSON', () => {
         return Promise.all(requests);
     });
 
-    it('should upsert a list of entities', async function() {
+    it('should upsert a list of entities 004', async function() {
         const entities = [entity1, entity2];
         // Default mode is replace (for upsert)
         const response = await http.post(batchUpsertResource, entities);

@@ -4,7 +4,7 @@ const http = require('../http.js');
 const entitiesResource = testedResource + '/entities/';
 
 describe('Create Entity. Errors. JSON', () => {
-    it('should reject an entity which id is not a URI', async function() {
+    it('should reject an entity which id is not a URI 082', async function() {
         const entity = {
             id: 'abcdef',
             type: 'T'
@@ -14,7 +14,7 @@ describe('Create Entity. Errors. JSON', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should reject an entity which node type is not recognized', async function() {
+    it('should reject an entity which node type is not recognized 083', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T4:9000',
             type: 'T',
@@ -28,7 +28,7 @@ describe('Create Entity. Errors. JSON', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should reject an entity which contain attributes with forbidden characters', async function() {
+    it('should reject an entity which contain attributes with forbidden characters 084', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T4:9000',
             type: 'T',
@@ -42,7 +42,7 @@ describe('Create Entity. Errors. JSON', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should reject an entity with a property value equal to null', async function() {
+    it('should reject an entity with a property value equal to null 085', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T4:9000',
             type: 'T',
@@ -56,7 +56,7 @@ describe('Create Entity. Errors. JSON', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should reject an entity with a Relationship with no object', async function() {
+    it('should reject an entity with a Relationship with no object 086', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T4:9000',
             type: 'T',
@@ -70,7 +70,7 @@ describe('Create Entity. Errors. JSON', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should reject an entity with a Property with no value', async function() {
+    it('should reject an entity with a Property with no value 087', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T4:9000',
             type: 'T',
@@ -84,7 +84,7 @@ describe('Create Entity. Errors. JSON', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should reject an entity with a Relationship object equal to null', async function() {
+    it('should reject an entity with a Relationship object equal to null 088', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T4:9000',
             type: 'T',
@@ -98,7 +98,7 @@ describe('Create Entity. Errors. JSON', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should report an error if @context is provided in a JSON payload', async function() {
+    it('should report an error if @context is provided in a JSON payload 089', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -110,7 +110,7 @@ describe('Create Entity. Errors. JSON', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should report an error if no @context is provided in a JSON-LD payload', async function() {
+    it('should report an error if no @context is provided in a JSON-LD payload 090', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T'
@@ -123,7 +123,7 @@ describe('Create Entity. Errors. JSON', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should report an error if a JSON-LD header is provided with a JSON-LD payload', async function() {
+    it('should report an error if a JSON-LD header is provided with a JSON-LD payload 091', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T'
