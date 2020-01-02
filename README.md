@@ -19,10 +19,10 @@ the evolution of NGSIv2 for supporting Linked Data based on JSON-LD.
 
 ### Prerequisites
 
-* node version 10.9
+* node version 10.17
 
 
-```
+```console
 npm install
 export TEST_ENDPOINT=<Your NGSI-LD Broker endpoint>. # Example: http://localhost:1026
 export ACC_ENDPOINT=<The accumulator endpoint>. # Example: http://localhost:3000
