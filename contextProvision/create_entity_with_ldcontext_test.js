@@ -9,7 +9,7 @@ const JSON_LD_HEADERS = {
 };
 
 describe('Create Entity. JSON-LD @context', () => {
-    it('should create an entity with JSON-LD @context as single URI', async function() {
+    it('should create an entity with JSON-LD @context as single URI 111', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -35,7 +35,7 @@ describe('Create Entity. JSON-LD @context', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity with JSON-LD @context as single URI. DateTime Property inline', async function() {
+    it('should create an entity with JSON-LD @context as single URI. DateTime Property inline 112', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -68,7 +68,7 @@ describe('Create Entity. JSON-LD @context', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity with JSON-LD @context as a vector of URIs', async function() {
+    it('should create an entity with JSON-LD @context as a vector of URIs 113', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',

@@ -33,7 +33,7 @@ describe('Batch Entity Deletion. JSON', () => {
         return Promise.all(requests);
     });
 
-    it('should delete a list of entities', async function() {
+    it('should delete a list of entities 002', async function() {
         const entityIds = [entity1.id, entity2.id];
 
         const response = await http.post(batchDeleteResource, entityIds);

@@ -19,12 +19,12 @@ describe('Delete Entity Attribute. Default @context', () => {
         return http.post(entitiesResource, entity);
     });
 
-    it('should delete the entity attribute', async function() {
+    it('should delete the entity attribute 114', async function() {
         const response = await http.delete(entitiesResource + entityId + '/attrs/P1');
         expect(response.response).toHaveProperty('statusCode', 204);
     });
 
-    it('should return 404 if attribute does not exist', async function() {
+    it('should return 404 if attribute does not exist 115', async function() {
         const response = await http.delete(entitiesResource + entityId + '/attrs/P1');
         expect(response.response).toHaveProperty('statusCode', 404);
     });

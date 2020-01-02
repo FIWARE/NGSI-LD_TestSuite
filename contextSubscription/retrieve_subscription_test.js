@@ -40,12 +40,12 @@ describe('Retrieve Subscription. JSON. Default @context', () => {
         return http.delete(subscriptionsResource + subscriptionId);
     });
 
-    it('should retrieve the subscription', async function() {
+    it('should retrieve the subscription 145', async function() {
         const response = await http.get(subscriptionsResource + subscriptionId);
         assertRetrieved(response, subscription);
     });
 
-    it('should report an error if the subscription does not exist', async function() {
+    it('should report an error if the subscription does not exist 146', async function() {
         const response = await http.get(subscriptionsResource + encodeURIComponent('urn:ngsi-ld:xxxxxxx'));
         expect(response.response).toHaveProperty('statusCode', 404);
     });

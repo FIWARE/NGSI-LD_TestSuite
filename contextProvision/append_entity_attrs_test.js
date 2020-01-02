@@ -62,7 +62,7 @@ describe('Append Entity Attributes. JSON. Default @context', () => {
         return http.delete(entitiesResource + entityId);
     });
 
-    it('append Entity Attributes. Success. 204', async function() {
+    it('append Entity Attributes 073', async function() {
         const response = await http.post(entitiesResource + entityId + '/attrs/', appendedAttributes);
 
         expect(response.response).toHaveProperty('statusCode', 204);
@@ -73,20 +73,20 @@ describe('Append Entity Attributes. JSON. Default @context', () => {
         expect(checkResponse.body).toEqual(finalEntity);
     });
 
-    it('Target entity does not exist', async function() {
+    it('append Entity Attributes. Target entity does not exist 074', async function() {
         const response = await http.post(entitiesResource + 'urn:ngsi-ld:doesnotexist/attrs/', appendedAttributes);
 
         expect(response.response).toHaveProperty('statusCode', 404);
     });
 
-    it('Empty Payload', async function() {
+    it('append Entity Attributes. Empty Payload 075', async function() {
         const response = await http.post(entitiesResource + entityId + '/attrs/', {});
 
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
     // Github Issue is created https://github.com/FIWARE/context.Orion-LD/issues/279
-    xit('append Entity Attributes. Attributes are overwritten', async function() {
+    xit('append Entity Attributes. Attributes are overwritten 076', async function() {
         const overwrittenAttrs = {
             P1: {
                 type: 'Property',
@@ -101,7 +101,7 @@ describe('Append Entity Attributes. JSON. Default @context', () => {
         expect(checkResponse.body).toEqual(finalEntity);
     });
 
-    it('Attributes should not be overwritten. Partial success. Only P2', async function() {
+    it('append Entity Attributes. Attributes should not be overwritten. Partial success 078', async function() {
         const overwrittenAttrs = {
             P1: {
                 type: 'Property',
@@ -113,11 +113,7 @@ describe('Append Entity Attributes. JSON. Default @context', () => {
             }
         };
         const response = await http.post(entitiesResource + entityId + '/attrs/?options=noOverwrite', overwrittenAttrs);
-        expect(response.response).toHaveProperty('statusCode', 207);
-
-        expect(response.body).toHaveProperty('updated', ['P2']);
-        expect(response.body.notUpdated).toHaveLength(1);
-        expect(response.body.notUpdated[0]).toHaveProperty('attributeName', 'P1');
+        expect(response.response).toHaveProperty('statusCode', 204);
 
         const finalEntity = patchObj(entity, {});
         finalEntity.P2 = overwrittenAttrs.P2;

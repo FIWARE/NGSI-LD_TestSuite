@@ -5,7 +5,7 @@ const entitiesResource = testedResource + '/entities/';
 const serializeParams = require('../common.js').serializeParams;
 
 describe('Query Entity. Errors', () => {
-    it('Should raise error when Accept header does not imply application/json or application/ld+json. ', async function() {
+    it('Should raise error when Accept header does not imply application/json or application/ld+json. 05', async function() {
         const headers = {
             Accept: 'text/plain'
         };
@@ -13,12 +13,12 @@ describe('Query Entity. Errors', () => {
         expect(response.response).toHaveProperty('statusCode', 406);
     });
 
-    it('Should raise error when no entity type nor entity attributes provided. ', async function() {
+    it('Should raise error when no entity type nor entity attributes provided. 017', async function() {
         const response = await http.get(entitiesResource);
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('Should raise error when filter query is syntactically incorrect', async function() {
+    it('Should raise error when filter query is syntactically incorrect 018', async function() {
         const queryParams = {
             type: 'T_Query',
             q: 'a>>>4;c<<<5'
@@ -29,7 +29,7 @@ describe('Query Entity. Errors', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('Should raise error when geo query is syntactically incorrect. Bad georel', async function() {
+    it('Should raise error when geo query is syntactically incorrect. Bad georel 019', async function() {
         const queryParams = {
             type: 'T_Query',
             georel: 'invalid',
@@ -42,7 +42,7 @@ describe('Query Entity. Errors', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('Should raise error when geo query is syntactically incorrect. Bad geometry', async function() {
+    it('Should raise error when geo query is syntactically incorrect. Bad geometry 020', async function() {
         const queryParams = {
             type: 'T_Query',
             georel: 'near;maxDistance==1000',
@@ -55,7 +55,7 @@ describe('Query Entity. Errors', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('Should raise error when geo query is syntactically incorrect. Bad coordinates', async function() {
+    it('Should raise error when geo query is syntactically incorrect. Bad coordinates 021', async function() {
         const queryParams = {
             type: 'T_Query',
             georel: 'near;maxDistance==1000',

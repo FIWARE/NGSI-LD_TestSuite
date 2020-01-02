@@ -152,7 +152,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         return http.delete(entitiesResource + entityId);
     });
 
-    it('should retrieve the entity. application/ld+json MIME Type Accepted. JSON-LD', async function() {
+    it('should retrieve the entity. application/ld+json MIME Type Accepted. JSON-LD 057', async function() {
         const headers = {
             Accept: 'application/ld+json',
             Link: JSON_LD_HEADER_CONTEXT
@@ -161,7 +161,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         assertRetrieved(response, entity, JSON_LD);
     });
 
-    it('should retrieve the entity. (non-present accept header). JSON', async function() {
+    it('should retrieve the entity. (non-present accept header). JSON 058', async function() {
         const headers = {
             Link: JSON_LD_HEADER_CONTEXT
         };
@@ -169,7 +169,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         assertRetrieved(response, entityNoContext, PLAIN_JSON);
     });
 
-    it('should retrieve the entity. Any Media Type Accepted. JSON-LD', async function() {
+    it('should retrieve the entity. Any Media Type Accepted. JSON-LD 059', async function() {
         const headers = {
             Accept: '*/*',
             Link: JSON_LD_HEADER_CONTEXT
@@ -178,7 +178,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         assertRetrieved(response, entity, JSON_LD);
     });
 
-    it('should retrieve the entity. Any application/* Media Type Accepted. JSON-LD', async function() {
+    it('should retrieve the entity. Any application/* Media Type Accepted. JSON-LD 060', async function() {
         const headers = {
             Accept: 'application/*',
             Link: JSON_LD_HEADER_CONTEXT
@@ -187,7 +187,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         assertRetrieved(response, entity, JSON_LD);
     });
 
-    it('should retrieve the entity. application/json MIME Type Accepted. JSON', async function() {
+    it('should retrieve the entity. application/json MIME Type Accepted. JSON 061', async function() {
         const headers = {
             Accept: 'application/json',
             Link: JSON_LD_HEADER_CONTEXT
@@ -196,7 +196,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         assertRetrieved(response, entityNoContext, PLAIN_JSON);
     });
 
-    it('should retrieve the entity. application/ld+json MIME Type Accepted. JSON-LD', async function() {
+    it('should retrieve the entity. application/ld+json MIME Type Accepted. JSON-LD 062', async function() {
         const headers = {
             Accept: 'application/ld+json, application/json',
             Link: JSON_LD_HEADER_CONTEXT
@@ -205,7 +205,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         assertRetrieved(response, entity, JSON_LD);
     });
 
-    it('should retrieve the entity. application/json MIME Type wins as it is more specific. JSON', async function() {
+    it('should retrieve the entity. application/json MIME Type wins as it is more specific. JSON 063', async function() {
         const headers = {
             Accept: '*/*, application/json',
             Link: JSON_LD_HEADER_CONTEXT
@@ -214,7 +214,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         assertRetrieved(response, entityNoContext, PLAIN_JSON);
     });
 
-    it('should retrieve the entity. application/json MIME Type wins as it is more specific. JSON', async function() {
+    it('should retrieve the entity. application/json MIME Type wins as it is more specific. JSON 064', async function() {
         const headers = {
             Accept: 'application/*, application/json',
             Link: JSON_LD_HEADER_CONTEXT
@@ -223,7 +223,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         assertRetrieved(response, entityNoContext, PLAIN_JSON);
     });
 
-    it('should retrieve the entity. application/ld+json MIME Type expanded from range. JSON-LD', async function() {
+    it('should retrieve the entity. application/ld+json MIME Type expanded from range. JSON-LD 065', async function() {
         const headers = {
             Accept: 'text/plain, application/*',
             Link: JSON_LD_HEADER_CONTEXT
@@ -232,7 +232,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         assertRetrieved(response, entity, JSON_LD);
     });
 
-    it('should retrieve the entity. application/json MIME Type wins as it has more weight. JSON', async function() {
+    it('should retrieve the entity. application/json MIME Type wins as it has more weight. JSON 066', async function() {
         const headers = {
             Accept: 'application/json, application/ld+json; q=0.8',
             Link: JSON_LD_HEADER_CONTEXT
@@ -241,7 +241,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         assertRetrieved(response, entityNoContext, PLAIN_JSON);
     });
 
-    it('should retrieve the entity key values mode', async function() {
+    it('should retrieve the entity key values mode 067', async function() {
         const headers = {
             Accept: 'application/ld+json',
             Link: JSON_LD_HEADER_CONTEXT
@@ -250,7 +250,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         assertRetrieved(response, entityKeyValues, JSON_LD);
     });
 
-    it('should retrieve the entity attribute projection', async function() {
+    it('should retrieve the entity attribute projection 068', async function() {
         const headers = {
             Accept: 'application/ld+json',
             Link: JSON_LD_HEADER_CONTEXT
@@ -259,7 +259,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         assertRetrieved(response, entityOneAttr, JSON_LD);
     });
 
-    it('should retrieve the entity no attribute matches', async function() {
+    it('should retrieve the entity no attribute matches 069', async function() {
         const headers = {
             Accept: 'application/ld+json',
             Link: JSON_LD_HEADER_CONTEXT
@@ -268,7 +268,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         assertRetrieved(response, entityNoAttr, JSON_LD);
     });
 
-    it('should retrieve the entity no attribute matches as @context differs', async function() {
+    it('should retrieve the entity no attribute matches as @context differs 070', async function() {
         const headers = {
             Accept: 'application/ld+json',
             // Observe that the provided @context will make the attribute not to match
@@ -285,7 +285,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         assertRetrieved(response, expectedEntityNoAttr, JSON_LD);
     });
 
-    it('should retrieve the entity but compaction shall use an alternative @context', async function() {
+    it('should retrieve the entity but compaction shall use an alternative @context 071', async function() {
         const headers = {
             Accept: 'application/ld+json',
             Link:
@@ -297,7 +297,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         assertRetrieved(response, entityAltCompacted, JSON_LD);
     });
 
-    it('should retrieve the entity but as no @context provided compaction should not happen', async function() {
+    it('should retrieve the entity but as no @context provided compaction should not happen 072', async function() {
         const headers = {
             Accept: 'application/ld+json'
         };
