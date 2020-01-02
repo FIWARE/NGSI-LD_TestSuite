@@ -13,7 +13,9 @@ fi
 
 ACC_ENDPOINT=${ACC_ENDPOINT:-http://localhost:3000}
 TEST_ENDPOINT=${TEST_ENDPOINT:-http://localhost:1026}
-NOTIFY_ENDPOINT=${NOTIFY_ENDPOINT:-http://accumulator:3000/acc}
+# NOTIFY_ENDPOINT=${NOTIFY_ENDPOINT:-http://accumulator:3000/acc}
+NOTIFY_ENDPOINT=${NOTIFY_ENDPOINT:-http://host.docker.internal:3000/acc}
+
 
 #echo "Starting accumulator ..."
 #node ./notifications/accumulator.js $ACC_ENDPOINT > accumulator.log & 
@@ -34,6 +36,3 @@ do
 done
 
 jest  --runInBand --verbose
-
-# Killing the Accumulator
-curl -X POST $ACC_ENDPOINT/kill 
