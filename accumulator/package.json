@@ -1,0 +1,15 @@
+{
+  "name": "sample-hapijs-inside-docker",
+  "version": "1.0.0",
+  "description": "Hapijs app in docker container",
+  "main": "index.js",
+  "scripts": {
+      "start": "node accumulator.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joseph Jude",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^18.4.0"
+  }
+}
