@@ -85,8 +85,7 @@ describe('Append Entity Attributes. JSON. Default @context', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    // Github Issue is created https://github.com/FIWARE/context.Orion-LD/issues/279
-    xit('append Entity Attributes. Attributes are overwritten 076', async function() {
+    it('append Entity Attributes. Attributes are overwritten 076', async function() {
         const overwrittenAttrs = {
             P1: {
                 type: 'Property',

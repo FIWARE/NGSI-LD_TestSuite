@@ -45,7 +45,8 @@ describe('Batch Entity Update. JSON', () => {
         return Promise.all(requests);
     });
 
-    it('should update a list of entities 003', async function() {
+     // issue is raised in Github https://github.com/FIWARE/context.Orion-LD/issues/303
+     xit('should update a list of entities 003', async function() {
         const entity11 = {
             id: entity1.id,
             type: 'T',
