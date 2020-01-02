@@ -17,25 +17,30 @@ the evolution of NGSIv2 for supporting Linked Data based on JSON-LD.
 
 ## How to execute the tests
 
-### Prerequisites 
+### Prerequisites
 
 * node version 10.9
 
 
 ```
 npm install
-export TEST_ENDPOINT=<Your NGSI-LD Broker endpoint>. Example: `http://localhost:1026`
-export ACC_ENDPOINT=<The accumulator endpoint>. Example: `http://localhost:3000`
-export NOTIFY_ENDPOINT=<The notification endpoint>. Example: `http://host.docker.internal:3000/acc`
+export TEST_ENDPOINT=<Your NGSI-LD Broker endpoint>. # Example: http://localhost:1026
+export ACC_ENDPOINT=<The accumulator endpoint>. # Example: http://localhost:3000
+export NOTIFY_ENDPOINT=<The notification endpoint>. # Example: http://host.docker.internal:3000/acc
+
+# Start the accumulator and services under test - e.g. to start the docker-compose file
+./services start
+
+# Run the test suite
 npm test
 ```
 
-By default, the test endpoint is `http://localhost:1026`.
-By default, the accumulator endpoint is `http://localhost:3000`.
-By default, the notification endpoint is `http://host.docker.internal:3000/acc`
+-  the test endpoint is `http://localhost:1026` By default
+-  the accumulator endpoint is `http://localhost:8080` By default
+-  the notification endpoint is `http://accumulator:8080/acc` By default
 
-Please note, that if you are running the NGSI-LD endpoint through Docker, the endpoint shall be encoded as `http://host.docker.internal:<port>/acc`, so that the Docker container can get access to the accumulator server running on the host.  
-
+Please note, that if you are running the NGSI-LD accumulator endpoint locally,
+ot can be referred to as  `http://host.docker.internal:<port>/acc`, so that  other Docker containers can get access to the accumulator server running on the host.
 
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-url]: LICENSE
