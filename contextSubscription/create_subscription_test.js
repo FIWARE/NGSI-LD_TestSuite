@@ -5,7 +5,7 @@ const http = require('../http.js');
 const subscriptionsResource = testedResource + '/subscriptions/';
 
 describe('Create Subscription. JSON', () => {
-    it('should create subscription from ETSI Example', async function() {
+    it('should create subscription from ETSI Example 141', async function() {
         const subscription = {
             id: 'urn:ngsi-ld:Subscription:mySubscription' + new Date().getTime(),
             type: 'Subscription',

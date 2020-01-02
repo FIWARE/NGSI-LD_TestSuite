@@ -48,7 +48,7 @@ describe('Query Entity. Pagination. JSON. Default @context', () => {
         return Promise.all(requests);
     });
 
-    it('query by type. No limit', async function() {
+    it('query by type. No limit 027', async function() {
         const queryParams = {
             type: 'T_Query'
         };
@@ -57,7 +57,7 @@ describe('Query Entity. Pagination. JSON. Default @context', () => {
         assertResultsQuery(response, 2);
     });
 
-    it('query by type. Limit 1', async function() {
+    it('query by type. Limit 1 028', async function() {
         const queryParams = {
             type: 'T_Query',
             limit: 1

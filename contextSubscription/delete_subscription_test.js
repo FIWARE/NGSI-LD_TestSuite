@@ -28,12 +28,12 @@ describe('Delete Subscription', () => {
         return http.post(subscriptionsResource, subscription);
     });
 
-    it('should delete the subscription', async function() {
+    it('should delete the subscription 143', async function() {
         const response = await http.delete(subscriptionsResource + subscriptionId);
         expect(response.response).toHaveProperty('statusCode', 204);
     });
 
-    it('should return 404 if subscription does not exist', async function() {
+    it('should return 404 if subscription does not exist 144', async function() {
         const response = await http.delete(subscriptionsResource + subscriptionId);
         expect(response.response).toHaveProperty('statusCode', 404);
     });

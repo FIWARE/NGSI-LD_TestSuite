@@ -66,7 +66,7 @@ describe('Query Entity. Geo. JSON. Default @context', () => {
         return Promise.all(requests);
     });
 
-    it('geoQuery near. Max Distance. No Results', async function() {
+    it('geoQuery near. Max Distance. No Results 022', async function() {
         const queryParams = {
             type: 'T_City',
             geometry: 'Point',
@@ -79,7 +79,7 @@ describe('Query Entity. Geo. JSON. Default @context', () => {
         assertResultsQuery(response, 0);
     });
 
-    it('geoQuery near. Max Distance. The three results', async function() {
+    it('geoQuery near. Max Distance. The three results 023', async function() {
         const queryParams = {
             type: 'T_City',
             geometry: 'Point',
@@ -92,7 +92,7 @@ describe('Query Entity. Geo. JSON. Default @context', () => {
         assertResultsQuery(response, 3);
     });
 
-    it('geoQuery near. Max Distance. Only one result left', async function() {
+    it('geoQuery near. Max Distance. Only one result left 024', async function() {
         const queryParams = {
             type: 'T_City',
             geometry: 'Point',
@@ -105,7 +105,7 @@ describe('Query Entity. Geo. JSON. Default @context', () => {
         assertResultsQuery(response, 1);
     });
 
-    it('geoQuery near. Min Distance. Only two results', async function() {
+    it('geoQuery near. Min Distance. Only two results 025', async function() {
         const queryParams = {
             type: 'T_City',
             geometry: 'Point',
@@ -119,7 +119,7 @@ describe('Query Entity. Geo. JSON. Default @context', () => {
         assertResultsQuery(response, 2);
     });
 
-    it('geoQuery within a polygon', async function() {
+    it('geoQuery within a polygon 026', async function() {
         const queryParams = {
             type: 'T_City',
             geometry: 'Polygon',

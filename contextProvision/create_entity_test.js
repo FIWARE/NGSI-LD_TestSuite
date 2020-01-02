@@ -5,7 +5,7 @@ const http = require('../http.js');
 const entitiesResource = testedResource + '/entities/';
 
 describe('Create Entity. JSON', () => {
-    it('should create an empty entity', async function() {
+    it('should create an empty entity 092', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T'
@@ -15,7 +15,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. One Property', async function() {
+    it('should create an entity. One Property 093', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -29,7 +29,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. One GeoProperty', async function() {
+    it('should create an entity. One GeoProperty 094', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -46,7 +46,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. One Property. DateTime', async function() {
+    it('should create an entity. One Property. DateTime 095', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -63,7 +63,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. Property. Relationship', async function() {
+    it('should create an entity. Property. Relationship 096', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -81,7 +81,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. Property. observedAt', async function() {
+    it('should create an entity. Property. observedAt 097', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -96,7 +96,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. Property. unitCode', async function() {
+    it('should create an entity. Property. unitCode 098', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -111,7 +111,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. Relationship. observedAt', async function() {
+    it('should create an entity. Relationship. observedAt 099', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -126,7 +126,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. Property. Property', async function() {
+    it('should create an entity. Property. Property 100', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -145,7 +145,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. Relationship. Property', async function() {
+    it('should create an entity. Relationship. Property 101', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -163,7 +163,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. Property. Relationship', async function() {
+    it('should create an entity. Property. Relationship 102', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -182,7 +182,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. Relationship. Relationship', async function() {
+    it('should create an entity. Relationship. Relationship 104', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -200,7 +200,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. Structured Property Value', async function() {
+    it('should create an entity. Structured Property Value 105', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -218,7 +218,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. Structured Property Value. Empty', async function() {
+    it('should create an entity. Structured Property Value. Empty 106', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -232,7 +232,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. Array Property Value', async function() {
+    it('should create an entity. Array Property Value 107', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -246,7 +246,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. Empty Array Property Value', async function() {
+    it('should create an entity. Empty Array Property Value 108', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -260,7 +260,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. Array Relationship Objects', async function() {
+    it('should create an entity. Array Relationship Objects 109', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
@@ -274,7 +274,7 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should report an error if Entity already exists', async function() {
+    it('should report an error if Entity already exists 110', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T'

@@ -24,7 +24,7 @@ describe('Delete Entity Attribute. JSON-LD @context', () => {
         return http.post(entitiesResource, entity, JSON_LD_HEADERS);
     });
 
-    it('should not delete the entity attribute as @context does not match', async function() {
+    it('should not delete the entity attribute as @context does not match 116', async function() {
         const headers = {
             Link:
                 '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext2.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
@@ -33,7 +33,7 @@ describe('Delete Entity Attribute. JSON-LD @context', () => {
         expect(response.response).toHaveProperty('statusCode', 404);
     });
 
-    it('should delete the entity attribute as @context matches', async function() {
+    it('should delete the entity attribute as @context matches 117', async function() {
         const headers = {
             Link:
                 '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
@@ -42,7 +42,7 @@ describe('Delete Entity Attribute. JSON-LD @context', () => {
         expect(response.response).toHaveProperty('statusCode', 204);
     });
 
-    it('should return 404 if attribute does not exist even if @context matches', async function() {
+    it('should return 404 if attribute does not exist even if @context matches 118', async function() {
         const headers = {
             Link:
                 '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext2.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'

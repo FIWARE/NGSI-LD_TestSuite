@@ -15,12 +15,12 @@ describe('Delete Entity.', () => {
         return http.post(entitiesResource, entity);
     });
 
-    it('should delete the entity', async function() {
+    it('should delete the entity 119', async function() {
         const response = await http.delete(entitiesResource + entityId);
         expect(response.response).toHaveProperty('statusCode', 204);
     });
 
-    it('should return 404 if entity does not exist', async function() {
+    it('should return 404 if entity does not exist 120', async function() {
         const response = await http.delete(entitiesResource + entityId);
         expect(response.response).toHaveProperty('statusCode', 404);
     });

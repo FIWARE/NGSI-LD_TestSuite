@@ -33,7 +33,7 @@ describe('Batch Entity Creation. JSON', () => {
         return Promise.all(requests);
     });
 
-    it('should create a list of entities', async function() {
+    it('should create a list of entities 001', async function() {
         const entities = [entity1, entity2];
 
         const response = await http.post(batchCreationResource, entities);

@@ -58,7 +58,7 @@ describe('Query Entity. JSON. Default @context', () => {
         return http.delete(entitiesResource + entityId);
     });
 
-    it('query by type', async function() {
+    it('query by type 029', async function() {
         const queryParams = {
             type: entity.type
         };
@@ -67,7 +67,7 @@ describe('Query Entity. JSON. Default @context', () => {
         assertRetrievedQuery(response, entity);
     });
 
-    it('query by type. No results', async function() {
+    it('query by type. No results 030', async function() {
         const queryParams = {
             type: 'T_Non_Present'
         };
@@ -76,7 +76,7 @@ describe('Query Entity. JSON. Default @context', () => {
         assertNoResultsQuery(response);
     });
 
-    it('query by attributes.', async function() {
+    it('query by attributes. 031', async function() {
         const queryParams = {
             type: 'T_Query',
             attrs: 'P100'
@@ -93,7 +93,7 @@ describe('Query Entity. JSON. Default @context', () => {
         assertRetrievedQuery(response, result);
     });
 
-    it('query by id', async function() {
+    it('query by id 032', async function() {
         const queryParams = {
             id: entity.id,
             type: entity.type
@@ -103,7 +103,7 @@ describe('Query Entity. JSON. Default @context', () => {
         assertRetrievedQuery(response, entity);
     });
 
-    it('query by id. No results', async function() {
+    it('query by id. No results 033', async function() {
         const queryParams = {
             id: 'urn:ngsi-ld:T_Non_Present:890',
             type: entity.type
@@ -113,7 +113,7 @@ describe('Query Entity. JSON. Default @context', () => {
         assertNoResultsQuery(response);
     });
 
-    it('query by idPattern', async function() {
+    it('query by idPattern 034', async function() {
         const queryParams = {
             idPattern: '.*:T_Query:EntityForQuery.*',
             type: entity.type
@@ -123,7 +123,7 @@ describe('Query Entity. JSON. Default @context', () => {
         assertRetrievedQuery(response, entity);
     });
 
-    it('query by idPattern. No results', async function() {
+    it('query by idPattern. No results 035', async function() {
         const queryParams = {
             idPattern: '.*:T_Non_Present:EntityForQuery.*',
             type: entity.type
@@ -133,7 +133,7 @@ describe('Query Entity. JSON. Default @context', () => {
         assertNoResultsQuery(response);
     });
 
-    it('query by condition over value', async function() {
+    it('query by condition over value 036', async function() {
         const queryParams = {
             type: entity.type,
             q: 'P100>5'
@@ -143,7 +143,7 @@ describe('Query Entity. JSON. Default @context', () => {
         assertRetrievedQuery(response, entity);
     });
 
-    it('query by condition over value. No results', async function() {
+    it('query by condition over value. No results 037', async function() {
         const queryParams = {
             type: entity.type,
             q: 'P100<=5'
@@ -153,7 +153,7 @@ describe('Query Entity. JSON. Default @context', () => {
         assertNoResultsQuery(response);
     });
 
-    it('query by condition over values. And Condition', async function() {
+    it('query by condition over values. And Condition 038', async function() {
         const queryParams = {
             type: entity.type,
             q: 'P100>5;P1>40'
@@ -163,7 +163,7 @@ describe('Query Entity. JSON. Default @context', () => {
         assertRetrievedQuery(response, entity);
     });
 
-    it('query by condition over values. Or Condition', async function() {
+    it('query by condition over values. Or Condition 039', async function() {
         const queryParams = {
             type: entity.type,
             q: 'P100>5|P1>50'
@@ -173,7 +173,7 @@ describe('Query Entity. JSON. Default @context', () => {
         assertRetrievedQuery(response, entity);
     });
 
-    it('query by condition over values. Parenthesis Association', async function() {
+    it('query by condition over values. Parenthesis Association 040', async function() {
         const queryParams = {
             type: entity.type,
             q: '(P100>5|P1<=0);(P1>40|P1<=45)'
@@ -183,7 +183,7 @@ describe('Query Entity. JSON. Default @context', () => {
         assertRetrievedQuery(response, entity);
     });
 
-    it('query by condition over object', async function() {
+    it('query by condition over object 041', async function() {
         const queryParams = {
             type: entity.type,
             q: 'R100=="urn:ngsi-ld:T2:6789"'
@@ -193,7 +193,7 @@ describe('Query Entity. JSON. Default @context', () => {
         assertRetrievedQuery(response, entity);
     });
 
-    it('query by condition over observedAt', async function() {
+    it('query by condition over observedAt 042', async function() {
         const queryParams = {
             type: entity.type,
             q: 'P100.observedAt>2018-12-03'
@@ -203,7 +203,7 @@ describe('Query Entity. JSON. Default @context', () => {
         assertRetrievedQuery(response, entity);
     });
 
-    it('query by condition over property of property', async function() {
+    it('query by condition over property of property 043', async function() {
         const queryParams = {
             type: entity.type,
             q: 'P100.P1_P1 > 0.70'
@@ -213,7 +213,7 @@ describe('Query Entity. JSON. Default @context', () => {
         assertRetrievedQuery(response, entity);
     });
 
-    it('geoQuery near', async function() {
+    it('geoQuery near 044', async function() {
         const queryParams = {
             type: entity.type,
             geometry: 'Point',

@@ -46,7 +46,7 @@ describe('Query Entity. JSON-LD. @context', () => {
         return http.delete(entitiesResource + entityId);
     });
 
-    it('query by type name. Default @context. Not found as @context does not match.', async function() {
+    it('query by type name. Default @context. Not found as @context does not match. 045', async function() {
         const queryParams = {
             type: entity.type
         };
@@ -55,7 +55,7 @@ describe('Query Entity. JSON-LD. @context', () => {
         assertNoResultsQuery(response, JSON_LD);
     });
 
-    it('query by type name. Right @context', async function() {
+    it('query by type name. Right @context 046', async function() {
         const queryParams = {
             type: entity.type
         };
@@ -69,7 +69,7 @@ describe('Query Entity. JSON-LD. @context', () => {
         assertRetrievedQuery(response, entity, JSON_LD);
     });
 
-    it('query by type URI', async function() {
+    it('query by type URI 047', async function() {
         const queryParams = {
             type: 'http://example.org/T_Query'
         };
@@ -83,7 +83,7 @@ describe('Query Entity. JSON-LD. @context', () => {
         assertRetrievedQuery(response, entity, JSON_LD);
     });
 
-    it('query by type URI. No @context supplied but matches', async function() {
+    it('query by type URI. No @context supplied but matches 048', async function() {
         const queryParams = {
             type: 'http://example.org/T_Query'
         };
@@ -96,7 +96,7 @@ describe('Query Entity. JSON-LD. @context', () => {
         assertResultsQuery(response, 1);
     });
 
-    it('query by type URI. No matching', async function() {
+    it('query by type URI. No matching 049', async function() {
         const queryParams = {
             type: 'http://example.com/T_Query'
         };
@@ -110,7 +110,7 @@ describe('Query Entity. JSON-LD. @context', () => {
         assertNoResultsQuery(response, JSON_LD);
     });
 
-    it('query by condition over value. Default @context. Not found as @context does not match for the attribute.', async function() {
+    it('query by condition over value. Default @context. Not found as @context does not match for the attribute. 050', async function() {
         const queryParams = {
             type: entity.type,
             q: 'P100>5'
@@ -121,7 +121,7 @@ describe('Query Entity. JSON-LD. @context', () => {
         assertNoResultsQuery(response, JSON_LD);
     });
 
-    it('query by condition over value. Right @context. ', async function() {
+    it('query by condition over value. Right @context. 051', async function() {
         const queryParams = {
             type: entity.type,
             q: 'P100>5'

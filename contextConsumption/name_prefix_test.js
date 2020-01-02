@@ -47,7 +47,7 @@ describe('Name prefixes test', () => {
         return http.delete(entitiesResource + entityId);
     });
 
-    it('query by type. Default @context. Not found as @context does not match.', async function() {
+    it('query by type. Default @context. Not found as @context does not match. 011', async function() {
         const queryParams = {
             type: 'T_Query'
         };
@@ -56,7 +56,7 @@ describe('Name prefixes test', () => {
         assertNoResultsQuery(response, JSON_LD);
     });
 
-    it('query by type. Right @context', async function() {
+    it('query by type. Right @context 012', async function() {
         const queryParams = {
             type: 'ex:T_Query'
         };
@@ -70,7 +70,7 @@ describe('Name prefixes test', () => {
         assertResultsQuery(response, 1);
     });
 
-    it('query by condition over value. Default @context. Not found as @context does not match for the attribute.', async function() {
+    it('query by condition over value. Default @context. Not found as @context does not match for the attribute. 012', async function() {
         const queryParams = {
             type: 'http://example.org/T_Query',
             q: 'P100>5'
@@ -81,7 +81,7 @@ describe('Name prefixes test', () => {
         assertNoResultsQuery(response, JSON_LD);
     });
 
-    it('query by condition over value. Right @context. ', async function() {
+    it('query by condition over value. Right @context. 013', async function() {
         const queryParams = {
             type: 'http://example.org/T_Query',
             q: 'P100>5'
@@ -96,7 +96,7 @@ describe('Name prefixes test', () => {
         assertResultsQuery(response, 1);
     });
 
-    it('keeps schema:name as prefixed, as it clashes with Core @context name', async function() {
+    it('keeps schema:name as prefixed, as it clashes with Core @context name 014', async function() {
         const queryParams = {
             type: 'http://example.org/T_Query',
             q: 'P100>5'
@@ -112,7 +112,7 @@ describe('Name prefixes test', () => {
         expect(response.body[0]).toHaveProperty('name.value', 'XX');
     });
 
-    it('query by condition over prefixed attribute. Right @context. ', async function() {
+    it('query by condition over prefixed attribute. Right @context. 015', async function() {
         const queryParams = {
             type: 'http://example.org/T_Query',
             q: 'schema:name=="XX"'
@@ -127,7 +127,7 @@ describe('Name prefixes test', () => {
         assertResultsQuery(response, 1);
     });
 
-    it('query by condition over prefixed attribute. No @context. ', async function() {
+    it('query by condition over prefixed attribute. No @context. 016', async function() {
         const queryParams = {
             type: 'http://example.org/T_Query',
             q: 'schema:name=="XX"'

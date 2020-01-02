@@ -29,21 +29,21 @@ describe('Create Subscription. Errors. JSON', () => {
         }
     };
 
-    it('should reject a subscription which id is not a URI', async function() {
+    it('should reject a subscription which id is not a URI 131', async function() {
         const testSubscription = patchObj(subscription, { id: '1234' });
 
         const response = await http.post(subscriptionsResource, testSubscription);
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should reject a subscription which type is not Subscription', async function() {
+    it('should reject a subscription which type is not Subscription 132', async function() {
         const testSubscription = patchObj(subscription, { type: 'T' });
 
         const response = await http.post(subscriptionsResource, testSubscription);
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should reject a subscription which does not include "entities" nor "watachedAttributes"', async function() {
+    it('should reject a subscription which does not include "entities" nor "watachedAttributes" 133', async function() {
         const testSubscription = {
             id: 'urn:ngsi-ld:Subscription:9000',
             type: 'Subscription',
@@ -58,7 +58,7 @@ describe('Create Subscription. Errors. JSON', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should reject a subscription which watched attributes is null', async function() {
+    it('should reject a subscription which watched attributes is null 134', async function() {
         const testSubscription = patchObj(subscription, {
             watchedAttributes: null
         });
@@ -67,21 +67,21 @@ describe('Create Subscription. Errors. JSON', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should reject a subscription which watched attributes array is 0 length', async function() {
+    it('should reject a subscription which watched attributes array is 0 length 135', async function() {
         const testSubscription = patchObj(subscription, { watchedAttributes: [] });
 
         const response = await http.post(subscriptionsResource, testSubscription);
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should reject a subscription which entities array is 0 length', async function() {
+    it('should reject a subscription which entities array is 0 length 136', async function() {
         const testSubscription = patchObj(subscription, { entities: [] });
 
         const response = await http.post(subscriptionsResource, testSubscription);
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should reject a subscription which entities array does not contain a type', async function() {
+    it('should reject a subscription which entities array does not contain a type 137', async function() {
         const testSubscription = {
             id: 'urn:ngsi-ld:Subscription:9000',
             type: 'Subscription',
@@ -96,7 +96,7 @@ describe('Create Subscription. Errors. JSON', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should reject a subscription which does not define notification parameters', async function() {
+    it('should reject a subscription which does not define notification parameters 138', async function() {
         const testSubscription = {
             id: 'urn:ngsi-ld:Subscription:9000',
             type: 'Subscription',
@@ -112,14 +112,14 @@ describe('Create Subscription. Errors. JSON', () => {
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should reject a subscription which "isActive" field is not a boolean', async function() {
+    it('should reject a subscription which "isActive" field is not a boolean 139', async function() {
         const testSubscription = patchObj(subscription, { isActive: 'abcde' });
 
         const response = await http.post(subscriptionsResource, testSubscription);
         expect(response.response).toHaveProperty('statusCode', 400);
     });
 
-    it('should reject a subscription which "endpoint" is not a URI', async function() {
+    it('should reject a subscription which "endpoint" is not a URI 140', async function() {
         const notification = patchObj(subscription.notification, {
             endpoint: { uri: 'abcde' }
         });

@@ -45,35 +45,35 @@ describe('MIME Type Tests', () => {
         return http.delete(entitiesResource + entityId);
     });
 
-    it('should retrieve the entity. application/ld+json', async function() {
+    it('should retrieve the entity. application/ld+json 006', async function() {
         const response = await http.get(entitiesResource + entityId, {
             Accept: 'application/ld+json'
         });
         assertResponse(response, 'application/ld+json');
     });
 
-    it('should retrieve the entity. application/*', async function() {
+    it('should retrieve the entity. application/* 007', async function() {
         const response = await http.get(entitiesResource + entityId, {
             Accept: 'application/*'
         });
         assertResponse(response, 'application/ld+json');
     });
 
-    it('should retrieve the entity. application/json', async function() {
+    it('should retrieve the entity. application/json 008', async function() {
         const response = await http.get(entitiesResource + entityId, {
             Accept: 'application/json'
         });
         assertResponse(response, 'application/json');
     });
 
-    it('should retrieve the entity. */*', async function() {
+    it('should retrieve the entity. */* 009', async function() {
         const response = await http.get(entitiesResource + entityId, {
             Accept: '*/*'
         });
         assertResponse(response, 'application/ld+json');
     });
 
-    it('should retrieve the entity. No Accept Header', async function() {
+    it('should retrieve the entity. No Accept Header 010', async function() {
         const response = await http.get(entitiesResource + entityId);
         assertResponse(response, 'application/json');
     });
