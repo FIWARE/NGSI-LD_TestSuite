@@ -9,7 +9,7 @@ echo "Subscriptions will notify the accumulator using $NOTIFY_ENDPOINT"
 
 # To run an accumulator locally run:
 #
-# export WEB_APP_PORT=3000
+# export WEB_APP_PORT=8080
 # node accumulator/accumulator.js
 
 while [ `curl -s -o /dev/null -w %{http_code} $ACC_ENDPOINT` -eq 000 ]
