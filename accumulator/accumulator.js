@@ -23,10 +23,10 @@ function normalizePort(val) {
         // named pipe
         return val;
     }
-    return port >= 0 ? port : 3000;
+    return port >= 0 ? port : 8080;
 }
 
-const port = normalizePort(process.env.WEB_APP_PORT || '3000');
+const port = normalizePort(process.env.WEB_APP_PORT || '8080');
 
 const init = async () => {
     const server = Hapi.server({
