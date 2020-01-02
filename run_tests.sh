@@ -11,10 +11,10 @@ if [ -f accumulator.pid ]; then
   fi
 fi
 
-ACC_ENDPOINT=${ACC_ENDPOINT:-http://localhost:3000}
+ACC_ENDPOINT=${ACC_ENDPOINT:-http://localhost:8080}
 TEST_ENDPOINT=${TEST_ENDPOINT:-http://localhost:1026}
 # NOTIFY_ENDPOINT=${NOTIFY_ENDPOINT:-http://accumulator:3000/acc}
-NOTIFY_ENDPOINT=${NOTIFY_ENDPOINT:-http://host.docker.internal:3000/acc}
+NOTIFY_ENDPOINT=${NOTIFY_ENDPOINT:-http://host.docker.internal:8080/acc}
 
 
 #echo "Starting accumulator ..."
