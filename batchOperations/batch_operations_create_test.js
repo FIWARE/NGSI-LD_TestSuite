@@ -33,7 +33,7 @@ describe('Batch Entity Creation. JSON', () => {
         return Promise.all(requests);
     });
 
-     //this is not implemented
+   // Github Issue is created https://github.com/FIWARE/context.Orion-LD/issues/new
     xit('should create a list of entities 001', async function() {
         const entities = [entity1, entity2];
 
