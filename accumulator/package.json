@@ -1,14 +1,21 @@
 {
-  "name": "sample-hapijs-inside-docker",
+  "name": "accumulator",
   "version": "1.0.0",
-  "description": "Hapijs app in docker container",
+  "description": "Accumulator app in docker container",
   "main": "index.js",
   "scripts": {
       "start": "node accumulator.js",
       "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Joseph Jude",
-  "license": "ISC",
+  "author": "FIWARE Foundation e.V.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fiware/NGSI-LD_TestSuite.git"
+  },
+  "engines": {
+    "node": ">=10.17"
+  },
   "dependencies": {
     "@hapi/hapi": "^18.4.0"
   }
