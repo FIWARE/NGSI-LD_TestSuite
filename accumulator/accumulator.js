@@ -9,7 +9,6 @@ const log = (logStr) => {
     console.log(`${new Date().toISOString()} Accumulator:  ${logStr}`);
 };
 
-
 // Notifications indexed by subscription id
 let allNotifications = Object.create(null);
 
@@ -24,11 +23,7 @@ function normalizePort(val) {
         // named pipe
         return val;
     }
-
-    if (port >= 0) {
-        // port number
-        return port;
-    }
+    return port >= 0 ? port : 3000;
 }
 
 const port = normalizePort(process.env.WEB_APP_PORT || '3000');
@@ -39,12 +34,10 @@ const init = async () => {
         host: '0.0.0.0'
     });
 
-
     server.route({
         method: 'GET',
         path: '/',
         handler: (request, h) => {
-
             return 'Hello World!';
         }
     });
