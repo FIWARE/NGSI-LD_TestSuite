@@ -32,7 +32,15 @@ describe('Create Registration. JSON', () => {
             endpoint: 'http://my.csource.org:1026',
             location: {
                 type: 'Polygon',
-                coordinates: [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]]]
+                coordinates: [
+                    [
+                        [100.0, 0.0],
+                        [101.0, 0.0],
+                        [101.0, 1.0],
+                        [100.0, 1.0],
+                        [100.0, 0.0]
+                    ]
+                ]
             }
         };
 

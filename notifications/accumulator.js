@@ -1,7 +1,7 @@
 /*eslint no-console: "off"*/
 /*eslint no-unused-vars: "off"*/
 
-const Hapi = require('hapi');
+const Hapi = require('@hapi/hapi');
 
 const url = require('url');
 

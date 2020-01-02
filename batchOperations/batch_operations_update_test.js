@@ -64,13 +64,13 @@ describe('Batch Entity Update. JSON', () => {
             }
         };
 
-        const entities = [entity11, entity22];
+        const entities2 = [entity11, entity22];
 
         // Entity 1 a new attribute P100 is appended
         // Entity 2 P1 will get a new value (default mode is overwrite)
-        const response = await http.post(batchUpdateResource, entities);
+        const response = await http.post(batchUpdateResource, entities2);
 
         expect(response.response).toHaveProperty('statusCode', 200);
-        assertBatchOperation(response, [entities[0].id, entities[1].id], []);
+        assertBatchOperation(response, [entities2[0].id, entities2[1].id], []);
     });
 });
