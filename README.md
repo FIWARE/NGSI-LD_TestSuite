@@ -42,6 +42,12 @@ npm test
 Please note, that if you are running the NGSI-LD accumulator endpoint locally,
 ot can be referred to as  `http://host.docker.internal:<port>/acc`, so that  other Docker containers can get access to the accumulator server running on the host.
 
+> **Note:** To run the accumulator locally you can start the service using
+> ```console
+> export WEB_APP_PORT=8080
+> node accumulator/accumulator.js
+> ```
+
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-url]: LICENSE
 
