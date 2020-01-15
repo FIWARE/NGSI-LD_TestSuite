@@ -7,5 +7,10 @@ script:
   - npm run lint
 
 after_success:
-  - ./services start
-  - npm test
+#  - ./services orion
+#  - export TEST_ENDPOINT=http://localhost:1026
+#  - npm test
+
+- ./services scorpio
+- export TEST_ENDPOINT=http://localhost:9090
+- npm test
