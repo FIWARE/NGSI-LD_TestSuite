@@ -70,7 +70,7 @@ describe('Query Entity. Geo. JSON. Default @context', () => {
         const queryParams = {
             type: 'T_City',
             geometry: 'Point',
-            coordinates: '[-3.691944, 41.418889]',
+            coordinates: '[-3.691944,41.418889]',
             georel: 'near;maxDistance==15'
         };
 
@@ -83,7 +83,7 @@ describe('Query Entity. Geo. JSON. Default @context', () => {
         const queryParams = {
             type: 'T_City',
             geometry: 'Point',
-            coordinates: '[-3.691944, 40.418889]',
+            coordinates: '[-3.691944,40.418889]',
             georel: 'near;maxDistance==15000'
         };
 
@@ -96,7 +96,7 @@ describe('Query Entity. Geo. JSON. Default @context', () => {
         const queryParams = {
             type: 'T_City',
             geometry: 'Point',
-            coordinates: '[-3.691944, 40.418889]',
+            coordinates: '[-3.691944,40.418889]',
             georel: 'near;maxDistance==1000'
         };
 
@@ -109,7 +109,7 @@ describe('Query Entity. Geo. JSON. Default @context', () => {
         const queryParams = {
             type: 'T_City',
             geometry: 'Point',
-            coordinates: '[-3.691944, 40.418889]',
+            coordinates: '[-3.691944,40.418889]',
             georel: 'near;minDistance==1000'
         };
 
@@ -123,7 +123,7 @@ describe('Query Entity. Geo. JSON. Default @context', () => {
         const queryParams = {
             type: 'T_City',
             geometry: 'Polygon',
-            coordinates: '[[ [-3.65,40.316667],[-3.85,40.416667],[-3.85,40.216667],[-3.65,40.316667] ]]',
+            coordinates: '[[[-3.65,40.316667],[-3.85,40.416667],[-3.85,40.216667],[-3.65,40.316667]]]',
             georel: 'within'
         };
 
