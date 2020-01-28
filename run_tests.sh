@@ -28,4 +28,4 @@ do
   sleep 1
 done
 
-jest  --runInBand --verbose
+jest  --runInBand --verbose 
