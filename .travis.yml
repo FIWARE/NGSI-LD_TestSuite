@@ -2,9 +2,15 @@ language: node_js
 node_js:
   - 12.14
 env:
-  matrix:
+  - STAGE=compliance
   - STAGE=orion
   - STAGE=scorpio
+
+matrix:
+  allow_failures:
+  - env: STAGE=orion
+  - env: STAGE=scorpio
+
 install: >
   npm install;
   if [[ "${STAGE}" == "orion" ]]; then
@@ -12,20 +18,24 @@ install: >
   fi
   
   if [[ "${STAGE}" == "scorpio" ]]; then
-     docker pull scorpiobroker/scorpio:scorpio-aaio;
+     docker pull scorpiobroker/scorpio:scorpio-aaio_0.9.5;
   fi
-script:
-  - npm run lint
-
-after_success: >
+  
+before_script: >
   if [[ "${STAGE}" == "orion" ]]; then
      ./services orion;
      export TEST_ENDPOINT=http://localhost:1026;
-     npm test;
   fi
   
-  if [[ "${STAGE}" == "orion" ]]; then
+  if [[ "${STAGE}" == "scorpio" ]]; then
      ./services scorpio;
      export TEST_ENDPOINT=http://localhost:9090;
+  fi
+
+
+script: >
+  if [[ "${STAGE}" == "compliance" ]]; then
+     npm run lint;
+  else
      npm test;
   fi
