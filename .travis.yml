@@ -9,10 +9,10 @@ install: >
   npm install;
   if [[ "${STAGE}" == "orion" ]]; then
      docker pull fiware/orion-ld;
-  if
+  fi
   if [[ "${STAGE}" == "scorpio" ]]; then
      docker pull scorpiobroker/scorpio:scorpio-aaio;
-  if
+  fi
 script:
   - npm run lint
 
@@ -21,9 +21,9 @@ after_success: >
      ./services orion;
      export TEST_ENDPOINT=http://localhost:1026;
      npm test;
-  if
+  fi
   if [[ "${STAGE}" == "orion" ]]; then
      ./services scorpio;
      export TEST_ENDPOINT=http://localhost:9090;
      npm test;
-  if
+  fi
