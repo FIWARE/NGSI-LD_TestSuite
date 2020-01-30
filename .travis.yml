@@ -1,16 +1,29 @@
 language: node_js
 node_js:
-  - 10.9
-install:
-  - npm install
+  - 12.14
+env:
+  matrix:
+  - STAGE=orion
+  - STAGE=scorpio
+install: >
+  npm install;
+  if [[ "${STAGE}" == "orion" ]]; then
+     docker pull fiware/orion-ld;
+  if
+  if [[ "${STAGE}" == "scorpio" ]]; then
+     docker pull scorpiobroker/scorpio:scorpio-aaio;
+  if
 script:
   - npm run lint
 
-after_success:
-#  - ./services orion
-#  - export TEST_ENDPOINT=http://localhost:1026
-#  - npm test
-
-- ./services scorpio
-- export TEST_ENDPOINT=http://localhost:9090
-- npm test
+after_success: >
+  if [[ "${STAGE}" == "orion" ]]; then
+     ./services orion;
+     export TEST_ENDPOINT=http://localhost:1026;
+     npm test;
+  if
+  if [[ "${STAGE}" == "orion" ]]; then
+     ./services scorpio;
+     export TEST_ENDPOINT=http://localhost:9090;
+     npm test;
+  if
