@@ -103,7 +103,6 @@ function serializeParams(query) {
         out += key + '=' + encodeURIComponent(query[key]);
         out += '&';
     });
-
     return out.substring(0, out.length - 1);
 }
 
