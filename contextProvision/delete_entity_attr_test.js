@@ -15,7 +15,7 @@ describe('Delete Entity Attribute. Default @context', () => {
 
     const entityId = encodeURIComponent(entity.id);
 
-    beforeAll(() => {
+    beforeEach(() => {
         return http.post(entitiesResource, entity);
     });
 
