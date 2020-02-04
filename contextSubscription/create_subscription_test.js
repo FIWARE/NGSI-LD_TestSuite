@@ -17,7 +17,7 @@ describe('Create Subscription. JSON', () => {
             watchedAttributes: ['speed'],
             q: 'speed>50',
             geoQ: {
-                georel: 'near;maxDistance==2000',
+                georel: 'near;maxDistance==2000.0',
                 geometry: 'Point',
                 coordinates: [-1, 100]
             },

@@ -21,7 +21,7 @@ describe('Create Subscription. JSON-LD @context', () => {
             watchedAttributes: ['P1'],
             q: 'P1>50',
             geoQ: {
-                georel: 'near;maxDistance==2000',
+                georel: 'near;maxDistance==2000.0',
                 geometry: 'Point',
                 coordinates: [-1, 100]
             },
