@@ -5,7 +5,7 @@ const entitiesResource = testedResource + '/entities/';
 const serializeParams = require('../common.js').serializeParams;
 
 describe('Query Entity. Errors', () => {
-    it('Should raise error when Accept header does not imply application/json or application/ld+json. 05', async function() {
+    it('Should raise error when Accept header does not imply application/json or application/ld+json. 005', async function() {
         const headers = {
             Accept: 'text/plain'
         };

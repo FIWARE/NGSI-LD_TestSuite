@@ -34,7 +34,7 @@ describe('Batch Entity Creation. JSON', () => {
     });
 
      // issue is raised in Github https://github.com/FIWARE/context.Orion-LD/issues/303
-    xit('should create a list of entities 001', async function() {
+    it('should create a list of entities 001', async function() {
         const entities = [entity1, entity2];
 
         const response = await http.post(batchCreationResource, entities);
