@@ -111,8 +111,12 @@ describe('Append Entity Attributes. JSON. Default @context', () => {
                 value: 'Adios'
             }
         };
+        // P1 already exists in the entity. P2 does not.
+        // Since this is noOverwrite, it is a partial success. P2 is created, P1 remains unchanged.
+        // The response code is 207 - multistatus 
+        // it is a partial success with both updated and notUpdated attributes found in the response body.
         const response = await http.post(entitiesResource + entityId + '/attrs/?options=noOverwrite', overwrittenAttrs);
-        expect(response.response).toHaveProperty('statusCode', 204);
+        expect(response.response).toHaveProperty('statusCode', 207);
 
         const finalEntity = patchObj(entity, {});
         finalEntity.P2 = overwrittenAttrs.P2;
