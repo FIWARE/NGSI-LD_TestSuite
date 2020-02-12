@@ -46,5 +46,6 @@ describe('Create Registration. JSON', () => {
 
         const response = await http.post(registrationsResource, registration);
         assertRegistrationCreated(response.response, registration.id);
+        const response = await http.delete(registrationsResource + "/" + registration.id);
     });
 });
