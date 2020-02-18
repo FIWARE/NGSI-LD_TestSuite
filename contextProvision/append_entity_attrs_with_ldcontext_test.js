@@ -19,7 +19,7 @@ function patchObj(target, patch) {
 }
 
 describe('Append Entity Attributes. JSON-LD @context', () => {
-    entity = {
+    let entity = {
         id: 'urn:ngsi-ld:T:' + new Date().getTime(),
         type: 'T',
         P1: {
