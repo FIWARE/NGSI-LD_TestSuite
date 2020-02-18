@@ -19,7 +19,7 @@ function patchObj(target, patch) {
 }
 
 describe('Append Entity Attributes. JSON-LD @context', () => {
-    const entity = {
+    entity = {
         id: 'urn:ngsi-ld:T:' + new Date().getTime(),
         type: 'T',
         P1: {
@@ -88,8 +88,8 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
 
         const checkResponse = await http.get(`${entitiesResource}${entityId}`, ACCEPT_LD);
 
-        const finalEntity = patchObj(entity, appendedAttributes);
-        expect(checkResponse.body).toEqual(finalEntity);
+        entity = patchObj(entity, appendedAttributes);
+        expect(checkResponse.body).toEqual(entity);
     });
 
     it('append Entity Attributes. Attributes are overwritten 080', async function() {
@@ -104,8 +104,8 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
         expect(response.response).toHaveProperty('statusCode', 204);
 
         const checkResponse = await http.get(`${entitiesResource}${entityId}`, ACCEPT_LD);
-        const finalEntity = patchObj(entity, overwrittenAttrs);
-        expect(checkResponse.body).toEqual(finalEntity);
+        entity = patchObj(entity, overwrittenAttrs);
+        expect(checkResponse.body).toEqual(entity);
     });
 
     it('append Entity Attributes. Attributes should not be overwritten. Partial success 081', async function() {
@@ -127,9 +127,8 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
         );
         expect(response.response).toHaveProperty('statusCode', 207);
 
-        const finalEntity = patchObj(entity, {});
-        finalEntity.P2 = overwrittenAttrs.P2;
+        entity.P2 = overwrittenAttrs.P2;
         const checkResponse = await http.get(entitiesResource + entityId, ACCEPT_LD);
-        expect(checkResponse.body).toEqual(finalEntity);
+        expect(checkResponse.body).toEqual(entity);
     });
 });
