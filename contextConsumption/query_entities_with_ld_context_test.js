@@ -2,12 +2,10 @@ const testedResource = require('../common.js').testedResource;
 const http = require('../http.js');
 
 const entitiesResource = testedResource + '/entities/';
-const assertRetrievedQuery = require('../common.js').assertRetrievedQuery;
 const assertResultsQuery = require('../common.js').assertResultsQuery;
 const assertNoResultsQuery = require('../common.js').assertNoResultsQuery;
 const serializeParams = require('../common.js').serializeParams;
 const assertRetrievedQueryAlternatives = require('../common.js').assertRetrievedQueryAlternatives;
-
 
 const JSON_LD = /application\/ld\+json(;.*)?/;
 
@@ -35,9 +33,10 @@ describe('Query Entity. JSON-LD. @context', () => {
         '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext.jsonld'
     };
 
-    const contexts = ['https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext.jsonld',
-        ['https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld']];
-
+    const contexts = [
+        'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext.jsonld',
+        ['https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld']
+    ];
 
     const entityId = encodeURIComponent(entity.id);
 
