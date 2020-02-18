@@ -2,6 +2,7 @@ const testedResource = require('../common.js').testedResource;
 const http = require('../http.js');
 
 const entitiesResource = testedResource + '/entities/';
+const assertRetrievedAlternatives = require('../common.js').assertRetrievedAlternatives;
 const assertRetrieved = require('../common.js').assertRetrieved;
 
 const JSON_LD = /application\/ld\+json(;.*)?/;
@@ -144,6 +145,24 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         '@context': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld'
     };
 
+    const coreContexts = [
+        'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld',
+        ['https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld']
+    ];
+
+    const altContexts = [
+        'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/alternativeContext.jsonld',
+        [
+            'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/alternativeContext.jsonld',
+            'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld'
+        ]
+    ];
+
+    const testContexts = [
+        'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext.jsonld',
+        ['https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld']
+    ];
+
     beforeAll(() => {
         return http.post(entitiesResource, entity, JSON_LD_HEADERS_POST);
     });
@@ -158,7 +177,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
             Link: JSON_LD_HEADER_CONTEXT
         };
         const response = await http.get(entitiesResource + entityId, headers);
-        assertRetrieved(response, entity, JSON_LD);
+        assertRetrievedAlternatives(response, entity, JSON_LD, testContexts);
     });
 
     it('should retrieve the entity. (non-present accept header). JSON 058', async function() {
@@ -175,7 +194,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
             Link: JSON_LD_HEADER_CONTEXT
         };
         const response = await http.get(entitiesResource + entityId, headers);
-        assertRetrieved(response, entity, JSON_LD);
+        assertRetrievedAlternatives(response, entity, JSON_LD, testContexts);
     });
 
     it('should retrieve the entity. Any application/* Media Type Accepted. JSON-LD 060', async function() {
@@ -184,7 +203,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
             Link: JSON_LD_HEADER_CONTEXT
         };
         const response = await http.get(entitiesResource + entityId, headers);
-        assertRetrieved(response, entity, JSON_LD);
+        assertRetrievedAlternatives(response, entity, JSON_LD, testContexts);
     });
 
     it('should retrieve the entity. application/json MIME Type Accepted. JSON 061', async function() {
@@ -202,7 +221,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
             Link: JSON_LD_HEADER_CONTEXT
         };
         const response = await http.get(entitiesResource + entityId, headers);
-        assertRetrieved(response, entity, JSON_LD);
+        assertRetrievedAlternatives(response, entity, JSON_LD, testContexts);
     });
 
     it('should retrieve the entity. application/json MIME Type wins as it is more specific. JSON 063', async function() {
@@ -229,7 +248,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
             Link: JSON_LD_HEADER_CONTEXT
         };
         const response = await http.get(entitiesResource + entityId, headers);
-        assertRetrieved(response, entity, JSON_LD);
+        assertRetrievedAlternatives(response, entity, JSON_LD, testContexts);
     });
 
     it('should retrieve the entity. application/json MIME Type wins as it has more weight. JSON 066', async function() {
@@ -247,7 +266,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
             Link: JSON_LD_HEADER_CONTEXT
         };
         const response = await http.get(entitiesResource + entityId + '?options=keyValues', headers);
-        assertRetrieved(response, entityKeyValues, JSON_LD);
+        assertRetrievedAlternatives(response, entityKeyValues, JSON_LD, testContexts);
     });
 
     it('should retrieve the entity attribute projection 068', async function() {
@@ -256,7 +275,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
             Link: JSON_LD_HEADER_CONTEXT
         };
         const response = await http.get(entitiesResource + entityId + '?attrs=P1', headers);
-        assertRetrieved(response, entityOneAttr, JSON_LD);
+        assertRetrievedAlternatives(response, entityOneAttr, JSON_LD, testContexts);
     });
 
     it('should retrieve the entity no attribute matches 069', async function() {
@@ -265,7 +284,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
             Link: JSON_LD_HEADER_CONTEXT
         };
         const response = await http.get(entitiesResource + entityId + '?attrs=notFoundAttr', headers);
-        assertRetrieved(response, entityNoAttr, JSON_LD);
+        assertRetrievedAlternatives(response, entityNoAttr, JSON_LD, testContexts);
     });
 
     it('should retrieve the entity no attribute matches as @context differs 070', async function() {
@@ -281,8 +300,16 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
             '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext2.jsonld'
         };
 
+        const testContext2 = [
+            'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext2.jsonld',
+            [
+                'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext2.jsonld',
+                'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld'
+            ]
+        ];
+
         const response = await http.get(entitiesResource + entityId + '?attrs=P1', headers);
-        assertRetrieved(response, expectedEntityNoAttr, JSON_LD);
+        assertRetrievedAlternatives(response, expectedEntityNoAttr, JSON_LD, testContext2);
     });
 
     it('should retrieve the entity but compaction shall use an alternative @context 071', async function() {
@@ -294,7 +321,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
 
         const response = await http.get(entitiesResource + entityId, headers);
 
-        assertRetrieved(response, entityAltCompacted, JSON_LD);
+        assertRetrievedAlternatives(response, entityAltCompacted, JSON_LD, altContexts);
     });
 
     it('should retrieve the entity but as no @context provided compaction should not happen 072', async function() {
@@ -304,6 +331,6 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
 
         const response = await http.get(entitiesResource + entityId, headers);
 
-        assertRetrieved(response, entityNotCompacted, JSON_LD);
+        assertRetrievedAlternatives(response, entityNotCompacted, JSON_LD, coreContexts);
     });
 });

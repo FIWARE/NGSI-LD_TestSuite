@@ -23,24 +23,17 @@ const JSON_TYPE = /application\/json(;.*)?/;
 
 const emptyArray = [];
 
-const arrayWithAnEmptyObj = [{}]
+const arrayWithAnEmptyObj = [{}];
 
-const ACCEPTABLE_EMPTY_RESULTS = [ emptyArray, arrayWithAnEmptyObj ];
+const ACCEPTABLE_EMPTY_RESULTS = [emptyArray, arrayWithAnEmptyObj];
 
-
-function acceptableContexts(entity, contexts){
-
+function acceptableContexts(entity, contexts) {
     const entities = [];
     contexts.forEach((context, index) => {
         const obj = JSON.parse(JSON.stringify(entity));
         obj['@context'] = context;
         entities.push(obj);
     });
-
-
-
-
-
 
     return entities;
 }
@@ -108,7 +101,7 @@ function assertNoResultsQuery(response, mimeType) {
     assertResponse(response, checkedMimeType);
     expect(response.body).toBeDefined();
     // Check first query result
-	expect(ACCEPTABLE_EMPTY_RESULTS).toContainEqual(response.body);
+    expect(ACCEPTABLE_EMPTY_RESULTS).toContainEqual(response.body);
     // expect(response.body.length).toBe(0);
 }
 
