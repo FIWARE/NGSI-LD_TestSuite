@@ -2,7 +2,7 @@ const testedResource = require('../common.js').testedResource;
 const http = require('../http.js');
 
 const subscriptionsResource = testedResource + '/subscriptions/';
-const assertRetrieved = require('../common.js').assertRetrieved;
+const assertRetrievedAlternatives = require('../common.js').assertRetrievedAlternatives;
 
 const JSON_LD = /application\/ld\+json(;.*)?/;
 
@@ -41,6 +41,11 @@ describe('Retrieve Subscription. JSON-LD. @context', () => {
         '@context': 'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext.jsonld'
     };
 
+    const testContexts = [
+        'https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testContext.jsonld',
+        ['https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld']
+    ];
+
     const subscriptionId = encodeURIComponent(subscription.id);
 
     beforeAll(() => {
@@ -60,7 +65,7 @@ describe('Retrieve Subscription. JSON-LD. @context', () => {
                 '<https://fiware.github.io/NGSI-LD_TestSuite/ldContext/testFullContext.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
         };
         const response = await http.get(subscriptionsResource + subscriptionId, headers);
-        assertRetrieved(response, subscription, JSON_LD);
+        assertRetrievedAlternatives(response, subscription, JSON_LD, testContexts);
     });
 
     it('should report an error if the subscription does not exist 148', async function() {
