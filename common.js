@@ -19,7 +19,24 @@ const testedResource = endpoint + '/' + ngsild;
 // Regular expression for matching the link header pointing to the JSON-LD @context
 const JSON_LD_CONTEXT_HEADER = /<.+>;\s+rel="http:\/\/www\.w3\.org\/ns\/json-ld#context";\s+type="application\/ld\+json"/;
 
-const JSON = /application\/json(;.*)?/;
+const JSON_TYPE = /application\/json(;.*)?/;
+
+const emptyArray = [];
+
+const arrayWithAnEmptyObj = [{}];
+
+const ACCEPTABLE_EMPTY_RESULTS = [emptyArray, arrayWithAnEmptyObj];
+
+function acceptableContexts(entity, contexts) {
+    const entities = [];
+    contexts.forEach((context, index) => {
+        const obj = JSON.parse(JSON.stringify(entity));
+        obj['@context'] = context;
+        entities.push(obj);
+    });
+
+    return entities;
+}
 
 function assertCreated(response, id, resource) {
     const resourceTest = resource || '/entities/';
@@ -37,7 +54,7 @@ function assertRegistrationCreated(response, id) {
 }
 
 function assertResponse(response, mimeType) {
-    const mType = mimeType || JSON;
+    const mType = mimeType || JSON_TYPE;
 
     expect(response.response).toHaveProperty('statusCode', 200);
     expect(response.response.headers['content-type']).toMatch(mType);
@@ -45,18 +62,31 @@ function assertResponse(response, mimeType) {
     // response.response.headers['link'] =
     // '<http://json-ld.org/contexts/person.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"';
 
-    if (mType === JSON) {
+    if (mType === JSON_TYPE) {
         expect(response.response.headers.link).toBeDefined();
         const linkHeader = response.response.headers.link;
         expect(linkHeader).toMatch(JSON_LD_CONTEXT_HEADER);
     }
 }
 
+function assertRetrievedAlternatives(response, entity, mimeType, contexts) {
+    const entities = acceptableContexts(entity, contexts);
+    assertResponse(response, mimeType);
+    expect(entities).toContainEqual(response.body);
+}
+
 function assertRetrieved(response, entity, mimeType) {
     assertResponse(response, mimeType);
     expect(response.body).toEqual(entity);
 }
-
+function assertRetrievedQueryAlternatives(response, entity, mimeType, contexts) {
+    const entities = acceptableContexts(entity, contexts);
+    assertResponse(response, mimeType);
+    expect(response.body).toBeDefined();
+    // Check first query result
+    expect(response.body[0]).toBeDefined();
+    expect(entities).toContainEqual(response.body[0]);
+}
 function assertRetrievedQuery(response, entity, mimeType) {
     assertResponse(response, mimeType);
     expect(response.body).toBeDefined();
@@ -71,7 +101,8 @@ function assertNoResultsQuery(response, mimeType) {
     assertResponse(response, checkedMimeType);
     expect(response.body).toBeDefined();
     // Check first query result
-    expect(response.body.length).toBe(0);
+    expect(ACCEPTABLE_EMPTY_RESULTS).toContainEqual(response.body);
+    // expect(response.body.length).toBe(0);
 }
 
 function assertResultsQuery(response, numResults) {
@@ -132,6 +163,8 @@ module.exports = {
     assertSubscriptionCreated,
     assertRegistrationCreated,
     assertRetrieved,
+    assertRetrievedAlternatives,
+    assertRetrievedQueryAlternatives,
     assertRetrievedQuery,
     assertResultsQuery,
     assertNoResultsQuery,

@@ -2,6 +2,7 @@ const testedResource = require('../common.js').testedResource;
 const http = require('../http.js');
 
 const entitiesResource = testedResource + '/entities/';
+const assertRetrievedAlternatives = require('../common.js').assertRetrievedAlternatives;
 
 const JSON_LD_HEADERS = {
     'Content-Type': 'application/ld+json'
@@ -11,6 +12,11 @@ const ACCEPT_LD = {
     Accept: 'application/ld+json'
 };
 
+const coreContexts = [
+    'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld',
+    ['https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld']
+];
+
 // Patches the object and returns a new copy of the patched object
 // TECHNICAL DEBT: It should be imported from common.js
 function patchObj(target, patch) {
@@ -19,7 +25,7 @@ function patchObj(target, patch) {
 }
 
 describe('Append Entity Attributes. JSON-LD @context', () => {
-    entity = {
+    let entity = {
         id: 'urn:ngsi-ld:T:' + new Date().getTime(),
         type: 'T',
         P1: {
@@ -89,7 +95,7 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
         const checkResponse = await http.get(`${entitiesResource}${entityId}`, ACCEPT_LD);
 
         entity = patchObj(entity, appendedAttributes);
-        expect(checkResponse.body).toEqual(entity);
+        assertRetrievedAlternatives(checkResponse, entity, 'application/ld+json', coreContexts);
     });
 
     it('append Entity Attributes. Attributes are overwritten 080', async function() {
@@ -105,7 +111,7 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
 
         const checkResponse = await http.get(`${entitiesResource}${entityId}`, ACCEPT_LD);
         entity = patchObj(entity, overwrittenAttrs);
-        expect(checkResponse.body).toEqual(entity);
+        assertRetrievedAlternatives(checkResponse, entity, 'application/ld+json', coreContexts);
     });
 
     it('append Entity Attributes. Attributes should not be overwritten. Partial success 081', async function() {
@@ -129,6 +135,6 @@ describe('Append Entity Attributes. JSON-LD @context', () => {
 
         entity.P2 = overwrittenAttrs.P2;
         const checkResponse = await http.get(entitiesResource + entityId, ACCEPT_LD);
-        expect(checkResponse.body).toEqual(entity);
+        assertRetrievedAlternatives(checkResponse, entity, 'application/ld+json', coreContexts);
     });
 });
