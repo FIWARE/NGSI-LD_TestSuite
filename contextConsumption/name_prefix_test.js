@@ -109,7 +109,7 @@ describe('Name prefixes test', () => {
 
         const response = await http.get(entitiesResource + '?' + serializeParams(queryParams), headers);
         expect(response.body[0]).toBeDefined();
-        expect(response.body[0]).toHaveProperty('name.value', 'XX');
+        expect(response.body[0]).toHaveProperty('schema:name.value', 'XX');
     });
 
     it('query by condition over prefixed attribute. Right @context. 015', async function() {
