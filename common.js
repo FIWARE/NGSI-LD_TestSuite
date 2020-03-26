@@ -112,20 +112,10 @@ function assertResultsQuery(response, numResults) {
 
 function assertBatchOperation(response, success, errors) {
     expect(typeof response.body).toBe('object');
-	console.log("LOOK HERE");
-	console.log(response.body);
 
     const respSuccess = response.body.success;
     const respErrors = response.body.errors;
-	console.log("LOOK HERE");
-	console.log(response.body);
-	console.log(respSuccess);
-	console.log(success);
-	console.log(respErrors);
-	console.log(respErrors[0].ProblemDetails);
-	console.log("---------------------------");
-	
-	
+
     expect(respSuccess.length).toBe(success.length);
     expect(respErrors.length).toBe(errors.length);
 

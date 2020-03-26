@@ -13,7 +13,7 @@ describe('Batch Entity Deletion. JSON', () => {
     };
 
     const entity2 = {
-        id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+        id: 'urn:ngsi-ld:T:' + new Date().getTime() + 1,
         type: 'T',
         P1: {
             type: 'Property',
