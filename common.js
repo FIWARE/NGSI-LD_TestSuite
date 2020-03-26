@@ -121,6 +121,11 @@ function assertBatchOperation(response, success, errors) {
 	console.log(response.body);
 	console.log(respSuccess);
 	console.log(success);
+	console.log(respErrors);
+	console.log(respErrors[0].ProblemDetails);
+	console.log("---------------------------");
+	
+	
     expect(respSuccess.length).toBe(success.length);
     expect(respErrors.length).toBe(errors.length);
 
