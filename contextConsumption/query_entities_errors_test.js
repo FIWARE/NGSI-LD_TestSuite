@@ -9,7 +9,7 @@ describe('Query Entity. Errors', () => {
         const headers = {
             Accept: 'text/plain'
         };
-        const response = await http.get(entitiesResource, headers);
+        const response = await http.get(entitiesResource + '?type=dummy', headers);
         expect(response.response).toHaveProperty('statusCode', 406);
     });
 
