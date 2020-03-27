@@ -291,12 +291,7 @@ describe('Subscription yields to no Notification. JSON', () => {
 
         // Only one notification delivered as the subscription later had expired
         assertNotification(accPayload, subscription.id, 0);
-        assertNotificationContent(accPayload, subscription.id, {
-            entityId,
-            index: 0,
-            attribute: 'speed',
-            value: entity.speed.value
-        });
+
 
         await deleteSubscription(subscription.id);
     });
