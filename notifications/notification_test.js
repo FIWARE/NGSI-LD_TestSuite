@@ -77,7 +77,7 @@ describe('Basic Notification. JSON', () => {
         // Once subscription is created the first notification should be received
         await createSubscription(subscription);
 
-        await sleep(2000);
+        await sleep(3000);
 
         const checkResponse = await http.get(accumulatorResource);
         const accPayload = checkResponse.response.body;
@@ -117,7 +117,7 @@ describe('Basic Notification. JSON', () => {
         // Once subscription is created the first notification should be received
         await createSubscription(subscription);
 
-        await sleep(2000);
+        await sleep(3000);
 
         const checkResponse = await http.get(accumulatorResource);
         const accPayload = checkResponse.response.body;
@@ -165,7 +165,7 @@ describe('Basic Notification. JSON', () => {
         // Once subscription is created the first notification should be received
         await createSubscription(subscription);
 
-        await sleep(2000);
+        await sleep(3000);
 
         const checkResponse = await http.get(accumulatorResource);
         const accPayload = checkResponse.response.body;
@@ -215,7 +215,7 @@ describe('Basic Notification. JSON', () => {
         const newSpeed = 5;
         await updateAttribute(entityId, 'speed', newSpeed);
 
-        await sleep(2000);
+        await sleep(3000);
         const checkResponse = await http.get(accumulatorResource);
         const accPayload = checkResponse.response.body;
 
@@ -255,7 +255,7 @@ describe('Basic Notification. JSON', () => {
         // Once subscription is created the first notification should be received
         await createSubscription(subscription);
 
-        await sleep(2000);
+        await sleep(3000);
         const checkResponse = await http.get(accumulatorResource);
         const accPayload = checkResponse.response.body;
 
@@ -296,7 +296,7 @@ describe('Basic Notification. JSON', () => {
         // Once subscription is created the first notification should be received
         await createSubscription(subscription);
 
-        await sleep(2000);
+        await sleep(3000);
         const checkResponse = await http.get(accumulatorResource);
         const accPayload = checkResponse.response.body;
 
@@ -342,7 +342,7 @@ describe('Basic Notification. JSON', () => {
         const newSpeed = 90;
         await updateAttribute(entityId, 'speed', newSpeed);
 
-        await sleep(2000);
+        await sleep(3000);
 
         // Now checking the content of the accumulator
         const checkResponse = await http.get(accumulatorResource);
