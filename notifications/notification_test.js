@@ -175,7 +175,7 @@ describe('Basic Notification. JSON', () => {
         const accPayload = checkResponse.response.body;
 
         // Only one notification corresponding to the initial subscription
-        assertNotification(accPayload, subscription.id, 0;
+        assertNotification(accPayload, subscription.id, 0);
 
         assertNotificationNoContent(accPayload, subscription.id, {
             entityId: entity.id,
