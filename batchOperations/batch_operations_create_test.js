@@ -39,7 +39,9 @@ describe('Batch Entity Creation. JSON', () => {
 
         const response = await http.post(batchCreationResource, entities);
 
-        expect(response.response).toHaveProperty('statusCode', 200);
-        assertBatchOperation(response, [entities[0].id, entities[1].id], []);
+        expect(response.response).toHaveProperty('statusCode', 201);
+        //no response body
+		//assertBatchOperation(response, [entities[0].id, entities[1].id], []);
+		
     });
 });
