@@ -13,7 +13,7 @@ describe('Batch Entity Creation. JSON', () => {
     };
 
     const entity2 = {
-        id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+        id: 'urn:ngsi-ld:T:' + new Date().getTime() + 1,
         type: 'T',
         P1: {
             type: 'Property',
@@ -39,7 +39,9 @@ describe('Batch Entity Creation. JSON', () => {
 
         const response = await http.post(batchCreationResource, entities);
 
-        expect(response.response).toHaveProperty('statusCode', 200);
-        assertBatchOperation(response, [entities[0].id, entities[1].id], []);
+        expect(response.response).toHaveProperty('statusCode', 201);
+        //no response body
+		//assertBatchOperation(response, [entities[0].id, entities[1].id], []);
+		
     });
 });
