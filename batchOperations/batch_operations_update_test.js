@@ -1,9 +1,6 @@
 const testedResource = require('../common.js').testedResource;
-const assertBatchOperation = require('../common.js').assertBatchOperation;
 const http = require('../http.js');
-
 const entitiesResource = testedResource + '/entities/';
-
 const batchUpdateResource = testedResource + '/entityOperations/update';
 
 describe('Batch Entity Update. JSON', () => {
@@ -45,8 +42,8 @@ describe('Batch Entity Update. JSON', () => {
         return Promise.all(requests);
     });
 
-     // issue is raised in Github https://github.com/FIWARE/context.Orion-LD/issues/303
-     it('should update a list of entities 003', async function() {
+    // issue is raised in Github https://github.com/FIWARE/context.Orion-LD/issues/303
+    it('should update a list of entities 003', async function() {
         const entity11 = {
             id: entity1.id,
             type: 'T',

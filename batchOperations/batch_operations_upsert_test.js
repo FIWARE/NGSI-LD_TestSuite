@@ -1,9 +1,6 @@
 const testedResource = require('../common.js').testedResource;
-const assertBatchOperation = require('../common.js').assertBatchOperation;
 const http = require('../http.js');
-
 const entitiesResource = testedResource + '/entities/';
-
 const batchUpsertResource = testedResource + '/entityOperations/upsert';
 
 describe('Batch Entity Upsert. JSON', () => {
@@ -46,7 +43,7 @@ describe('Batch Entity Upsert. JSON', () => {
     });
 
     it('should upsert a list of entities 004', async function() {
-        const entities2 = [entity1, entity2];
+        // const entities2 = [entity1, entity2];
         // Default mode is replace (for upsert)
         const response = await http.post(batchUpsertResource, entities);
 

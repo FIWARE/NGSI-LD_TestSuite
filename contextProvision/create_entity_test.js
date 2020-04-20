@@ -51,19 +51,17 @@ describe('Create Entity. JSON', () => {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
-             category : 
-            {type: "Property", value: ["commercial"]}
+            category: { type: 'Property', value: ['commercial'] }
         };
 
         const response = await http.post(entitiesResource, entity);
-        assertCreated(response.response, entity.id); 
+        assertCreated(response.response, entity.id);
 
         const checkResponse = await http.get(entitiesResource + entity.id);
         // should be a simple string on return - Remove the array - JSON-LD requirement
-        entity.category = {type: "Property", value: "commercial"};
+        entity.category = { type: 'Property', value: 'commercial' };
 
         expect(checkResponse.body).toEqual(entity);
-
     });
 
     it('should create an entity. One Property. DateTime 095', async function() {

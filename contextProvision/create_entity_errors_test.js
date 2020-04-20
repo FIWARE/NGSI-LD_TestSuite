@@ -102,9 +102,7 @@ describe('Create Entity. Errors. JSON', () => {
         const entity = {
             id: 'urn:ngsi-ld:T4:9000',
             type: 'T',
-            price : {type: "Property",value: 10.99,currency: "EUR"},
-
-
+            price: { type: 'Property', value: 10.99, currency: 'EUR' }
         };
 
         const response = await http.post(entitiesResource, entity);

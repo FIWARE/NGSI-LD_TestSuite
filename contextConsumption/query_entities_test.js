@@ -43,7 +43,7 @@ describe('Query Entity. JSON. Default @context', () => {
             type: 'GeoProperty',
             value: {
                 type: 'Point',
-                coordinates: [-30.01,75.01]
+                coordinates: [-30.01, 75.01]
             }
         }
     };

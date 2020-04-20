@@ -76,7 +76,7 @@ describe('Basic Notification. JSON', () => {
 
         // Once subscription is created the first notification should be received
         await createSubscription(subscription);
-		await http.post(entitiesResource, entity);
+        await http.post(entitiesResource, entity);
         await sleep(2000);
 
         const checkResponse = await http.get(accumulatorResource);
@@ -119,7 +119,6 @@ describe('Basic Notification. JSON', () => {
 
         await http.post(entitiesResource, entity);
         await sleep(2000);
-
 
         const checkResponse = await http.get(accumulatorResource);
         const accPayload = checkResponse.response.body;
@@ -170,7 +169,6 @@ describe('Basic Notification. JSON', () => {
         await http.post(entitiesResource, entity);
         await sleep(2000);
 
-
         const checkResponse = await http.get(accumulatorResource);
         const accPayload = checkResponse.response.body;
 
@@ -213,15 +211,15 @@ describe('Basic Notification. JSON', () => {
 
         // Once subscription is created the first notification should be received
         await createSubscription(subscription);
-		await http.post(entitiesResource, entity);
-        
+        await http.post(entitiesResource, entity);
+
         // Now the speed property is modified
         // An additional notification should be received
         const newSpeed = 5;
         await updateAttribute(entityId, 'speed', newSpeed);
 
         await sleep(2000);
-		const checkResponse = await http.get(accumulatorResource);
+        const checkResponse = await http.get(accumulatorResource);
         const accPayload = checkResponse.response.body;
 
         // Two notifications one corresponding to the initial subscription another corresponding to
@@ -259,7 +257,7 @@ describe('Basic Notification. JSON', () => {
 
         // Once subscription is created the first notification should be received
         await createSubscription(subscription);
-		await http.post(entitiesResource, entity);
+        await http.post(entitiesResource, entity);
         await sleep(2000);
 
         const checkResponse = await http.get(accumulatorResource);
@@ -301,7 +299,7 @@ describe('Basic Notification. JSON', () => {
 
         // Once subscription is created the first notification should be received
         await createSubscription(subscription);
-		await http.post(entitiesResource, entity);
+        await http.post(entitiesResource, entity);
         await sleep(2000);
         const checkResponse = await http.get(accumulatorResource);
         const accPayload = checkResponse.response.body;
@@ -323,7 +321,7 @@ describe('Basic Notification. JSON', () => {
     it('should send a notification. Subscription to one attribute with filter query 162', async function() {
         // Speed is updated so that the initial notification will not be received
         await http.post(entitiesResource, entity);
-		await updateAttribute(entityId, 'speed', 10);
+        await updateAttribute(entityId, 'speed', 10);
 
         // A Subscription is created
         const subscription = {
@@ -345,8 +343,7 @@ describe('Basic Notification. JSON', () => {
 
         // Here the initial notification should not be received as the query is not matched
         await createSubscription(subscription);
-		
-        
+
         const newSpeed = 90;
         await updateAttribute(entityId, 'speed', newSpeed);
 

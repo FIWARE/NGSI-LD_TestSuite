@@ -48,7 +48,7 @@ describe('Create Registration. JSON', () => {
         assertRegistrationCreated(response.response, registration.id);
     });
 
-     afterEach(() => {
+    afterEach(() => {
         return http.delete(registrationsResource + 'urn:ngsi-ld:ContextSourceRegistration:csr1a3456');
     });
 });
