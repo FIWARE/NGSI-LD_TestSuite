@@ -1,0 +1,7 @@
+{
+  "@context": {
+    "V1": "http://schema.org/Vehicle",
+    "V2": "http://schema.org/Vehicle"
+    "V3": "http://schema.org/Vehicle"
+  }
+}
