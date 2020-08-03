@@ -282,10 +282,14 @@ describe('Create Entity. JSON', () => {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
-            AR1: {
+            AR1: [{
                 type: 'Relationship',
-                object: ['urn:ngsi-ld:T:1234', 'urn:ngsi-ld:T:5678']
-            }
+                object: 'urn:ngsi-ld:T:1234'
+            },
+				type: 'Relationship',
+                object: 'urn:ngsi-ld:T:12345',
+				datasetId: 'urn:ngsi-ld:datasetid:test109'
+			]
         };
 
         const response = await http.post(entitiesResource, entity);
