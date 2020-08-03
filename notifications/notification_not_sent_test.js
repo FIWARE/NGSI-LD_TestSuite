@@ -34,12 +34,13 @@ describe('Subscription yields to no Notification. JSON', () => {
 
     // Accumulator is cleared before each test
     beforeEach(() => {
-        const requests = [];
-        requests.push(http.post(clearAccumulatorResource));
+        //const requests = [];
+        //requests.push(
+		http.post(clearAccumulatorResource);
         // Entity is recreated to start from a known state
-        requests.push(http.post(entitiesResource, entity));
+        http.post(entitiesResource, entity);
 
-        return Promise.all(requests);
+        return;
     });
 
     afterEach(() => {
