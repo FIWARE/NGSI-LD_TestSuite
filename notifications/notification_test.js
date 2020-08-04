@@ -323,7 +323,7 @@ describe('Basic Notification. JSON', () => {
     it('should send a notification. Subscription to one attribute with filter query 162', async function() {
         // Speed is updated so that the initial notification will not be received
         await http.post(entitiesResource, entity);
-        await updateAttribute(entityId, 'speed', 10);
+        
 
         // A Subscription is created
         const subscription = {
@@ -345,7 +345,8 @@ describe('Basic Notification. JSON', () => {
 		await sleep(200);
         // Here the initial notification should not be received as the query is not matched
         await createSubscription(subscription);
-
+		await updateAttribute(entityId, 'speed', 10);
+		await sleep(2000);
         const newSpeed = 90;
         await updateAttribute(entityId, 'speed', newSpeed);
 
