@@ -52,10 +52,10 @@ describe('Retrieve Entity. JSON. Default @context', () => {
         P1: entity.P1
     };
 
-    const entityNoAttr = {
+    /*const entityNoAttr = {
         id: entity.id,
         type: entity.type
-    };
+    };*/
 
     beforeAll(() => {
         return http.post(entitiesResource, entity);

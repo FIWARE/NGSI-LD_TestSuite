@@ -73,11 +73,11 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         '@context': entity['@context']
     };
 
-    const entityNoAttr = {
+    /*const entityNoAttr = {
         id: entity.id,
         type: entity.type,
         '@context': entity['@context']
-    };
+    };*/
 
     const entityNoContext = patchObj({}, entity);
     delete entityNoContext['@context'];
