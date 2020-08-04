@@ -53,7 +53,9 @@ describe('Basic Notification. JSON', () => {
     });
 
     afterEach(() => {
-        return http.delete(entitiesResource + entityId);
+		const requests = [];
+        requests.push(http.delete(entitiesResource + entityId));
+        return Promise.all(requests);
     });
 
     it('should send a notification. Subscription to Entity Type. Any attribute 156', async function() {
@@ -340,7 +342,7 @@ describe('Basic Notification. JSON', () => {
                 }
             }
         };
-
+		await sleep(200);
         // Here the initial notification should not be received as the query is not matched
         await createSubscription(subscription);
 
