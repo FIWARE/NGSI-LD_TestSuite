@@ -66,10 +66,11 @@ describe('Subscription yields to no Notification. JSON', () => {
                 }
             }
         };
-
+		//Added a small sleep here to allow for a bit of async behaviour in each broker
+		await sleep(200);
         // Once subscription is created the first notification should be received
         await createSubscription(subscription);
-
+		
         // Now the brandName property is modified
         // No additional notification should be received
         await updateAttribute(entityId, 'brandName', 'Volvo');
@@ -268,6 +269,8 @@ describe('Subscription yields to no Notification. JSON', () => {
             }
         };
 
+		//Added a small sleep here to allow for a bit of async behaviour in each broker
+		await sleep(200);
         // The initial notification should be received
         await createSubscription(subscription);
 
