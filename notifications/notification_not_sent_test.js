@@ -34,17 +34,18 @@ describe('Subscription yields to no Notification. JSON', () => {
 
     // Accumulator is cleared before each test
     beforeEach(() => {
-        //const requests = [];
-        //requests.push(
-		http.post(clearAccumulatorResource);
+        const requests = [];
+        requests.push(http.post(clearAccumulatorResource));
         // Entity is recreated to start from a known state
-        http.post(entitiesResource, entity);
+        requests.push(http.post(entitiesResource, entity));
 
-        return;
+        return Promise.all(requests);
     });
 
     afterEach(() => {
-        return http.delete(entitiesResource + entityId);
+		const requests = [];
+        requests.push(http.delete(entitiesResource + entityId));
+		return Promise.all(requests);
     });
 
     it('should not send a notification. Subscription to specific attribute. Update other 149', async function() {
