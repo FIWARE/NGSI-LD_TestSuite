@@ -19,17 +19,17 @@ the evolution of NGSIv2 for supporting Linked Data based on JSON-LD.
 
 ### Prerequisites
 
-* node version 10.17
+* node version 10.17,docker-compose version 1.26
 
 
 ```console
 npm install
-export TEST_ENDPOINT=<Your NGSI-LD Broker endpoint>. # Example: http://localhost:1026
+export TEST_ENDPOINT=<Your NGSI-LD Broker endpoint>. # Example: http://localhost:1026 for Orion, http://localhost:9090 for Scorpio
 export ACC_ENDPOINT=<The accumulator endpoint>. # Example: http://localhost:3000
 export NOTIFY_ENDPOINT=<The notification endpoint>. # Example: http://host.docker.internal:3000/acc
 
 # Start the accumulator and services under test - e.g. to start the docker-compose file
-./services start
+./services [orion|scorpio]
 
 # Run the test suite
 npm test
