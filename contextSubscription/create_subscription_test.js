@@ -45,26 +45,23 @@ describe('Create Subscription. JSON', () => {
                 }
             ],
             watchedAttributes: ['speed'],
-            q: "numberOfItems<10;locatedIn==urn:ngsi-ld:Store:001",
-            
+            q: 'numberOfItems<10;locatedIn==urn:ngsi-ld:Store:001',
+
             notification: {
-                attributes: ["numberOfItems", "stocks", "locatedIn"],
-                format: "keyValues",
+                attributes: ['numberOfItems', 'stocks', 'locatedIn'],
+                format: 'keyValues',
                 endpoint: {
-                    uri: "http://tutorial:3000/subscription/low-stock-store001",
-                    accept: "application/json"
+                    uri: 'http://tutorial:3000/subscription/low-stock-store001',
+                    accept: 'application/json'
                 }
-            },
+            }
         };
 
         const response = await http.post(subscriptionsResource, subscription);
         assertSubscriptionCreated(response.response, subscription.id);
 
         const checkResponse = await http.get(subscriptionsResource + subscription.id);
-      
+
         expect(checkResponse.body).toEqual(subscription);
     });
-
-
-
 });

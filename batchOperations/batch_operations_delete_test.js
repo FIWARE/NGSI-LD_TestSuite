@@ -1,5 +1,4 @@
 const testedResource = require('../common.js').testedResource;
-const assertBatchOperation = require('../common.js').assertBatchOperation;
 const http = require('../http.js');
 
 const entitiesResource = testedResource + '/entities/';
@@ -13,7 +12,7 @@ describe('Batch Entity Deletion. JSON', () => {
     };
 
     const entity2 = {
-        id: 'urn:ngsi-ld:T:' + new Date().getTime(),
+        id: 'urn:ngsi-ld:T:' + new Date().getTime() + 1,
         type: 'T',
         P1: {
             type: 'Property',
@@ -38,7 +37,7 @@ describe('Batch Entity Deletion. JSON', () => {
 
         const response = await http.post(batchDeleteResource, entityIds);
 
-        expect(response.response).toHaveProperty('statusCode', 200);
-        assertBatchOperation(response, entityIds, []);
+        expect(response.response).toHaveProperty('statusCode', 204);
+        //assertBatchOperation(response, entityIds, []);
     });
 });
