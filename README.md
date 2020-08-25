@@ -1,9 +1,9 @@
 # NGSI-LD Test Suite
 
-This project is intended to define a test suite for [NGSI-LD](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/004/01.01.01_60/gs_CIM004v010101p.pdf),
+This project is intended to define a test suite for [NGSI-LD](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.03.01_60/gs_cim009v010301p.pdf),
 the evolution of NGSIv2 for supporting Linked Data based on JSON-LD.
 
-[![MIT license][license-image]][license-url]
+[![License: MIT](https://img.shields.io/github/license/FIWARE/NGSI-LD_TestSuite.svg)](https://opensource.org/licenses/MIT)
 [![Build badge](https://img.shields.io/travis/FIWARE/NGSI-LD_TestSuite.svg?branch=master "Travis build status")](https://travis-ci.org/FIWARE/NGSI-LD_TestSuite/?branch=master)
 [![NGSI-LD badge](https://img.shields.io/badge/NGSI-LD-red.svg)](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.01.01_60/gs_CIM009v010101p.pdf)
 
@@ -19,7 +19,7 @@ the evolution of NGSIv2 for supporting Linked Data based on JSON-LD.
 
 ### Prerequisites
 
-* node version 10.17,docker-compose version 1.26
+* node version 10.17, docker-compose version 1.26
 
 
 ```console
@@ -40,16 +40,13 @@ npm test
 -  the notification endpoint is `http://accumulator:8080/acc` By default
 
 Please note, that if you are running the NGSI-LD accumulator endpoint locally,
-ot can be referred to as  `http://host.docker.internal:<port>/acc`, so that  other Docker containers can get access to the accumulator server running on the host.
+it can be referred to as  `http://host.docker.internal:<port>/acc`, so that  other Docker containers can get access to the accumulator server running on the host.
 
 > **Note:** To run the accumulator locally you can start the service using
 > ```console
 > export WEB_APP_PORT=8080
 > node accumulator/accumulator.js
 > ```
-
-[license-image]: https://img.shields.io/badge/license-MIT-blue.svg
-[license-url]: LICENSE
 
 ## See also
 
