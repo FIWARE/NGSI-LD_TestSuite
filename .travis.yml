@@ -18,7 +18,7 @@ install: >
   fi
   
   if [[ "${STAGE}" == "scorpio" ]]; then
-     docker pull scorpiobroker/scorpio:scorpio-aaio_0.9.5;
+     docker pull scorpiobroker/scorpio:scorpio-aaio_latest;
   fi
   
 before_script: >
