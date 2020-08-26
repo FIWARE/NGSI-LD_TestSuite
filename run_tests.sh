@@ -22,16 +22,16 @@ regex+="999)$"
 TEST_REGEX_PATTERN=${TEST_REGEX_PATTERN:-$regex}
 echo "The following tests will be excluded: $EXCLUDED_TESTS"
 
-ACC_ENDPOINT=${ACC_ENDPOINT:-http://localhost:8080}
-NOTIFY_ENDPOINT=${NOTIFY_ENDPOINT:-http://accumulator:8080/acc}
-#NOTIFY_ENDPOINT=${NOTIFY_ENDPOINT:-http://host.docker.internal:8080/acc}
+ACC_ENDPOINT=${ACC_ENDPOINT:-http://localhost:8085}
+NOTIFY_ENDPOINT=${NOTIFY_ENDPOINT:-http://accumulator:8085/acc}
+#NOTIFY_ENDPOINT=${NOTIFY_ENDPOINT:-http://host.docker.internal:8085/acc}
 
 echo "The Accumulator endpoint listens on $ACC_ENDPOINT"
 echo "Subscriptions will notify the accumulator using $NOTIFY_ENDPOINT"
 
 # To run an accumulator locally run:
 #
-# export WEB_APP_PORT=8080
+# export WEB_APP_PORT=8085
 # node accumulator/accumulator.js
 
 while [ `curl -s -o /dev/null -w %{http_code} $ACC_ENDPOINT` -eq 000 ]

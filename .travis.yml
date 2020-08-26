@@ -19,16 +19,16 @@ matrix:
 install: >
   npm install;
   if [[ "${STAGE}" == "orion" ]]; then
-     docker-compose --log-level ERROR -f docker-compose/orion.yml pull
+     docker-compose --log-level ERROR -f docker-compose/orion.yml pull --ignore-pull-failures 
   fi
   
   if [[ "${STAGE}" == "scorpio" ]]; then
-    docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml pull
-    docker-compose --log-level ERROR -f docker-compose/scorpio-dist.yml pull
+    docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml pull --ignore-pull-failures 
+    docker-compose --log-level ERROR -f docker-compose/scorpio-dist.yml pull --ignore-pull-failures 
   fi
 
-  if [[ "${STAGE}" == "scorpio" ]]; then
-     docker-compose --log-level ERROR -f docker-compose/stellio.yml pull
+  if [[ "${STAGE}" == "stellio" ]]; then
+     docker-compose --log-level ERROR -f docker-compose/stellio.yml pull --ignore-pull-failures 
   fi
   
 before_script: >
