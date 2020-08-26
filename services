@@ -106,6 +106,7 @@ case "${command}" in
 		docker-compose --log-level ERROR -f docker-compose/stellio.yml -p fiware up -d --remove-orphans
 		displayServices stellio
 		waitForStellio
+		;;
 	"stop")
 		stoppingContainers
 		;;
