@@ -39,15 +39,15 @@ npm test
 ```
 
 -  the test endpoint is `http://localhost:1026` By default
--  the accumulator endpoint is `http://localhost:8080` By default
--  the notification endpoint is `http://accumulator:8080/acc` By default
+-  the accumulator endpoint is `http://localhost:8085` By default
+-  the notification endpoint is `http://accumulator:8085/acc` By default
 
 Please note, that if you are running the NGSI-LD accumulator endpoint locally,
 it can be referred to as  `http://host.docker.internal:<port>/acc`, so that  other Docker containers can get access to the accumulator server running on the host.
 
 > **Note:** To run the accumulator locally you can start the service using
 > ```console
-> export WEB_APP_PORT=8080
+> export WEB_APP_PORT=8085
 > node accumulator/accumulator.js
 > ```
 

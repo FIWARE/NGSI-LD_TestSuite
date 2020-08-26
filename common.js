@@ -8,9 +8,9 @@
 
 const endpoint = process.env.TEST_ENDPOINT || 'http://localhost:1026';
 
-const accEndpoint = process.env.ACC_ENDPOINT || 'http://localhost:8080';
-//const notifyEndpoint = process.env.NOTIFY_ENDPOINT || 'http://host.docker.internal:8080/acc';
-const notifyEndpoint = process.env.NOTIFY_ENDPOINT || 'http://accumulator:8080/acc';
+const accEndpoint = process.env.ACC_ENDPOINT || 'http://localhost:8085';
+//const notifyEndpoint = process.env.NOTIFY_ENDPOINT || 'http://host.docker.internal:8085/acc';
+const notifyEndpoint = process.env.NOTIFY_ENDPOINT || 'http://accumulator:8085/acc';
 
 const ngsild = 'ngsi-ld/v1';
 
