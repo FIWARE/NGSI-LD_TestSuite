@@ -13,7 +13,7 @@ describe('Query Entity. JSON. Default @context', () => {
         P100: {
             type: 'Property',
             value: 12,
-            observedAt: '2018-12-04T12:00:00Z',
+            observedAt: '2018-12-04T12:00:00.000Z',
             P1_R1: {
                 type: 'Relationship',
                 object: 'urn:ngsi-ld:T2:6789'
@@ -196,7 +196,7 @@ describe('Query Entity. JSON. Default @context', () => {
     it('query by condition over observedAt 042', async function() {
         const queryParams = {
             type: entity.type,
-            q: 'P100.observedAt>2018-12-03T12:00:00Z'
+            q: 'P100.observedAt>2018-12-03T12:00:00.000Z'
         };
 
         const response = await http.get(entitiesResource + '?' + serializeParams(queryParams));

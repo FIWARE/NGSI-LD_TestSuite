@@ -11,7 +11,7 @@ describe('Retrieve Entity. JSON. Default @context', () => {
         P1: {
             type: 'Property',
             value: 12,
-            observedAt: '2018-12-04T12:00:00Z',
+            observedAt: '2018-12-04T12:00:00.000Z',
             P1_R1: {
                 type: 'Relationship',
                 object: 'urn:ngsi-ld:T2:6789'
