@@ -5,20 +5,30 @@ env:
   - STAGE=compliance
   - STAGE=orion
   - STAGE=scorpio
+  - STAGE=stellio
+
+services:
+  - docker
 
 matrix:
   allow_failures:
   - env: STAGE=orion
   - env: STAGE=scorpio
+  - env: STAGE=stellio
 
 install: >
   npm install;
   if [[ "${STAGE}" == "orion" ]]; then
-     docker pull fiware/orion-ld;
+     docker-compose --log-level ERROR -f docker-compose/orion.yml pull
   fi
   
   if [[ "${STAGE}" == "scorpio" ]]; then
-     docker pull scorpiobroker/scorpio:scorpio-aaio_latest;
+    docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml pull
+    docker-compose --log-level ERROR -f docker-compose/scorpio-dist.yml pull
+  fi
+
+  if [[ "${STAGE}" == "scorpio" ]]; then
+     docker-compose --log-level ERROR -f docker-compose/stellio.yml pull
   fi
   
 before_script: >
@@ -32,6 +42,10 @@ before_script: >
      export TEST_ENDPOINT=http://localhost:9090;
   fi
 
+  if [[ "${STAGE}" == "stellio" ]]; then
+     ./services stellio;
+     export TEST_ENDPOINT=http://localhost:8080;
+  fi
 
 script: >
   if [[ "${STAGE}" == "compliance" ]]; then

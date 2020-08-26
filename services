@@ -37,6 +37,25 @@ waitForScorpio () {
 	done
 }
 
+waitForStellio () {
+	echo -e "\n⏳ Waiting for \033[1;34mStellio\033[0m to respond\n"
+	waitSeconds=30
+	while [ `docker run --network fiware_default --rm curlimages/curl -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X'` -eq 000 ]
+	do 
+	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:8080/ngsi-ld/v1/entities/?type=X'` " (waiting for 500)"
+	  waitSeconds=$((waitSeconds+5))
+	  echo -e "Waiting for ${waitSeconds} seconds ..."
+	  sleep ${waitSeconds}
+	done
+	while [ `docker run --network fiware_default --rm curlimages/curl -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X'` -eq 500 ]
+	do 
+	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:8080/ngsi-ld/v1/entities/?type=X'` " (waiting for 200)"
+	  waitSeconds=$((waitSeconds+5))
+	  echo -e "Waiting for ${waitSeconds} seconds ..."
+	  sleep ${waitSeconds}
+	done
+}
+
 stoppingContainers () {
 	echo "Stopping containers"
 	docker-compose --log-level ERROR -f docker-compose/orion.yml -p fiware down -v --remove-orphans
@@ -54,7 +73,7 @@ displayServices () {
 command="$1"
 case "${command}" in
 	"help")
-		echo "usage: services [create|orion|scorpio|scorpio-dist|stop]"
+		echo "usage: services [create|orion|scorpio|scorpio-dist|stellio|stop]"
 		;;
 	"orion")
 		stoppingContainers 
@@ -80,6 +99,13 @@ case "${command}" in
 		displayServices scorpio
 		waitForScorpio
 		;;
+	"stellio")
+		stoppingContainers 
+		echo -e "Starting five containers \033[1;34mStellio\033[0m, \033[1mKafka\033[0m, \033[1mZookeeper\033[0m and \033[1mPostgres\033[0m and \033[1mNeo4j\033[0m databases."
+		echo -e "- \033[1;34mStellio\033[0m is the context broker\n"
+		docker-compose --log-level ERROR -f docker-compose/stellio.yml -p fiware up -d --remove-orphans
+		displayServices stellio
+		waitForStellio
 	"stop")
 		stoppingContainers
 		;;
@@ -88,10 +114,11 @@ case "${command}" in
 		docker-compose --log-level ERROR -f docker-compose/orion.yml pull
 		docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml pull
 		docker-compose --log-level ERROR -f docker-compose/scorpio-dist.yml pull
+		docker-compose --log-level ERROR -f docker-compose/stellio.yml pull
 		;;
 	*)
 		echo "Command not Found."
-		echo "usage: services [create|orion|scorpio|scorpio-dist|stop]"
+		echo "usage: services [create|orion|scorpio|scorpio-dist|stellio|stop]"
 		exit 127;
 		;;
 esac

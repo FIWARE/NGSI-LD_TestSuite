@@ -29,7 +29,7 @@ services:
     expose: 
       - "${ACC_PORT}"
     ports:
-      - "${ACC_PORT}:${ACC_PORT}" # localhost:3000
+      - "${ACC_PORT}:${ACC_PORT}"
     environment:
       - WEB_APP_PORT=${ACC_PORT}
       
