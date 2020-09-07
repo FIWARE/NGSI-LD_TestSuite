@@ -1,3 +1,4 @@
+//This file is used to test delete temporal test
 const http = require('../http.js');
 const testedResource = require('../common.js').testedResource;
 const entitiesResource = testedResource+'/temporal/entities/';

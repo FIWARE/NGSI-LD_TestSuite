@@ -1,4 +1,4 @@
-//const testedResource = require('../common.js').testedResource;
+//This file is used to check temporal create and update entity
 const http = require('../http.js');
 
 const testedResource = require('../common.js').testedResource;
@@ -60,6 +60,12 @@ describe('Create Temporal Entity. JSON', () => {
     
         const response = await http.post(entitiesResource+'urn:ngsi-ld:testunit:159/attrs', entity);
         expect(response.response).toHaveProperty('statusCode', 204);
+    });
+
+    it('update an temporal entity by ID which is not exists 168', async function() {
+    
+        const response = await http.post(entitiesResource+'urn:ngsi-ld:testunit:1599/attrs', entity);
+        expect(response.response).toHaveProperty('statusCode', 404);
     });
 
     it('try to update an existing temporal entity with no content found 167', async function() {

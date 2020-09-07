@@ -1,3 +1,4 @@
+//This file is used to check temporal retrive test
 const http = require('../http.js');
 const testedResource = require('../common.js').testedResource;
 const entitiesResource = testedResource+'/temporal/entities/';
