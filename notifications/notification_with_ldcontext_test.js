@@ -56,7 +56,7 @@ describe('Basic Notification. JSON-LD @context', () => {
     it('should not send a notification. Subscription to Entity Type. LD Context generates a different mapping 163', async function() {
         // A Subscription is created
         const subscription = {
-            id: 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+            id: 'urn:ngsi-ld:Subscription:mySubscription:test163',
             type: 'Subscription',
             entities: [
                 {

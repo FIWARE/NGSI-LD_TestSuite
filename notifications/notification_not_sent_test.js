@@ -43,13 +43,15 @@ describe('Subscription yields to no Notification. JSON', () => {
     });
 
     afterEach(() => {
-        return http.delete(entitiesResource + entityId);
+		const requests = [];
+        requests.push(http.delete(entitiesResource + entityId));
+		return Promise.all(requests);
     });
 
     it('should not send a notification. Subscription to specific attribute. Update other 149', async function() {
         // A Subscription is created
         const subscription = {
-            id: 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+            id: 'urn:ngsi-ld:Subscription:mySubscription:test149',
             type: 'Subscription',
             entities: [
                 {
@@ -64,10 +66,11 @@ describe('Subscription yields to no Notification. JSON', () => {
                 }
             }
         };
-
+		//Added a small sleep here to allow for a bit of async behaviour in each broker
+		await sleep(200);
         // Once subscription is created the first notification should be received
         await createSubscription(subscription);
-
+		
         // Now the brandName property is modified
         // No additional notification should be received
         await updateAttribute(entityId, 'brandName', 'Volvo');
@@ -86,7 +89,7 @@ describe('Subscription yields to no Notification. JSON', () => {
     it('should not send a notification. Subscription to entity which id does not match 150', async function() {
         // A Subscription is created
         const subscription = {
-            id: 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+            id: 'urn:ngsi-ld:Subscription:mySubscription:test150',
             type: 'Subscription',
             entities: [
                 {
@@ -118,7 +121,7 @@ describe('Subscription yields to no Notification. JSON', () => {
     it('should not send a notification. Subscription to idPattern does not match 151', async function() {
         // A Subscription is created
         const subscription = {
-            id: 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+            id: 'urn:ngsi-ld:Subscription:mySubscription:test151',
             type: 'Subscription',
             entities: [
                 {
@@ -150,7 +153,7 @@ describe('Subscription yields to no Notification. JSON', () => {
     it('should not send a notification. Subscription to entity which type does not match 152', async function() {
         // A Subscription is created
         const subscription = {
-            id: 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+            id: 'urn:ngsi-ld:Subscription:mySubscription:test152',
             type: 'Subscription',
             entities: [
                 {
@@ -182,7 +185,7 @@ describe('Subscription yields to no Notification. JSON', () => {
     it('should not send a notification. Watched attribute does not exist 153', async function() {
         // A Subscription is created
         const subscription = {
-            id: 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+            id: 'urn:ngsi-ld:Subscription:mySubscription:test153',
             type: 'Subscription',
             entities: [
                 {
@@ -215,7 +218,7 @@ describe('Subscription yields to no Notification. JSON', () => {
     it('should not send a notification. Subscription is not active 154', async function() {
         // A Subscription is created
         const subscription = {
-            id: 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+            id: 'urn:ngsi-ld:Subscription:mySubscription:test154',
             type: 'Subscription',
             entities: [
                 {
@@ -248,7 +251,7 @@ describe('Subscription yields to no Notification. JSON', () => {
     it('should not send a notification. Subscription has expired 155', async function() {
         // A Subscription is created
         const subscription = {
-            id: 'urn:ngsi-ld:Subscription:mySubscription:' + new Date().getTime(),
+            id: 'urn:ngsi-ld:Subscription:mySubscription:test155',
             type: 'Subscription',
             entities: [
                 {
@@ -266,6 +269,8 @@ describe('Subscription yields to no Notification. JSON', () => {
             }
         };
 
+		//Added a small sleep here to allow for a bit of async behaviour in each broker
+		await sleep(200);
         // The initial notification should be received
         await createSubscription(subscription);
 

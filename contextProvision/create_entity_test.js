@@ -278,14 +278,19 @@ describe('Create Entity. JSON', () => {
         assertCreated(response.response, entity.id);
     });
 
-    it('should create an entity. Array Relationship Objects 109', async function() {
+    it('should create an entity. Array Relationships with datasetId 109', async function() {
         const entity = {
             id: 'urn:ngsi-ld:T:' + new Date().getTime(),
             type: 'T',
-            AR1: {
+            AR1: [{
                 type: 'Relationship',
-                object: ['urn:ngsi-ld:T:1234', 'urn:ngsi-ld:T:5678']
-            }
+                object: 'urn:ngsi-ld:T:1234'
+            },{
+				type: 'Relationship',
+                object: 'urn:ngsi-ld:T:12345',
+				datasetId: 'urn:ngsi-ld:datasetid:test109'
+			}
+			]
         };
 
         const response = await http.post(entitiesResource, entity);

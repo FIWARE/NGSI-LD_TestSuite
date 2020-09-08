@@ -57,15 +57,15 @@ describe('Create Subscription. Errors. JSON', () => {
         const response = await http.post(subscriptionsResource, testSubscription);
         expect(response.response).toHaveProperty('statusCode', 400);
     });
-
-    it('should reject a subscription which watched attributes is null 134', async function() {
+	// No it should not. setting watchedAttibutes to null is syntactically the same as not giving it. No error should be expected here
+    /*it('should reject a subscription which watched attributes is null 134', async function() {
         const testSubscription = patchObj(subscription, {
             watchedAttributes: null
         });
 
         const response = await http.post(subscriptionsResource, testSubscription);
         expect(response.response).toHaveProperty('statusCode', 400);
-    });
+    });*/
 
     it('should reject a subscription which watched attributes array is 0 length 135', async function() {
         const testSubscription = patchObj(subscription, { watchedAttributes: [] });

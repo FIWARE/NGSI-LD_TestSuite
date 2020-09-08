@@ -73,11 +73,11 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         '@context': entity['@context']
     };
 
-    const entityNoAttr = {
+    /*const entityNoAttr = {
         id: entity.id,
         type: entity.type,
         '@context': entity['@context']
-    };
+    };*/
 
     const entityNoContext = patchObj({}, entity);
     delete entityNoContext['@context'];
@@ -277,7 +277,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         const response = await http.get(entitiesResource + entityId + '?attrs=P1', headers);
         assertRetrievedAlternatives(response, entityOneAttr, JSON_LD, testContexts);
     });
-
+/* Does not fit spec. No matching attribute found is a 404
     it('should retrieve the entity no attribute matches 069', async function() {
         const headers = {
             Accept: 'application/ld+json',
@@ -286,8 +286,9 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
         const response = await http.get(entitiesResource + entityId + '?attrs=notFoundAttr', headers);
         assertRetrievedAlternatives(response, entityNoAttr, JSON_LD, testContexts);
     });
-
-    it('should retrieve the entity no attribute matches as @context differs 070', async function() {
+*/
+//Does not fit the spec.
+    /*it('should retrieve the entity no attribute matches as @context differs 070', async function() {
         const headers = {
             Accept: 'application/ld+json',
             // Observe that the provided @context will make the attribute not to match
@@ -310,7 +311,7 @@ describe('Retrieve Entity. JSON-LD. @context ', () => {
 
         const response = await http.get(entitiesResource + entityId + '?attrs=P1', headers);
         assertRetrievedAlternatives(response, expectedEntityNoAttr, JSON_LD, testContext2);
-    });
+    });*/
 
     it('should retrieve the entity but compaction shall use an alternative @context 071', async function() {
         const headers = {
