@@ -4,7 +4,7 @@
   "description": "This project is intended to define a test suite for NGSI-LD , the evolution of NGSIv2 for supporting linked data based on JSON-LD.",
   "main": "index.js",
   "dependencies": {
-    "@hapi/hapi": "^18.4.0",
+    "@hapi/hapi": "^19.1.1",
     "request": "^2.88.0"
   },
   "devDependencies": {
