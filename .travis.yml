@@ -2,7 +2,6 @@ language: node_js
 node_js:
   - 12.14
 env:
-  - STAGE=compliance
   - STAGE=orion
   - STAGE=scorpio
   - STAGE=stellio
@@ -48,8 +47,4 @@ before_script: >
   fi
 
 script: >
-  if [[ "${STAGE}" == "compliance" ]]; then
-     npm run lint;
-  else
-     npm test;
-  fi
+  npm test;
