@@ -1,0 +1,22 @@
+name: CI
+'on':
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  test-orion:
+    - name: Git checkout
+        uses: actions/checkout@v2
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Run Test Suite Against Orion-LD
+      run: |
+        docker-compose --log-level ERROR -f docker-compose/orion.yml pull --ignore-pull-failures
+        ./services orion;
+        export TEST_ENDPOINT=http://localhost:1026;
+        result="$(npm test)"
