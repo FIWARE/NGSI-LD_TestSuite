@@ -32,4 +32,4 @@ jobs:
       - name: Run EsLint Node.js Linter
         run: |
           npm install
-          npm run:lint
+          npm run lint
