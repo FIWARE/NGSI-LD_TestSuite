@@ -1,4 +1,4 @@
-name: CI
+name: Broker-Tests
 'on':
   push:
     branches:
@@ -8,7 +8,7 @@ name: CI
       - master
 jobs:
   test-orion:
-    name: Run tests against Orion-LD
+    name: Test Suite against Orion-LD
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout
@@ -17,9 +17,51 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - name: Run Test Suite Against Orion-LD
+      - name: Setup Orion Services
         run: |
           docker-compose --log-level ERROR -f docker-compose/orion.yml pull --ignore-pull-failures
           ./services orion;
           export TEST_ENDPOINT=http://localhost:1026;
+      - name: Run Test Suite Against Orion
+        run: |
+          npm install
+          result="$(npm test)"
+  test-scorpio:
+    name: Test Suite against Scorpio Broker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Setup Scorpio Services
+        run: |
+          docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml pull --ignore-pull-failures 
+          docker-compose --log-level ERROR -f docker-compose/scorpio-dist.yml pull --ignore-pull-failures 
+          ./services scorpio;
+          export TEST_ENDPOINT=http://localhost:9090;
+      - name: Run Test Suite Against Scorpio
+        run: |
+          npm install
+          result="$(npm test)"
+  test-stellio:
+    name: Test Suite against Stellio Broker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Setup Stellio Services
+        run: |
+          docker-compose --log-level ERROR -f docker-compose/stellio.yml pull --ignore-pull-failures 
+          ./services stellio;
+          export TEST_ENDPOINT=http://localhost:8080;
+      - name: Run Test Suite Against Stellio
+        run: |
+          npm install
           result="$(npm test)"
