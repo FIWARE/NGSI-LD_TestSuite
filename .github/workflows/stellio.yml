@@ -1,0 +1,29 @@
+name: Stellio Test
+'on':
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  test-stellio:
+    name: Test Suite against Stellio Broker
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Setup Stellio Services
+        run: |
+          docker-compose --log-level ERROR -f docker-compose/stellio.yml pull --ignore-pull-failures 
+          ./services stellio;
+          export TEST_ENDPOINT=http://localhost:8080;
+      - name: Run Test Suite Against Stellio
+        run: |
+          npm install
+          npm test

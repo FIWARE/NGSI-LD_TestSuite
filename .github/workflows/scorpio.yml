@@ -1,0 +1,30 @@
+name: Scorpio Test
+'on':
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  test-scorpio:
+    name: Test Suite against Scorpio Broker
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Setup Scorpio Services
+        run: |
+          docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml pull --ignore-pull-failures 
+          docker-compose --log-level ERROR -f docker-compose/scorpio-dist.yml pull --ignore-pull-failures 
+          ./services scorpio;
+          export TEST_ENDPOINT=http://localhost:9090;
+      - name: Run Test Suite Against Scorpio
+        run: |
+          npm install
+          npm test
