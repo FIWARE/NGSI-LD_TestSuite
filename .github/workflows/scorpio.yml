@@ -24,7 +24,7 @@ jobs:
           docker-compose -f docker-compose/scorpio-aaio.yml -p fiware up -d 
           docker ps
           echo -e "Waiting for 500 seconds ..."
-          wait 500
+          sleep 500
           docker ps
       - name: Run Test Suite Against Scorpio
         run: |

@@ -21,7 +21,7 @@ jobs:
           node-version: 12.x
       - name: Set-up Stellio
         run: |
-          docker-compose -f docker-compose/stellio.yml pull -p fiware up -d
+          docker-compose -f docker-compose/stellio.yml -p fiware up -d 
           docker ps
           echo -e "Waiting for 20 seconds ..."
           sleep 20
