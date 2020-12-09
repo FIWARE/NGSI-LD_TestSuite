@@ -19,11 +19,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - name: Run Test Suite Against Orion
+      - name: Set-up Orion
         run: |
           docker-compose -f docker-compose/orion.yml -p fiware up -d
           docker ps
-          ./services orion;
+          echo -e "Waiting for 20 seconds ..."
+          sleep 20
+          docker ps
+      - name: Run Test Suite Against Orion
+        run: |
           export TEST_ENDPOINT=http://localhost:1026;
           npm install
           npm test

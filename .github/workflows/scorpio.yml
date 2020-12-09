@@ -2,16 +2,16 @@ name: Scorpio Test
 'on':
   push:
     branches:
-      - masterX
+      - master
   pull_request:
     branches:
-      - masterX
+      - master
 jobs:
   test-scorpio:
     name: Test Suite against Scorpio Broker
     runs-on: ubuntu-latest
     continue-on-error: true
-    timeout-minutes: 5
+    timeout-minutes: 12
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
@@ -19,12 +19,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
+      - name: Set up Scorpio
+        run: |
+          docker-compose -f docker-compose/scorpio-aaio.yml -p fiware up -d 
+          docker ps
+          echo -e "Waiting for 500 seconds ..."
+          wait 500
+          docker ps
       - name: Run Test Suite Against Scorpio
         run: |
-          docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml pull --ignore-pull-failures 
-          docker-compose --log-level ERROR -f docker-compose/scorpio-dist.yml pull --ignore-pull-failures 
-          docker images
-          ./services scorpio;
           export TEST_ENDPOINT=http://localhost:9090;
           npm install
           npm test

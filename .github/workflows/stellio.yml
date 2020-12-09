@@ -2,10 +2,10 @@ name: Stellio Test
 'on':
   push:
     branches:
-      - masterX
+      - master
   pull_request:
     branches:
-      - masterX
+      - master
 jobs:
   test-stellio:
     name: Test Suite against Stellio Broker
@@ -19,11 +19,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
+      - name: Set-up Stellio
+        run: |
+          docker-compose -f docker-compose/stellio.yml pull -p fiware up -d
+          docker ps
+          echo -e "Waiting for 20 seconds ..."
+          sleep 20
+          docker ps
       - name: Run Test Suite Against Stellio
         run: |
-          docker-compose --log-level ERROR -f docker-compose/stellio.yml pull --ignore-pull-failures 
-          docker images
-          ./services stellio;
           export TEST_ENDPOINT=http://localhost:8080;
           npm install
           npm test
