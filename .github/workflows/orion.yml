@@ -22,8 +22,8 @@ jobs:
       - name: Run Test Suite Against Orion
         run: |
           docker-compose --log-level ERROR -f docker-compose/orion.yml pull --ignore-pull-failures
+          docker-compose --log-level ERROR -f docker-compose/orion.yml -p fiware up -d --remove-orphans
           ./services orion;
-          docker ps
           export TEST_ENDPOINT=http://localhost:1026;
           npm install
           npm test

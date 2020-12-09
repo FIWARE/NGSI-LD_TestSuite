@@ -2,10 +2,10 @@ name: Stellio Test
 'on':
   push:
     branches:
-      - master
+      - masterX
   pull_request:
     branches:
-      - master
+      - masterX
 jobs:
   test-stellio:
     name: Test Suite against Stellio Broker
@@ -22,8 +22,8 @@ jobs:
       - name: Run Test Suite Against Stellio
         run: |
           docker-compose --log-level ERROR -f docker-compose/stellio.yml pull --ignore-pull-failures 
+          docker images
           ./services stellio;
-          docker ps
           export TEST_ENDPOINT=http://localhost:8080;
           npm install
           npm test

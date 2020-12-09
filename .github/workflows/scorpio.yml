@@ -2,10 +2,10 @@ name: Scorpio Test
 'on':
   push:
     branches:
-      - master
+      - masterX
   pull_request:
     branches:
-      - master
+      - masterX
 jobs:
   test-scorpio:
     name: Test Suite against Scorpio Broker
@@ -23,8 +23,8 @@ jobs:
         run: |
           docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml pull --ignore-pull-failures 
           docker-compose --log-level ERROR -f docker-compose/scorpio-dist.yml pull --ignore-pull-failures 
+          docker images
           ./services scorpio;
           export TEST_ENDPOINT=http://localhost:9090;
-          docker ps
           npm install
           npm test
