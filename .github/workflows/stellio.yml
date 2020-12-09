@@ -11,6 +11,7 @@ jobs:
     name: Test Suite against Stellio Broker
     runs-on: ubuntu-latest
     continue-on-error: true
+    timeout-minutes: 5
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
@@ -18,12 +19,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - name: Setup Stellio Services
+      - name: Run Test Suite Against Stellio
         run: |
           docker-compose --log-level ERROR -f docker-compose/stellio.yml pull --ignore-pull-failures 
           ./services stellio;
+          docker ps
           export TEST_ENDPOINT=http://localhost:8080;
-      - name: Run Test Suite Against Stellio
-        run: |
           npm install
           npm test

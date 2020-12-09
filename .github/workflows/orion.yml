@@ -11,6 +11,7 @@ jobs:
     name: Test Suite against Orion-LD
     runs-on: ubuntu-latest
     continue-on-error: true
+    timeout-minutes: 5
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
@@ -18,12 +19,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - name: Setup Orion Services
+      - name: Run Test Suite Against Orion
         run: |
           docker-compose --log-level ERROR -f docker-compose/orion.yml pull --ignore-pull-failures
           ./services orion;
+          docker ps
           export TEST_ENDPOINT=http://localhost:1026;
-      - name: Run Test Suite Against Orion
-        run: |
           npm install
           npm test

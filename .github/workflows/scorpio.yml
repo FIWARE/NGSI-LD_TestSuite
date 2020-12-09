@@ -11,6 +11,7 @@ jobs:
     name: Test Suite against Scorpio Broker
     runs-on: ubuntu-latest
     continue-on-error: true
+    timeout-minutes: 5
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
@@ -18,13 +19,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - name: Setup Scorpio Services
+      - name: Run Test Suite Against Scorpio
         run: |
           docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml pull --ignore-pull-failures 
           docker-compose --log-level ERROR -f docker-compose/scorpio-dist.yml pull --ignore-pull-failures 
           ./services scorpio;
           export TEST_ENDPOINT=http://localhost:9090;
-      - name: Run Test Suite Against Scorpio
-        run: |
+          docker ps
           npm install
           npm test
