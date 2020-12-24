@@ -47,6 +47,7 @@ waitForStellio () {
 	  echo -e "Waiting for ${waitSeconds} seconds ..."
 	  sleep ${waitSeconds}
 	done
+	echo -e "\n⏳ Waiting for all \033[1;34mStellio\033[0m services to be available\n"
 	while [ `docker run --network fiware_default --rm curlimages/curl -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X'` -eq 500 ]
 	do 
 	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:8080/ngsi-ld/v1/entities/?type=X'` " (waiting for 200)"
@@ -61,6 +62,7 @@ stoppingContainers () {
 	docker-compose --log-level ERROR -f docker-compose/orion.yml -p fiware down -v --remove-orphans
 	docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml -p fiware down -v --remove-orphans
 	docker-compose --log-level ERROR -f docker-compose/scorpio-dist.yml -p fiware down -v --remove-orphans
+	docker-compose --log-level ERROR -f docker-compose/stellio.yml -p fiware down -v --remove-orphans
 }
 
 displayServices () {
