@@ -62,7 +62,7 @@ describe('Create Temporal Entity. JSON', () => {
         expect(response.response).toHaveProperty('statusCode', 204);
     });
 
-    it('update an temporal entity by ID which is not exists 168', async function() {
+    it('update an temporal entity by ID which is not exists 171', async function() {
     
         const response = await http.post(entitiesResource+'urn:ngsi-ld:testunit:1599/attrs', entity);
         expect(response.response).toHaveProperty('statusCode', 404);
