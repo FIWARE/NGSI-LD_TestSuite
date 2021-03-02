@@ -22,6 +22,7 @@ jobs:
           node-version: 12.x
       - name: Set-up Orion
         run: |
+          export $(cat .env | grep "#" -v)
           docker-compose -f docker-compose/orion.yml -p fiware up -d
           docker ps
           echo -e "Waiting for 20 seconds ..."
