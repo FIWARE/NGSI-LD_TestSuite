@@ -6,6 +6,7 @@ name: Orion Test
   pull_request:
     branches:
       - master
+  workflow_dispatch:
 jobs:
   test-orion:
     name: Test Suite against Orion-LD
