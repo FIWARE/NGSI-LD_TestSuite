@@ -44,7 +44,7 @@ services:
       - default
     ports:
       - "${ORION_LD_PORT}:${ORION_LD_PORT}"
-    command: -dbhost mongo-db -logLevel DEBUG
+    command: -dbhost mongo-db
     healthcheck:
       test: curl --fail -s http://orion:${ORION_LD_PORT}/version || exit 1
 

@@ -7,18 +7,26 @@
 
 set -e
 
-if (( $# != 1 )); then
-	echo "Illegal number of parameters"
-	echo "usage: services [create|start|stop]"
-	exit 1
+if (( $# != 1 ))
+then
+    echo "Illegal number of parameters (not 1)"
+    echo "Usage: services <create|stop|orion|scorpio|scorpio-dist|stellio>"
+    exit 1
 fi
 
-waitForOrion () {
+
+if [ "$ENV_SOURCED" == "" ]
+then
+    source .env
+fi
+
+waitForOrion ()
+{
 	echo -e "\n⏳ Waiting for \033[1;34mOrion\033[0m to be available\n"
 	while [ `docker run --network fiware_default --rm appropriate/curl -s -o /dev/null -w %{http_code} 'http://orion:1026/version'` -eq 000 ]
 	do 
 	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:1026/version'` " (waiting for 200)"
-	  sleep 30
+	  sleep 1
 	done
 }
 
@@ -57,12 +65,24 @@ waitForStellio () {
 	done
 }
 
-stoppingContainers () {
-	echo "Stopping containers"
+stoppingContainers ()
+{
+    if [ "$command" == "orion"  ]
+    then
+	echo "Stopping Orion-LD containers"
 	docker-compose --log-level ERROR -f docker-compose/orion.yml -p fiware down -v --remove-orphans
+    elif [ "$command" == "scorpio" ]
+    then
+	echo "Stopping Scorpio containers"
 	docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml -p fiware down -v --remove-orphans
+	echo "Stopping Scorpio containers 2"
 	docker-compose --log-level ERROR -f docker-compose/scorpio-dist.yml -p fiware down -v --remove-orphans
+    elif [ "$command" == "stellio" ]
+    then
+	echo "Stopping Stellio containers"
 	docker-compose --log-level ERROR -f docker-compose/stellio.yml -p fiware down -v --remove-orphans
+    fi
+    echo "Stopped containers"
 }
 
 displayServices () {
